@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="books">
+<!-- 여기에 SQL 구문을 작성 -->
+		<select id="selectList" resultType="vo.Book">
+			SELECT no, title, author,page_num pageNum, publication_date publicationDate
+			FROM books
+			ORDER BY 1
+		</select>
+</mapper>

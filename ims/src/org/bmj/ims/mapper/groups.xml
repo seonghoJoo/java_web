@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="groups">
+<!-- 여기에 SQL 구문을 작성 -->
+	<select id="selectList" resultType="Group">
+		SELECT group_id groupId, name, debut_date debutDate
+		FROM groups
+		ORDER BY 1
+	</select>
+	
+	<select id="selectOne" parameterType="int" resultType="Group">
+		SELECT group_id groupId, name,debut_date debutDate
+		FROM groups
+		WHERE group_id = #{groupId}
+	</select>
+	
+	<insert id="insert" parameterType="Group">
+		INSERT INTO groups(group_id, name, debut_date)
+		VALUES (groups_seq.nextval,#{name}, #{debutDate})
+	</insert>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM groups
+		WHERE group_id = #{groupId}
+	</delete>
+</mapper>
