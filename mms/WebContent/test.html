@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Date Picker 예제</title>
+<link rel="stylesheet" href="/css/datepicker.css" />
+</head>
+<body>
+<h1>종료일 선택</h1>
+<button type="button" id="changeBtn">종료일 없음</button>
+<form action="asdasd" method="get">
+	<input name="endDate" id="endDate" />
+	<button type="submit">submit</button>
+</form>
+<script src="/js/jquery.js"></script>
+<script src="/js/datepicker.min.js"></script>
+<script src="/js/datepicker.ko-KR.js"></script>
+<script>
+	const $endDate = $('#endDate');
+	$('#changeBtn').click(function(){
+		
+		// prop : true or false 값이 true냐 false냐? (개발자용)
+		// attr : undefiend or disabled 속성이 있냐 없냐? 
+		//<input disabled="disabled" />
+		//<input /> <-- undefined
+		console.log($endDate.prop("disabled"));
+		if(!$endDate.attr("disabled")){
+			$endDate.attr("disabled",true);
+		}else{
+			$endDate.attr("disabled",false);
+		}
+	});
+
+	$('#endDate').datepicker({
+		autoPick : true,  	
+		autoHide:true,		//클릭하면 자동 숨김
+	  	format: 'yyyy-mm-dd',	//자바 맞춤형 포맷
+	  	language: 'ko-KR',	//한국어 설정 (i18n)
+	  	date:new Date()
+	});
+	
+	
+</script>
+</body>
+</html>

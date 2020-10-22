@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="movies">
+
+	<select id="selectList" resultType="Movie">
+		SELECT	no,name,
+			release_date releaseDate,
+			end_date endDate,
+			director,
+			audience_num audienceNum,
+			genre
+		FROM movies
+		ORDER BY 1
+	</select>
+	
+	<select id="selectOne" parameterType="int" resultType="Movie">
+		SELECT	m.no,m.name,
+			release_date releaseDate,
+			end_date endDate,
+			director,
+			audience_num audienceNum,
+			g.name genreName
+		FROM movies m, genres g
+		WHERE m.no = #{no} AND m.genre = g.no
+	</select>
+	
+	<delete id="delete" parameterType="int">
+		DELETE
+		FROM movies
+		WHERE no=#{no}
+	</delete>
+	
+	<insert id="insert" parameterType="Movie">
+		<selectKey order="BEFORE" resultType="int" keyProperty="no">
+			SELECT movies_seq.nextval
+			FROM dual
+		</selectKey>
+		INSERT INTO movies(no,name, release_date, end_date, director, audience_num, genre)
+		VALUES(#{no},#{name},#{releaseDate}, #{endDate}, #{director}, #{audienceNum}, #{genre})		
+	</insert>
+	
+	<update id="update" parameterType="Movie">
+		UPDATE movies
+		SET name=#{name}, release_date=#{releaseDate}, end_date=#{endDate}, director=#{director}, audience_num=#{audienceNum}, genre=#{genre}
+		WHERE no=#{no}
+	</update>
+	
+</mapper>

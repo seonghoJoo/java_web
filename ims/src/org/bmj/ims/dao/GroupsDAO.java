@@ -76,5 +76,22 @@ public class GroupsDAO {
 		return result;
 	}//delete() end
 	
+	public static int update(Group group){
+		int result = 0;
+		SqlSession session = null;
+		try {
+			session = SqlSessionUtil.getSession();
+			result = session.update("groups.update",group);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(session!=null) {
+				session.close();
+			}
+		}//try catch finally end
+				
+		return result;
+	}//update() end
+	
 	
 }//GroupsDAO end

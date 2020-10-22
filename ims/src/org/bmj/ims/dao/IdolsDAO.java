@@ -7,7 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.bmj.ims.util.SqlSessionUtil;
 import org.bmj.ims.vo.Group;
 import org.bmj.ims.vo.Idol;
-import org.bmj.ims.vo.IdolGroup;
+
 
 public class IdolsDAO {
 	
@@ -43,7 +43,7 @@ public class IdolsDAO {
 		}//try catch finally end
 				
 		return result;
-	}
+	}//insert() end
 	public static List<Idol> selectListByGroupId(int groupId){
 		List<Idol> idols = null;
 		SqlSession session = null;
@@ -90,5 +90,22 @@ public class IdolsDAO {
 		}
 		return 0;
 	}//delete()
+	
+	public static int update(Idol idol) {
+		int result = 0;
+		SqlSession session = null;
+		try {
+			session = SqlSessionUtil.getSession();
+			result = session.update("idols.update",idol);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(session!=null) {
+				session.close();
+			}
+		}//try catch finally end
+				
+		return result;
+	}//update
 	
 }//IfolsDAO

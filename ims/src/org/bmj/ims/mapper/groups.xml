@@ -18,12 +18,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<insert id="insert" parameterType="Group">
+		<selectKey order="BEFORE" resultType="int" keyProperty="groupId">
+			SELECT groups_seq.nextval
+			FROM dual
+		</selectKey>
 		INSERT INTO groups(group_id, name, debut_date)
-		VALUES (groups_seq.nextval,#{name}, #{debutDate})
+		VALUES (#{groupId}, #{name}, #{debutDate})
 	</insert>
 	
 	<delete id="delete" parameterType="int">
 		DELETE FROM groups
 		WHERE group_id = #{groupId}
 	</delete>
+	
+	<update id="update" parameterType="Group">
+		UPDATE groups
+		SET name=#{name}, debut_date=#{debutDate}
+		WHERE group_id = #{groupId}
+	</update>	
 </mapper>

@@ -20,14 +20,15 @@
 	double weight = Double.parseDouble(request.getParameter("weight"));
 	char gender = request.getParameter("gender").charAt(0);
 	Idol idol = new Idol(name,groupId,height,weight,birthDate,gender);
+	System.out.println("전: "+idol.getIdolId() +" / "+ name + " / " + year + month + day + " / " +groupId +" / "+  height + "cm / "
+			
+			+ weight+"kg / " + gender);
 	int result = IdolsDAO.insert(idol);
-	System.out.println(name + " / " + year + month + day + " / " +groupId +" / "+  height + "cm / "
+	System.out.println("후: "+idol.getIdolId() +" / "+ name + " / " + year + month + day + " / " +groupId +" / "+  height + "cm / "
 			
 			+ weight+"kg / " + gender);
 	// 이 페이지에서 insert시킨 후 groupList.jsp로 이동(리다이렉트)
-	response.sendRedirect("/idolList.jsp");
-
-
+	response.sendRedirect("/idolDetail.jsp?idolId=" + idol.getIdolId());
 %>
 
 <%-- 

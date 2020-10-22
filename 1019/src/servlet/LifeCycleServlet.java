@@ -24,6 +24,7 @@ public class LifeCycleServlet extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
+		//서블릿과 주소를 맵핑
 		String ip = req.getRemoteAddr();
 		System.out.println(ip);
 		//get 방식이면 doGet

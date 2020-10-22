@@ -44,10 +44,15 @@
 		<dt>그룹명</dt>
 		<dd><%=group.getName() %></dd>
 		<dt>데뷔일</dt>
-		<dd><%=group.getDebutDate() %></dd>
+		<dd>
+		<%=group.getDebutYear() %>년
+		<%=group.getDebutMonth() %>월
+		<%=group.getDebutDay() %>일
+		</dd>
 	</dl>
 	<%if(idols.isEmpty()){ %>
 		<h2>아이돌 없음</h2>
+		<!--  get 방식으로 groupId를 넘겨줌 -->
 		<a class="btn" href="/groupDelete.jsp?groupId=<%=groupId%>"><i class="far fa-trash-alt"></i> 삭제</a>
 	<%}else{ %>
 		<h2>아이돌 목록</h2>
@@ -58,6 +63,7 @@
 	</ul>
 	<%} %>
 
+	<a class="btn" href="/groupUpdateForm.jsp?groupId=<%=groupId %>"><i class="fas fa-wrench"></i> 수정하기</a>
 	<a class="btn" href="/groupList.jsp"><i class="fas fa-user-friends"></i> 목록으로</a>
 </body>
 </html>

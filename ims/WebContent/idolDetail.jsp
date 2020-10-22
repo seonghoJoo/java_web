@@ -1,4 +1,4 @@
-<%@page import="org.bmj.ims.vo.IdolGroup"%>
+
 <%@page import="org.bmj.ims.dao.IdolsDAO"%>
 <%@page import="org.bmj.ims.vo.Idol"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -41,14 +41,17 @@
 		<dt>몸무게</dt>
 		<dd><%=idolGroup.getWeight() %></dd>
 		<dt>성별</dt>
-		<dd><%=idolGroup.getGender() %></dd>
+		<dd><%=idolGroup.getGenderIcon() %></dd>
 		<dt>생일</dt>
-		<dd><%=idolGroup.getBirthDate() %></dd>
+		<dd><%= idolGroup.getBirthYear() %>년
+		<%= idolGroup.getBirthMonth() %>월
+		<%= idolGroup.getBirthDay() %>일</dd>
 		<dt>그룹명</dt>
 		<dd><a href="/groupDetail.jsp?groupId=<%=idolGroup.getGroupId() %>"><%=idolGroup.getGroupName() %></a></dd>
 	</dl>
 
 	<a class="btn" href="/idolDelete.jsp?idolId=<%=idolGroup.getIdolId() %>"><i class="fas fa-user-friends"></i> 삭제하기</a>
+	<a class="btn" href="/idolUpdateForm.jsp?idolId=<%=idolGroup.getIdolId() %>"><i class="fas fa-wrench"></i> 수정하기</a>
 	<a class="btn" href="/idolList.jsp"><i class="fas fa-user-friends"></i> 목록으로</a>
 </body>
 </html>

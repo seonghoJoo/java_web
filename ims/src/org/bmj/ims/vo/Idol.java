@@ -1,6 +1,7 @@
 package org.bmj.ims.vo;
 
 import java.sql.Date;
+import java.util.Calendar;
 
 public class Idol {
 	
@@ -9,6 +10,10 @@ public class Idol {
 	private double height, weight;
 	private Date birthDate;
 	private char gender;
+	
+	//년 월 일 얻기용 SimpleDateFormat은 객체 3개 필요하나 Calendar는 하나로 조짐
+	private Calendar cal;
+	
 	public Idol() {
 		
 	}
@@ -21,10 +26,14 @@ public class Idol {
 		this.groupName = groupName;
 	}
 	public Idol(String name, int groupId, double height, double weight, Date birthDate, char gender) {
-		this( name,  groupId,  height,  weight,  birthDate,  gender,"");
+		this( 0,name,  groupId,  height,  weight,  birthDate,  gender,"");
 	}
 
 	public Idol(String name, int groupId, double height, double weight, Date birthDate, char gender, String groupName) {
+		this(0,name,  groupId,  height,  weight,  birthDate,  gender,groupName);
+	}
+	public Idol(int idolId,String name, int groupId, double height, double weight, Date birthDate, char gender, String groupName) {
+		this.idolId = idolId;
 		this.name = name;
 		this.groupId = groupId;
 		this.height = height;
@@ -33,6 +42,7 @@ public class Idol {
 		this.gender = gender;
 		this.groupName = groupName;
 	}
+
 
 	public String getName() {
 		return name;
@@ -69,6 +79,8 @@ public class Idol {
 	}
 	public void setBirthDate(Date birthDate) {
 		this.birthDate = birthDate;
+		cal = Calendar.getInstance();
+		cal.setTime(birthDate);
 	}
 	public char getGender() {
 		return gender;
@@ -76,5 +88,23 @@ public class Idol {
 	public void setGender(char gender) {
 		this.gender = gender;
 	}
-	
+
+	public int getBirthYear() {
+		return cal.get(Calendar.YEAR);
+	}
+	public int getBirthMonth() {
+		return cal.get(Calendar.MONTH)+1;
+	}
+	public int getBirthDay() {
+		return cal.get(Calendar.DATE);
+	}
+	public String getBirthDateString() {
+		return getBirthYear() + "년" + getBirthMonth() + "월" + this.getBirthDay() + "일";
+	}
+	public String getGenderIcon() {
+		String icon = "<i class='fas fa-";
+		if(gender=='F') icon+="fe";		
+		icon+= "male'></i>";
+		return icon;
+	}
 }

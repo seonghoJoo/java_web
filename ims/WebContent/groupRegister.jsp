@@ -14,17 +14,18 @@
 	// 한글 깨짐 방지
 	request.setCharacterEncoding("UTF-8");
 	
-	// 한글로 보여주면 깨짐
 	String name = request.getParameter("name");	
 	String year = request.getParameter("year");
 	String month = request.getParameter("month");
 	String day = request.getParameter("day");
 	Date d = Date.valueOf(year+"-"+month+"-"+day);
 	Group group = new Group(name,d);
+	System.out.println("groupId: " + group.getGroupId());
 	int result = GroupsDAO.insert(group);
-	System.out.println(result);
+	System.out.println("result" + result);
+	System.out.println("groupId: " + group.getGroupId());
 	// 이 페이지에서 insert시킨 후 groupList.jsp로 이동(리다이렉트)
-	response.sendRedirect("/groupList.jsp");
+	response.sendRedirect("/groupDetail.jsp?groupId="+group.getGroupId());
 %>
 이름 : <%=name %><br />
 년 : <%=year %><br />

@@ -25,8 +25,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<insert id="insert" parameterType="Idol">
+		<selectKey order="BEFORE" resultType="int" keyProperty="idolId">
+			SELECT idols_seq.nextval
+			FROM dual
+		</selectKey>
 		INSERT INTO idols(idol_id, name, height, weight, birth_date, gender,group_id)
-		VALUES (idols_seq.nextval, #{name}, #{height}, #{weight}, #{birthDate}, #{gender}, #{groupId})
+		VALUES (#{idolId}, #{name}, #{height}, #{weight}, #{birthDate}, #{gender}, #{groupId})
 	</insert>
 	
 	<select id="selectByID" parameterType="int" resultType="Idol">
@@ -53,4 +57,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM idols
 		WHERE idol_id = #{idolId}
 	</delete>
+	
+	<update id="update" parameterType="Idol">
+		UPDATE idols
+		SET name=#{name}, height=#{height}, weight=#{weight}, birth_date=#{birthDate}, gender=#{gender},group_id = #{groupId}
+		WHERE idol_id = #{idolId}
+	</update>
 </mapper>

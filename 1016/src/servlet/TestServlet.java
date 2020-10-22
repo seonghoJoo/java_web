@@ -12,7 +12,7 @@ public class TestServlet extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// 응답 컨텐츠 설정
+			// 응답 컨텐츠 설정
 				// content-type response로 오지 않음
 				resp.setContentType("text/html; charset=UTF-8");
 				
