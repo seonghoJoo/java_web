@@ -63,4 +63,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SET name=#{name}, height=#{height}, weight=#{weight}, birth_date=#{birthDate}, gender=#{gender},group_id = #{groupId}
 		WHERE idol_id = #{idolId}
 	</update>
+	
+	<select id="selectPageList" resultType="Idol" parameterType="int">
+	SELECT	idolId, name, height, weight, birthDate, gender, groupId
+	FROM	(SELECT idolId, name,height, weight, birthDate, gender, groupId, rownum r
+			FROM	(SELECT Idol_id idolId, name, height, weight, birth_date birthDate, gender, group_id groupId
+					FROM idols
+					ORDER BY 1 DESC))
+	WHERE r BETWEEN #{start} AND #{end}
+	</select>
+	
+	<select id="selectTotal" resultType="int">
+		SELECT	COUNT(*)
+		FROM	idols
+	</select>
 </mapper>

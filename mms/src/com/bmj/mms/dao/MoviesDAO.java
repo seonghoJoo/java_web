@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 
 import com.bmj.mms.util.SqlSessionUtil;
 import com.bmj.mms.vo.Movie;
+import com.bmj.mms.vo.PageVO;
 
 public class MoviesDAO {
 	public static List<Movie> selectList(){
@@ -22,6 +23,38 @@ public class MoviesDAO {
 		}//try catch finally end
 				
 		return null;
+	}//selectList() end
+	
+	public static List<Movie> selectList(PageVO pageVO){
+		SqlSession session = null;
+		try {
+			session = SqlSessionUtil.getSession();
+			return session.selectList("movies.selectPageList",pageVO);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(session!=null) {
+				session.close();
+			}
+		}//try catch finally end
+				
+		return null;
+	}//selectList() end
+	
+	public static int selectTotal(){
+		SqlSession session = null;
+		try {
+			session = SqlSessionUtil.getSession();
+			return session.selectOne("movies.selectTotal");
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(session!=null) {
+				session.close();
+			}
+		}//try catch finally end
+				
+		return -1;
 	}//selectList() end
 	
 	

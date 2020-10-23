@@ -14,6 +14,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 <typeAliases>
 	<typeAlias alias="Genre" type="com.bmj.mms.vo.Genre"></typeAlias>
 	<typeAlias alias="Movie" type="com.bmj.mms.vo.Movie"></typeAlias>
+	<typeAlias alias="PageVO" type="com.bmj.mms.vo.PageVO"></typeAlias>
 </typeAliases>
 
 <!--  데이터 베이스와 연결 환경 설정 -->

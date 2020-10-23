@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.bmj.ims.util.SqlSessionUtil;
 import org.bmj.ims.vo.Group;
+import org.bmj.ims.vo.PageVO;
 
 public class GroupsDAO {
 
@@ -92,6 +93,38 @@ public class GroupsDAO {
 				
 		return result;
 	}//update() end
+	
+	public static List<Group> selectList(PageVO pageVO){
+		SqlSession session = null;
+		try {
+			session = SqlSessionUtil.getSession();
+			return session.selectList("groups.selectPageList", pageVO);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(session!=null) {
+				session.close();
+			}
+		}//try catch finally end
+				
+		return null;
+	}//selectList() end
+	
+	public static int selectTotal(){
+		SqlSession session = null;
+		try {
+			session = SqlSessionUtil.getSession();
+			return session.selectOne("groups.selectTotal");
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(session!=null) {
+				session.close();
+			}
+		}//try catch finally end
+				
+		return -1;
+	}//selectTotal() end
 	
 	
 }//GroupsDAO end

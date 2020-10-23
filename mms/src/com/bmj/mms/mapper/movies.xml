@@ -16,6 +16,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY 1
 	</select>
 	
+	<select id="selectPageList" resultType="Movie" parameterType="PageVO">
+		SELECT no, name, releaseDate, endDate, director, audienceNum, genre
+		FROM	(SELECT no, name, releaseDate, endDate, director, audienceNum, genre, rownum r
+				FROM	(SELECT	no,name,
+						release_date releaseDate,
+						end_date endDate,
+						director,
+						audience_num audienceNum,
+						genre
+						FROM movies
+						ORDER BY 1))
+		WHERE r BETWEEN #{start} AND #{end}
+	</select>
+	
+	<select id="selectTotal" resultType="int">
+		SELECT COUNT(*)
+		FROM movies
+	</select>
+	
 	<select id="selectOne" parameterType="int" resultType="Movie">
 		SELECT	m.no,m.name,
 			release_date releaseDate,

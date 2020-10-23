@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.bmj.ims.util.SqlSessionUtil;
 import org.bmj.ims.vo.Group;
 import org.bmj.ims.vo.Idol;
+import org.bmj.ims.vo.PageVO;
 
 
 public class IdolsDAO {
@@ -18,6 +19,23 @@ public class IdolsDAO {
 		try {
 			session = SqlSessionUtil.getSession();
 			idols = session.selectList("idols.selectList");
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(session!=null) {
+				session.close();
+			}
+		}
+		return idols;
+	}// selectList() end
+	
+public static List<Idol> selectList(PageVO pageVO){
+		
+		List<Idol> idols = null;
+		SqlSession session = null;
+		try {
+			session = SqlSessionUtil.getSession();
+			idols = session.selectList("idols.selectPageList", pageVO);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
@@ -74,6 +92,20 @@ public class IdolsDAO {
 			}
 		}
 		return idol;
+	}//selectOne() end
+	public static int selectTotal() {
+		SqlSession session = null;
+		try {
+			session = SqlSessionUtil.getSession();
+			return session.selectOne("idols.selectTotal");
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(session!=null) {
+				session.close();
+			}
+		}
+		return -1;
 	}//selectOne() end
 	
 	public static int delete(int idolId) {
