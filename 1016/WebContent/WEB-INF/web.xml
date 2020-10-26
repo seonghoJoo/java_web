@@ -5,7 +5,6 @@
 	<servlet>
 		<servlet-name>hello</servlet-name>
 		<servlet-class>servlet.HelloServlet</servlet-class>
-
 	</servlet>	
 	<servlet>
 		<servlet-name>test</servlet-name>

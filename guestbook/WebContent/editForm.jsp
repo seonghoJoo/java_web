@@ -12,7 +12,7 @@
 <body>
 	<%@ include file="/WEB-INF/template/header.jsp" %>
 	<h2><i class="fas fa-pencil-alt"></i> 방명록 글쓰기</h2>
-	<form method="get" action="">
+	<form method="get" action="/edit.guest?no=2">
 		<fieldset>
 			<legend class="screen_out">글쓰기 수정폼</legend>
 			<div>

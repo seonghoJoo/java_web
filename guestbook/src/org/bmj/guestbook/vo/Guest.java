@@ -11,6 +11,23 @@ public class Guest {
 	public Guest() {
 		
 	}
+	
+	
+	public Guest(char emotion, String writer, String contents, String ip) {
+		this( 0,  emotion,  writer,  contents,  ip,  null);
+	}
+
+
+	public Guest(int no, char emotion, String writer, String contents, String ip, Timestamp regdate) {
+		super();
+		this.no = no;
+		this.emotion = emotion;
+		this.writer = writer;
+		this.contents = contents;
+		this.ip = ip;
+		this.regdate = regdate;
+	}
+
 	public int getNo() {
 		return no;
 	}

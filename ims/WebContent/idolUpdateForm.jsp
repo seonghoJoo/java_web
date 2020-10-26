@@ -89,7 +89,7 @@
 				<strong> 생년월일</strong>
 				<select name="year">
 					<%for(int i=2020;i>1906;i--){ %>
-					<option <%if(i==idol.getBirthYear()){%>selected <% } %>>
+					<option <%if(i==idol.getBirthYear()){%>selected <% } %> value="<%=i %>">
 						<%=i %>
 					</option>
 					<%} %>
@@ -99,7 +99,7 @@
 					<option
 					<%if(i==idol.getBirthMonth()){
 						%> selected <%
-						}%>>
+						}%> value="<%=i %>">
 					<%=i %>
 					</option>
 				
@@ -109,7 +109,7 @@
 					<%for(int i=1;i<32;i++){ %>
 					<option <%if(i==idol.getBirthDay()){ %>
 						selected <%
-					}%>>
+					}%> value="<%=i %>">
 					<%=i %>
 					</option>
 					<%} %>

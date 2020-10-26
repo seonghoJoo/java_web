@@ -3,5 +3,35 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="idols">
+<mapper namespace="guestbook">
+	<insert id="insert" parameterType="Guest">
+		INSERT INTO guestbook(no,writer,contents,emotion,ip,regdate)
+		VALUES (guestbook_seq.nextval,#{writer},#{contents},#{emotion},#{ip},systimestamp)
+	</insert>
+	
+	<select id="selectList" resultType="Guest" parameterType="PageVO">
+		SELECT no, emotion, writer, contents, regdate, ip
+		FROM	(SELECT no, emotion, writer, contents, regdate, ip, rownum r
+				FROM 	(SELECT	no, emotion, writer, contents, regdate, ip
+						FROM	guestbook
+						ORDER BY 1 DESC))
+		WHERE r BETWEEN #{start} AND #{end}
+	</select>
+	
+	<select id="selectTotal" resultType="int">
+		SELECT	COUNT(*)
+		FROM	guestbook
+	</select>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM guestbook
+		WHERE no=#{no}
+	</delete>
+
+	<select id="selectOne" resultType="Guest" parameterType="int">
+		SELECT no, emotion, writer, contents, regdate, ip
+		FROM	guestbook
+		WHERE no = #{no}
+	</select>
+
 </mapper>

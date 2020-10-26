@@ -9,6 +9,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 <!-- alias -->
 <typeAliases>
 	<typeAlias type="org.bmj.guestbook.vo.Guest" alias="Guest"/>
+	<typeAlias type="org.bmj.guestbook.vo.PageVO" alias="PageVO"/>
 </typeAliases>
 
 <!--  데이터 베이스와 연결 환경 설정 -->
