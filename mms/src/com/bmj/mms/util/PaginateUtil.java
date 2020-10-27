@@ -78,7 +78,7 @@ public class PaginateUtil {
 		
 		return paginate;
 	}
-	
+	//ajax 사용할때 쓰는 용도
 	public String getPaginate(int pageNo, int total, int numPage, int numBlock, String url) {
 		//현재 페이지 : pageNo
 		//전체 게시물수 : total 

@@ -43,7 +43,7 @@
 <body>
 	<h1><a href="/"><i class="far fa-address-book"></i>  Awesome Idol Management Service</a></h1>
 	<h2><i class="fas fa-edit"></i> 아이돌 등록폼</h2>
-	<form action="/idolRegister.jsp" method="post">
+	<form action="/idolRegister.jsp" method="post" enctype="multipart/form-data">
 		<fieldset>
 			<legend>
 				아이돌 등록 폼
@@ -97,6 +97,10 @@
 				<input value="<%=group.getGroupId() %>" id="group<%=group.getGroupId() %>" type="radio" name="groupId" />
 				<label for="group<%=group.getGroupId() %>"><%=group.getName() %></label>
 				<%} %>
+			</p>
+			<p>
+				<label for="profile">프로필 사진</label>
+				<input type="file" id="profile" name="profile"/>			
 			</p>
 			<p>
 				<button class="btn" type="submit">추가하기</button>

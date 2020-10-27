@@ -5,10 +5,16 @@ import java.util.Calendar;
 
 public class Movie {
 	private int no,audienceNum,genre;
-	private String name,director;
+	private String name,director,posterImage;
 	private Date releaseDate,endDate;
 	
-	
+	public String getPosterImage() {
+		return posterImage;
+	}
+
+	public void setPosterImage(String posterImage) {
+		this.posterImage = posterImage;
+	}
 	private Calendar endCalendar;
 	private Calendar releaseCalendar;
 	

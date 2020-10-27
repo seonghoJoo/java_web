@@ -79,7 +79,9 @@ h1{
 	
 	<ul>
 		<%for(Movie movie:movies){ %>
-		<li><a href="/movie.jsp?no=<%=movie.getNo() %>"><%=movie.getName() %></a></li>
+		<li>
+		<img src="/poster/<%=movie.getPosterImage() %>"/>
+		<a href="/movie.jsp?no=<%=movie.getNo() %>"><%=movie.getName() %></a></li>
 		<%} %>
 	</ul>
 	<%=pagiNate %>

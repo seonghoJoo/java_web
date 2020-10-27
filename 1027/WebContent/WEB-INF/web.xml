@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+  
+  <filter>
+  	<filter-name>test1</filter-name>
+  	<filter-class>com.bmj.test.filter.Test1</filter-class>
+  </filter>
+  <filter>
+  	<filter-name>test2</filter-name>
+  	<filter-class>com.bmj.test.filter.Test2</filter-class>
+  </filter>
+	
+	<!-- web.xml에 설정한 순서(필터체인의 순서) 순서 처리할 정도로 복잡하게 만들지 않음-->
+  <filter-mapping>
+  	<filter-name>test1</filter-name>
+  	<url-pattern>/*</url-pattern><!-- 전부 /a.jsp면 a.jsp만 필터가 걸림-->
+  </filter-mapping>
+  <filter-mapping>
+  	<filter-name>test2</filter-name>
+  	<url-pattern>/*</url-pattern><!-- 전부 /a.jsp면 a.jsp만 필터가 걸림-->
+  </filter-mapping>
+  
+</web-app>

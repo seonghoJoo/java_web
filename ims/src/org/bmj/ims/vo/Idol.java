@@ -5,7 +5,7 @@ import java.util.Calendar;
 
 public class Idol {
 	
-	private String name,groupName;
+	private String name,groupName, profileImage;
 	private int idolId, groupId;
 	private double height, weight;
 	private Date birthDate;
@@ -18,6 +18,14 @@ public class Idol {
 		
 	}
 	
+	public String getProfileImage() {
+		return profileImage;
+	}
+
+	public void setProfileImage(String profileImage) {
+		this.profileImage = profileImage;
+	}
+
 	public String getGroupName() {
 		return groupName;
 	}
@@ -26,13 +34,16 @@ public class Idol {
 		this.groupName = groupName;
 	}
 	public Idol(String name, int groupId, double height, double weight, Date birthDate, char gender) {
-		this( 0,name,  groupId,  height,  weight,  birthDate,  gender,"");
+		this( 0,name,  groupId,  height,  weight,  birthDate,  gender,"","");
 	}
 
-	public Idol(String name, int groupId, double height, double weight, Date birthDate, char gender, String groupName) {
-		this(0,name,  groupId,  height,  weight,  birthDate,  gender,groupName);
+	public Idol(String name, int groupId, double height, double weight, Date birthDate, char gender, String profile) {
+		this(0,name,  groupId,  height,  weight,  birthDate,  gender,profile,"");
 	}
-	public Idol(int idolId,String name, int groupId, double height, double weight, Date birthDate, char gender, String groupName) {
+	public Idol(String name,int groupId,double height,double weight,Date birthDate,char gender,String profile,String groupName) {
+		this(0,name,groupId,height,weight,birthDate,gender,profile, groupName);
+	}
+	public Idol(int idolId,String name, int groupId, double height, double weight, Date birthDate, char gender, String groupName, String profileImage) {
 		this.idolId = idolId;
 		this.name = name;
 		this.groupId = groupId;
@@ -41,6 +52,7 @@ public class Idol {
 		this.birthDate = birthDate;
 		this.gender = gender;
 		this.groupName = groupName;
+		this.profileImage = profileImage;
 	}
 
 

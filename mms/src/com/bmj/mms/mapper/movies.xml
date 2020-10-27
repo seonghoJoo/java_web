@@ -11,22 +11,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			end_date endDate,
 			director,
 			audience_num audienceNum,
-			genre
+			genre,
+			poster_image posterImage
 		FROM movies
 		ORDER BY 1
 	</select>
 	
 	<select id="selectPageList" resultType="Movie" parameterType="PageVO">
-		SELECT no, name, releaseDate, endDate, director, audienceNum, genre
-		FROM	(SELECT no, name, releaseDate, endDate, director, audienceNum, genre, rownum r
+		SELECT no, name, releaseDate, endDate, director, audienceNum, genre, posterImage
+		FROM	(SELECT no, name, releaseDate, endDate, director, audienceNum, genre, posterImage, rownum r
 				FROM	(SELECT	no,name,
 						release_date releaseDate,
 						end_date endDate,
 						director,
 						audience_num audienceNum,
-						genre
+						genre,
+						poster_image posterImage
 						FROM movies
-						ORDER BY 1))
+						ORDER BY 1 DESC))
 		WHERE r BETWEEN #{start} AND #{end}
 	</select>
 	
@@ -41,7 +43,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			end_date endDate,
 			director,
 			audience_num audienceNum,
-			g.name genreName
+			g.name genreName,
+			poster_image posterImage
 		FROM movies m, genres g
 		WHERE m.no = #{no} AND m.genre = g.no
 	</select>
@@ -57,13 +60,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			SELECT movies_seq.nextval
 			FROM dual
 		</selectKey>
-		INSERT INTO movies(no,name, release_date, end_date, director, audience_num, genre)
-		VALUES(#{no},#{name},#{releaseDate}, #{endDate}, #{director}, #{audienceNum}, #{genre})		
+		INSERT INTO movies(no,name, release_date, end_date, director, audience_num, genre, poster_image)
+		VALUES(#{no},#{name},#{releaseDate}, #{endDate}, #{director}, #{audienceNum}, #{genre}, #{posterImage})		
 	</insert>
 	
 	<update id="update" parameterType="Movie">
 		UPDATE movies
-		SET name=#{name}, release_date=#{releaseDate}, end_date=#{endDate}, director=#{director}, audience_num=#{audienceNum}, genre=#{genre}
+		SET name=#{name}, release_date=#{releaseDate}, end_date=#{endDate}, director=#{director}, audience_num=#{audienceNum}, genre=#{genre},poster_image=#{posterImage}
 		WHERE no=#{no}
 	</update>
 	

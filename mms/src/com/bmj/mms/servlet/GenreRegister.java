@@ -17,7 +17,7 @@ public class GenreRegister extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
 		// post 방식의 한글처리
-		req.setCharacterEncoding("UTF-8");
+		// req.setCharacterEncoding("UTF-8");
 		
 		// 파라미터 얻기
 		String name = req.getParameter("name");

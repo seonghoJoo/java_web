@@ -17,6 +17,7 @@
 <body>
 	<h1><a href="/">멋진 영화관리 서비스</a></h1>
 	<h2><%=movie.getName() %></h2>
+	<img src="/poster/<%=movie.getPosterImage() %>"/>
 	<dl>
 		<dt>번호</dt>
 		<dd><%= movie.getNo()%></dd>

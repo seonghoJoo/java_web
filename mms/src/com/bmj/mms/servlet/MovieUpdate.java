@@ -17,8 +17,8 @@ public class MovieUpdate extends HttpServlet{
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		//post 한글깨짐
-		req.setCharacterEncoding("UTF-8");
+		// POST 한글깨짐
+		// req.setCharacterEncoding("UTF-8");
 		
 		//파라미터 얻기
 		String noStr = req.getParameter("no");

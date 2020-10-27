@@ -17,7 +17,7 @@
 	}// try~catch
 	// 한 페이지당 보여질 게시물 수
 	
-	int numPage = 3; // 한페이지당 보여질 게시물 수
+	int numPage = 6; // 한페이지당 보여질 게시물 수
 	PageVO pageVO = new PageVO(pageNo, numPage);
 	List<Idol> idols = IdolsDAO.selectList(pageVO); 
 	
@@ -72,19 +72,19 @@
 	/*0 1 0 1*/
 	#idolList li{
 		width : 204px;
-		height : 64px;
+		height : 224px;
 		float : left;
 		margin : 5px;
 	}
 	/*0 1 0 2*/
 	#idolList>li>a{
-		width : 200px;
-		height : 60px;
+		width : 160px;
+		height : 180px;
+		padding : 20px;
 		display : block;
 		border : 2px solid #424242;
 		font-weight : 700;
 		text-align : center;
-		line-height : 60px;
 		text-decoration : none;
 		transition : .2s ease;
 		position : relative;
@@ -94,6 +94,12 @@
 		box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 		color : #424242;
 	}
+	#idolList a>img{
+		border-radius:50%;
+		display:block;
+		margin-bottom:5px;
+	}
+	
 	/*0 0 1 0*/
 	.ribbon{
 		width : 30px;
@@ -132,6 +138,7 @@
 	<ul id="idolList">
 	<%for(Idol idol : idols) { %>
 	<li><a href="/idolDetail.jsp?idolId=<%=idol.getIdolId() %>">
+	<img width='160' height='160' src="profile/<%=idol.getProfileImage() %>"/>
 		<span class="ribbon"><%=idol.getIdolId()%></span>
 		<%= idol.getName() %>
 		

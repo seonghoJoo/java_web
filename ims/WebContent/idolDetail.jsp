@@ -28,11 +28,15 @@
 		/*dl이 공간을 차지하도록 */
 		overflow : hidden;
 	}
+	img{
+		border-radius:50%;
+	}
 </style>
 </head>
 <body>
 	<h1><a href="/"><i class="fas fa-address-book"></i>  Awesome Idol Management Service</a></h1>
 	<h2><%=idolGroup.getName() %></h2>	
+	<img src="/profile/<%=idolGroup.getProfileImage() %>"/>
 	<dl>
 		<dt>이름</dt>
 		<dd><%=idolGroup.getName() %></dd>

@@ -18,7 +18,7 @@ public class GenreUpdate extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
 		// 한글깨짐 방지 doPost 방식
-		req.setCharacterEncoding("UTF-8");
+		// req.setCharacterEncoding("UTF-8");
 		// 파라미터 얻기
 		String noStr = req.getParameter("no");
 		String name = req.getParameter("name");

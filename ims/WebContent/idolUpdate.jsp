@@ -30,7 +30,7 @@
 	System.out.println(height +"  / "+ weight);
 	
 	//sql 실행
-	Idol idol = new Idol(idolId,name,groupId,height,weight,birthDate,gender,"");
+	Idol idol = new Idol(idolId,name,groupId,height,weight,birthDate,gender,"","");
 	int result = IdolsDAO.update(idol);
 	System.out.println(result+ " 개 업데이트");
 	

@@ -21,7 +21,7 @@
 <body>
 	<h1><a href="/">멋진 영화관리 서비스</a></h1>
 	<h2>영화 입력</h2>
-	<form action="/movieRegister.mms" method="post">
+	<form action="/movieRegister.mms" method="post" enctype="multipart/form-data">
 		<fieldset>
 			<legend>영화입력폼</legend>
 			<h3>제목</h3>		
@@ -69,6 +69,11 @@
 				<input name="endDate" id="endDate" />
 				<button type="button" id="changeBtn">종료일 없음</button>
 			</div>
+			<div>
+				<label for="poster">프로필 사진</label>
+				<input type="file" id="poster" name="poster"/>			
+			</div>
+			
 			<p>
 				<button type="reset">리셋</button>
 				<button type="submit">입력</button>
