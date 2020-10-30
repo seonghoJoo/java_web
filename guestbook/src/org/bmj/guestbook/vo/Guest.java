@@ -16,10 +16,14 @@ public class Guest {
 	public Guest(char emotion, String writer, String contents, String ip) {
 		this( 0,  emotion,  writer,  contents,  ip,  null);
 	}
+	
+	public Guest(int no,char emotion, String writer, String contents, String ip) {
+		this( no,  emotion,  writer,  contents,  ip,  null);
+	}
 
 
 	public Guest(int no, char emotion, String writer, String contents, String ip, Timestamp regdate) {
-		super();
+		
 		this.no = no;
 		this.emotion = emotion;
 		this.writer = writer;

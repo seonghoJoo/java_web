@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  톰캣이 객체로 만들어 놓음 -->
+<!--  
+
+	database와 java 연결하는것은 connection객체인데
+	자원이 많이 소모됨
+	그래서 미리 20개를 만들어놓음 connectionPool 결정이라 함
+
+	Oracle이 뭐임?
+	DBMS(DataBase Management System)
+	DBMS 안에 여러개의 DB(DataBase)가 존재
+	
+	JNDI 커넥션 풀을 이름으로 찾음 근데 한개임
+	ex) 종로에서 김서방 찾기
+
+	lib
+	mybatis mybatis 프레임워크를 사용하기 위해
+	ojdbc JDBC 사용해야하는데 Oracle DataBase 	
+-->
+<Context>
+	<Resource
+		name="oraclexe"
+		auth="Container"
+		driverClassName="oracle.jdbc.OracleDriver"
+		url="jdbc:oracle:thin:@localhost:1521:xe"
+		username="test"
+		password="1111"
+		type="javax.sql.DataSource"
+		maxIdle="20"
+		maxTotal="20"
+		maxWaitMillis="-1"
+	/>
+</Context>

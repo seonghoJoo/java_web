@@ -33,5 +33,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM	guestbook
 		WHERE no = #{no}
 	</select>
+	
+	<update id="update" parameterType="Guest">
+		UPDATE guestbook
+		SET emotion=#{emotion}, writer=#{writer}, contents=#{contents}
+		WHERE no=#{no}
+	</update>
+	
 
 </mapper>

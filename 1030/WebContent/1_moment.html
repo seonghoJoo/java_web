@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>moment 라이브러리</title>
+</head>
+<body>
+
+
+<!-- 
+	java의 Calendar 같은앤데 훨씬 편함
+	유닉스 시간 1970년 1월 1일 00:00:00 기준으로 경과된 초
+	
+	날짜를 어떻게 문자열로 쓸래? Unix 타임
+	
+	Java - 
+	Calendar cal = Calendar.getInstance()
+	cal.setTimeMills(); -> unix Time
+-->
+<script src="/js/moment-with-locales.js"></script>
+<script>
+	/*
+	const date = new Date();
+
+	//기존 자바 API 너무 불-편
+	const fullTime = date.getFullYear() + "년 " + (date.getMonth()+1)+"월 " + date.getDate()+"일";
+	*/
+	
+	/*
+		JavaScript 대표적인 라이브러리
+			1)	jQuery
+			-	DOM 선택 쉬움(css의 선택자 활용) 트리구조 형태로 인식
+			-	이벤트 처리 쉬움
+			-	ajax 쉬움
+			-	컨텐츠 변경(css, text, html, val...)
+			-	이펙트, 애니메이션이 쉬움
+	
+			2)	moment
+			-	날짜 관련 라이브러리
+			
+			3)	underscore (덜 돋보적 mustach도 있음)
+			-	배열 혹은 컬렉션에 대한 편리한 기능
+			-	템플릿 엔진
+
+	*/	
+	//moment-with-locales.js 거의 표준임
+	
+	//한국의 날짜 표시방법으로 전환
+	moment.locale("ko");
+			
+	//moment 객체 생성
+	const date = moment();	
+	
+	const year = date.year();
+	const month = date.month()+1;
+	const day = date.date();
+	alert(date.fromNow());
+	
+	alert(date.format("YYYY년 MM월 DD일 hh시 mm분 ss초"));
+			
+	// 라이브러리랑 프레임워크
+	// 라이브러리는 개발자가 객체생성을 해야한다. 프로그램 흐름을 개발자가 관리한다
+	
+	// 프레임워크는 작동을 시켜놓으면 프로그램의 주체가 프레임워크(프로그램)이 
+	// Lifecycle 의 주체 객체생성을 알아서 함
+	
+</script>
+</body>
+</html>

@@ -23,11 +23,12 @@ public class MovieRegister extends HttpServlet{
 
 		@Override
 		protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+			
+			// url로 눌러서 치팅하면 alert로 조져버리기
 			PrintWriter out = resp.getWriter();
 			out.println("<script>");
 			out.println("while(true){alert('잘못된접근')}");
 			out.println("</script>");
-			
 		}
 	
 		@Override
@@ -41,11 +42,16 @@ public class MovieRegister extends HttpServlet{
 			// 업로드(원본) 경로
 			String uploadPath = root + "upload";
 			
-			// profile 폴더 경로
+			// poster 폴더 경로
 			String posterPath = root + "poster";
 			
 			// MultipartRequest 객체 생성(파일 업로드)
-			MultipartRequest mr = new MultipartRequest(req,uploadPath,1024*1024*100,"UTF-8",new DefaultFileRenamePolicy());
+			MultipartRequest mr = new MultipartRequest(
+					req,
+					uploadPath,
+					1024*1024*100,
+					"UTF-8",
+					new DefaultFileRenamePolicy());
 			
 			// 실제 파일명 얻기
 			String poster = mr.getFilesystemName("poster");
@@ -91,7 +97,6 @@ public class MovieRegister extends HttpServlet{
 			movie.setReleaseDate(releaseDate);
 			movie.setEndDate(endDate);
 			movie.setPosterImage(poster);
-			
 			
 			//입력
 			int result = MoviesDAO.insert(movie);

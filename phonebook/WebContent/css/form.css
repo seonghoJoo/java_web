@@ -1,0 +1,65 @@
+@charset "UTF-8";
+
+#formBox {
+		width: 600px;
+		margin: auto;
+	}
+	#formBox #name {
+		width:160px;
+	}
+
+	#formBox .row {
+		margin: 20px 0;
+	}
+
+	#formBox .row>label {
+		display: inline-block;
+		width: 100px;
+		font-size: 25px;
+		text-align: right;
+	}
+
+	#formBox span>label {
+		font-size: 25px;
+	}
+
+	#formBox #gender, #formBox #name, #formBox #phone, #formBox #age, #profileImage{
+		margin-left: 13px;
+	}
+
+	#formBox #age em {
+		margin: 5px;
+		font-size: 25px;
+	}
+
+	#formBox #name, #formBox #age select, #formBox #phone input,
+	#formBox #phone select, #profileImage {
+		padding: 6px 10px;
+		font-size: 21px;
+		border: 2px solid #9E9E9E;
+		font-family: 'Noto Sans KR', sans-serif;
+		color: #333333;
+	}
+	#formBox #phone input.digit4 {
+		width:80px;
+	}
+	#formBox #phone input:focus, #formBox #name:focus, #formBox #age select:focus,
+	#formBox #phone select:focus, #profileImage:focus {
+		border-color: #616161;
+		outline: 3px solid #616161;
+	}
+
+	#formBox .profile {
+		text-align: center;
+		margin-top:0;
+	}
+	
+	.box_btn {
+		margin:30px 0;
+	}
+	
+	.msg {
+		display: block;
+		text-align:center;
+		margin:10px 0;
+	}

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  톰캣이 객체로 만들어 놓음 -->
+<Context>
+	
+	<!-- 
+			커넥션 풀 :	커넥션 객체를 만들때 자원을 많이 소모되게 되는데
+						커넥션을 여러개 만들어 놓고 객체를 만들지 않고 연결하게 도와주는 풀
+	 -->
+	<Resource
+		name="oraclexe"
+		auth="Container"
+		driverClassName="oracle.jdbc.OracleDriver"
+		url="jdbc:oracle:thin:@localhost:1521:xe"
+		username="test"
+		password="1111"
+		type="javax.sql.DataSource"
+		maxIdle="20"
+		maxTotal="20"
+		maxWaitMillis="-1"
+	/>
+</Context>

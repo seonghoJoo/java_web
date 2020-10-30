@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="phonebook">
+	
+	<select id="selectList" parameterType="PageVO" resultType="Phone">
+		<!-- select->  setter 호출 -->
+		SELECT no,name,phone,gender,birthDate, regdate
+		FROM	(SELECT no,name,phone,gender,birthDate, regdate, rownum r
+				FROM	(SELECT no,name,phone,gender,birth_date birthDate, regdate
+						FROM phonebook
+						ORDER BY 2))
+		WHERE r BETWEEN #{start} AND #{end}
+	</select>
+	
+	<select id="selectTotal" resultType="int" >
+		SELECT COUNT(*)
+		FROM phonebook
+	</select>
+	
+	<delete id="delete" parameterType="int">
+		DELETE phonebook
+		WHERE no=#{no}
+	</delete>
+	
+	<insert id="insert" parameterType="Phone">
+		INSERT INTO phonebook(no,name,phone,gender,birth_date, regdate)
+		VALUES(phonebook_seq.nextval, #{name},#{phone},#{gender},#{birthDate},systimestamp)
+	</insert>
+	
+	<select id="selectOne" parameterType="int" resultType="Phone">
+		SELECT no,name,phone,gender,birth_date birthDate, regdate
+		FROM phonebook
+		WHERE no=#{no}
+	</select>
+	
+	<update id="update" parameterType="Phone">
+		UPDATE phonebook
+		SET phone=#{phone}, gender=#{gender}, birth_date=#{birthDate}
+		WHERE no=#{no}
+	</update>
+
+	
+</mapper>

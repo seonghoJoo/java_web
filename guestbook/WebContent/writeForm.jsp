@@ -2,13 +2,7 @@
 <%@page import="org.bmj.guestbook.vo.Guest"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%
-	String noStr = request.getParameter("no");
-	int no = Integer.parseInt(noStr);
-	
-	Guest guest = GuestbookDAO.selectOne(no);
-	
-%>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>

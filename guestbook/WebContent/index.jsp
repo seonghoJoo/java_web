@@ -5,7 +5,7 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<% 
+<% 	
 	int pageNo = 1;
 	String pageStr = request.getParameter("pageNo");
 	try{
@@ -34,6 +34,13 @@
 		response.sendRedirect("/index.jsp?pageNo=1");
 	}//if end
 	
+	// ip 얻어오기 요청객체 안에 본사람의 ip를 알아낼 수 있다 이말이야
+	String ip = request.getRemoteAddr();
+	
+	System.out.println(ip);
+	
+	char[] emotions = {'G','F','L','S','A'};
+	String[] emotionIcons = {"grin-stars", "laugh-squint", "smile" , "sad-cry" , "angry" };
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -64,8 +71,10 @@
 						</strong>
 						<time><i class="far fa-clock"></i>
 						<%= guest.getRegdate() %></time>
+						<%if(ip.equals(guest.getIp())){ %>
 						<a href="/delete.guest?no=<%=guest.getNo() %>" class="delete btn"><i class="far fa-trash-alt"></i> 삭제</a>
-						<a href="/writeForm.jsp?no=<%=guest.getNo() %>" class="update btn"><i class="far fa-edit"></i> 수정</a>
+						<a href="/editForm.jsp?no=<%=guest.getNo() %>" class="update btn"><i class="far fa-edit"></i> 수정</a>
+						<%} %>
 					</h3>
 					<p><%= guest.getContents() %></p>
 				</li>

@@ -1,7 +1,6 @@
 <%@page import="java.time.LocalDate"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.util.Calendar"%>
-<%@page import="com.bmj.phonebook.util.LetterLengthCheck"%>
 <%@page import="com.bmj.phonebook.dao.PhonebookDAO"%>
 <%@page import="com.bmj.phonebook.vo.Phone"%>
 <%@page import="java.util.List"%>

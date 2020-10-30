@@ -91,6 +91,23 @@ public class GuestbookDAO {
 		}//try~catch~finally end
 		
 		return null;
-	}//selectList();
+	}//selectOne();
+	
+	public static int update(Guest guest) {
+		SqlSession session = null;
+		
+		try {
+			session = SqlSessionUtil.getSession();
+			return session.update("guestbook.update",guest);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(session!=null) {
+				session.close();
+			}
+		}//try~catch~finally end
+		
+		return -1;
+	}// delete() end
 	
 }

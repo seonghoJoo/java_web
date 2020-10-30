@@ -25,6 +25,8 @@
 <!-- HTML 주석 -->
 <%-- JSP 주석 --%>
 <%-- 
+		C:\BMJ\apache-tomcat-8.5.59\work\Catalina\localhost\ROOT\org\apache\jsp
+		
 		JSP란?
 		- Java Server Page의 줄임말
 		- HTML 코드에 자바코드를 삽입
@@ -49,7 +51,6 @@
 			
 		3) 스크립트릿 : <% %> 중요도 100
 			- _jspService 메서드 안에 선언
-			
 		 	
 		4) 표현식 : <%= %> 중요도 100
 			- _jspService 메서드 안에 out.print()메서드
