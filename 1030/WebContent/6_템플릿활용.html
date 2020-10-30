@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>underscore 템플릿 활용</title>
+</head>
+<body>
+<h1>음악목록</h1>
+<table border="1">
+	<thead>
+		<tr>
+			<th>제목</th>
+			<th>가수</th>
+			<th>장르</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td colspan="3">아직없음</td>
+		</tr>
+	</tbody>
+</table>
+
+
+<script type="text/template" id="musicTmpl">
+<% _.each(musicList,function(music){ %>
+<tr>
+	<th><%=music.title%></th>
+	<td><%=music.artist %></td>
+	<td><%=music.genre %></td>
+</tr>
+<% })%>
+</script>
+
+<script src="/js/jquery.js"></script>
+<script src="/js/underscore-min.js"></script>
+<script>
+	
+	const musicList = [
+		{"title" : "너를 만나", "artist" : "폴킴", "genre" : "발라드" },
+		{"title" : "Between Us", "artist" : "jayla darden", "genre" : "R&B" },
+		{"title" : "왜 이리 시끄러운 것이냐", "artist" : "머쉬베놈", "genre" : "힙합" },
+		{"title" : "애국가", "artist" : "안익태", "genre" : "국가" }
+		];
+	
+	
+	const musicTmpl = _.template($('#musicTmpl').html());
+	// .html 대신 .append를 사용하면 아직없음이 있고 밑에 쌓이게 됨
+	$('tbody').html(musicTmpl({musicList:musicList}));	//명 : 값 명은 each의 변수명 값:json
+</script>
+</body>
+</html>

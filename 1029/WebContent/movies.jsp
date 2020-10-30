@@ -54,6 +54,7 @@
 	<div id="loader"></div>
 	<button id="btn">불러오기</button>
 	<script src="/js/moment-with-locales.js"></script>
+	<script src="/js/underscore-min.js"></script>
 	<script src="/js/jquery.js"></script>
 	<script>
 		const $loader = $('#loader');
@@ -65,21 +66,21 @@
 				url: "/getMovies.mms",
 				dataType: "json",
 				type: "GET",
-				success:function(json){
-					console.log(json);
+				success:function(movies){
+					console.log(movies);
 					$('tbody').empty();
-					$(json).each(function(){
+					_.each(movies,function(movie){
 						// 브라우저 객체가 요청을 한다. 응답이 온다. ajax javascript 코드로 넘어와서
 						// 연산을 하기 때문에 경량적임 JSP보단
 					
 						
-						const $th1 = $('<th>').text(this.no);
-						const $th2 = $('<th>').text(this.name);
-						const $th3 = $('<th>').text(this.director);
+						const $th1 = $('<th>').text(movie.no);
+						const $th2 = $('<th>').text(movie.name);
+						const $th3 = $('<th>').text(movie.director);
 						//unix time 1970년 1월 1일로 해서 몇초 흘렀는지
-						const $th4 = $('<th>').text(moment(this.releaseDate).format("YYYY년 M월 D일"));
-						const $th5 = $('<th>').text(numberWithCommas(this.audienceNum) + "명");
-						const $th6 = $('<th>').text(this.genre);
+						const $th4 = $('<th>').text(moment(movie.releaseDate).format("YYYY년 M월 D일"));
+						const $th5 = $('<th>').text(numberWithCommas(movie.audienceNum) + "명");
+						const $th6 = $('<th>').text(movie.genre);
 						
 						$("<tr>").append($th1,$th2,$th3,$th4,$th5,$th6).appendTo("tbody");
 					});

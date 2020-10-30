@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<script src="/js/underscore-min.js"></script>
+	<script src="/js/jquery.js"></script>
+	
+	
+	
+	
+	<script>
+		const bts = ["슈가","RM","제이홉","뷔","지민","진","정국"];
+		
+		//1) 번 방법
+		$(bts).each(function(){
+			// log는 String 객체면 String 이라고 출력되고
+			// toString()을 해야 이름이 뜬다.
+			console.log(this.toString());			
+		});
+		
+		//2) 번 방법
+		$.each(bts,function(){
+			console.log(this);
+		});
+		
+		//3) 번 방법
+		_.each(bts,function(member){
+			console.log(member);
+		});
+		
+	</script>
+</body>
+</html>
