@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>underscore 템플릿 세팅 변경</title>
+</head>
+<body>
+
+<h1>배우 목록</h1>
+<ul>
+
+</ul>
+<script type="text/template" id="actorTmpl">
+<@ $(actors).each(function(){
+	console.log(this);@>
+	<li class="actorItem">
+	
+	<h3><@=this.name@></h3>
+	<dl>
+		<dt>키</dt>
+		<dt><@=this.height@></dt>
+		<dt>몸무게</dt>
+		<dt><@=this.weight@>kg</dt>
+	</dl>
+	</li>
+<@})@>
+</script>
+<script src="/js/jquery.js"></script>
+<script src="/js/underscore-min.js"></script>
+<script>
+	/*
+		언더스코어 템플릿의 문법이 jsp와 동일합니다.
+		그렇기 때문에 %를 @으로 바꿔주는 세팅이 필요합니다.
+	*/
+	
+	// % -> @ 으로
+	_.templateSettings = {interpolate: /\<\@\=(.+?)\@\>/gim,evaluate: /\<\@([\s\S]+?)\@\>/gim,escape: /\<\@\-(.+?)\@\>/gim};
+	
+	const actorTmpl = _.template($('#actorTmpl').html());
+	function getActorList(){
+		$.ajax({
+			url : "ajax/actors.json",
+			dataType : "json",
+			error: function(){
+				alert("서버 점검중!");
+			},
+			success : function(json){
+				$('ul').html(actorTmpl({actors : json}));
+			}
+		});
+	}//getActorList() end
+	getActorList();
+</script>
+</body>
+</html>

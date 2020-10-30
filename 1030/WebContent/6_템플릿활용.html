@@ -36,7 +36,7 @@
 <script src="/js/underscore-min.js"></script>
 <script>
 	
-	const musicList = [
+	const a = [
 		{"title" : "너를 만나", "artist" : "폴킴", "genre" : "발라드" },
 		{"title" : "Between Us", "artist" : "jayla darden", "genre" : "R&B" },
 		{"title" : "왜 이리 시끄러운 것이냐", "artist" : "머쉬베놈", "genre" : "힙합" },
@@ -46,7 +46,12 @@
 	
 	const musicTmpl = _.template($('#musicTmpl').html());
 	// .html 대신 .append를 사용하면 아직없음이 있고 밑에 쌓이게 됨
-	$('tbody').html(musicTmpl({musicList:musicList}));	//명 : 값 명은 each의 변수명 값:json
+	$('tbody').html(musicTmpl({"musicList":a}));	//명 : 값 명은 each의 변수명 값:json
+	
+	/*
+	0922
+	html text 차이 html 은 <>을 요소로 읽음
+	*/
 </script>
 </body>
 </html>

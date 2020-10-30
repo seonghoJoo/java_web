@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>템플릿 복습</title>
+</head>
+<body>
+<script type="text/template" id="xxx">
+	<@=a@> : <@=b@> : <@=c@>
+</script>
+<script src="/js/jquery.js"></script>
+<script src="/js/underscore-min.js"></script>
+<script>
+	let a = 0, b = 0, c = 1;
+	//% -> @ 으로
+	_.templateSettings = {interpolate: /\<\@\=(.+?)\@\>/gim,evaluate: /\<\@([\s\S]+?)\@\>/gim,escape: /\<\@\-(.+?)\@\>/gim};
+	
+	//_.template("<h1>안녕하세요?</h1>");
+	const tmpl = _.template($('#xxx').html());
+	//tmpl은 함수
+	alert(tmpl({"a" : a, "b":b,"c":c}));	
+</script>
+
+</body>
+</html>
