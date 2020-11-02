@@ -81,15 +81,14 @@
 <tr>
 	<th><%= phone.getName()%></th>
 	<td><i class="fas fa-mobile"></i> <%=phone.getPhoneFormat()%></td>
-	<td>
-	<%=phone.getGenderIcon() %>
-  </td>
-  <td title="<%=phone.getBirthDate()%>"><%=phone.getAge() %>세</td>
+	<td><%=phone.getGenderIcon() %></td>
+  	<td title="<%=phone.getBirthDate()%>"><%=phone.getAge() %>세</td>
 	<td>
 		<a href="/updateForm.jsp?no=<%=phone.getNo() %>" class="btn update"><i class="fa fa-wrench"></i> 수정</a>
 	</td>
 	<td>
-		<a href="/delete.bmj?no=<%=phone.getNo() %>" class="btn delete"><i class="far fa-trash-alt"></i> 삭제</a>
+		<!-- 요소의 속성으로 집어넣어 클릭했을때 속성 얻어오기 쉬움 -->
+		<a data-name="<%=phone.getName() %>" href="/delete.bmj?no=<%=phone.getNo() %>" class="btn delete"><i class="far fa-trash-alt"></i> 삭제</a>
 	</td>
 </tr>
 <%}  %>
@@ -112,6 +111,35 @@
 </table>
 </div>
 <!-- //#contents end -->
-
+<%@ include file="/WEB-INF/template/footer.jsp"%>
+<script>
+	// 1)
+		$(".delete").on("click",function(e){
+			
+			// 가비지 컬렉터에다가 자동적으로 메모리 관리를 맡기는게 더 낫다~
+			
+			// 에러 디버깅 하는 방법 funciton(e) 추가 후
+			//e.preventDefault();
+			
+			// 아래 방법은 무식한 방법이지만 무식한 방법임
+			//const name = $(this).parents("tr").children().eq(0).text();
+			
+			// data-
+			// 방법 1
+			const name = this.dataset.name;
+			// 방법 2
+			//const name1 = $(this).data("name");
+			// 방법 3
+			//const name2 = $(this).attr("data-name");
+			
+			//alert(name + name1 + name2);
+		
+			// submit , a 요소 링크했을때
+			// 이벤트.preventDefault((와 같음))
+			return confirm(name+"님을 삭제하시겠습니까?");
+		 	//return false;//이면 작동 안함
+			
+		})//.delete clickI() end
+</script>
 </body>
 </html>

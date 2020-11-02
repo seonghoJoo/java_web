@@ -46,19 +46,10 @@
 				<div class="row">
 					<label for="age">생년월일</label><span id="age">
 				<select id="year" name="year">
-					<%for(int i=2020; i>1901;i--){ %>
-					<option value="<%=i%>"><%=i %></option>
-					<%} %>
 				</select><em>년</em>
 				<select id="month" name="month">
-					<%for(int i=1; i<=12;i++){ %>
-					<option value="<%=i%>"><%=i %></option>
-					<%} %>
 				</select><em>월</em>
 				<select id="date" name="date">
-					<%for(int i=1; i<=31;i++){ %>
-					<option value="<%=i%>"><%=i %></option>
-					<%} %>
 				</select><em>일</em>
 				</span>
 				</div>
@@ -66,7 +57,7 @@
 					<label for="gender">성 별</label>
 					<span id="gender">
 				<!-- name="gender"로 묶이기 때문에 한개밖에 선택못함 프론트 딴에서 -->
-				<input type="radio" id="female" name="gender" value="F"/>
+				<input type="radio" id="female" name="gender" value="F" checked/>
 				<label for="female"><i class="fa fa-female"></i> 여 자</label>
 				<input type="radio" id="male" name="gender" value="M"/>
 				<label for="male"><i class="fa fa-male"></i> 남 자</label>
@@ -86,4 +77,90 @@
 	</div><!-- //formBox  -->
 <!-- //#contents end -->
 <%@ include file="/WEB-INF/template/footer.jsp" %>
+<script src="/js/create-date.js"></script>
+<script>
+	// 모바일 
+	// Thin client / Fat Server
+	// 기기의 발전
+	// Thin Server / Fat Client -> 우리가 자바스크립트로 유효성 검사를 하겠다. 
+	const now1 = moment();
+	createYearMonth(now1.year(),now1.month()+1,now1.date());
+	
+	// 이름 정규표현식 객체
+	const nameExp = /^[가-힣]{1}[가-힣|\d]{1,5}$/;
+	
+	// 2번째 전화번호 정규표현식 객체
+	const phone_3_4Exp = /^[\d]{3,4}$/;
+	// 3번째 전화번호 정규표현식 객체
+	const phone_4Exp = /^[\d]{4}$/;
+	
+	const $name = $('#name');
+	const $phone1 = $('#phone1');
+	const $phone2 = $('#phone2');
+	const $phone3 = $('#phone3');
+	
+	$('#form').on("submit",function(e){
+		
+		e.preventDefault();
+		
+		// 입력한 이름
+		const name = $name.val();
+		if(!nameExp.test(name)){
+			alert("이름을 2~6글자 첫글자는 한글 이고 나머지는 한글 및 숫자 입력");
+			$name.val("").focus();
+			return false;
+		}// if end
+		
+		
+		
+		// 입력한 phone
+		const phone1 = $phone1.val();
+		const phone2 = $phone2.val();
+		const phone3 = $phone3.val();
+		
+		if(!(phone_3_4Exp.test(phone2))){
+			alert("2번째 숫자 3~4 자리 제대로");
+			$phone2.val("").focus();
+			return false;
+		}
+		
+		if(!phone_4Exp.test(phone3)){
+			alert("3번째 숫자 입력 제대로");
+			$phone3.val("").focus();
+			return false;
+		}
+		
+		
+		
+		
+	});//submit() end
+
+	// index.jsp -> index_jsp.java -> index_jsp.class
+	// 로그인 사람에 따라 다르게 처리
+	// 찜질방 httpsession (신발장 키 도망못가게) httpSession pool이 있음 (브라우저 기준임)
+ 	// jsession ID (번호키)
+	
+	/*
+		요청 오기 전
+		httpSession 객체 없음
+		
+		첫 요청 
+		JSessionID 없음 -> HttpSession 객체 만듦
+		JSessionID(해쉬코드) 일단 3번이라고 하고 클라이언트에게 응답줌 
+		은행은 10분 기본값은 30분 마지막으로 간 이후에 30분 다시 들어가면 30분으로 갱신됨
+		
+		두번째 요청
+		JSessionID 없음 -> HttpSession 객체 만듦
+		JSessionID 부여 11번 부여  클라이언트에게 응답 줌
+		
+		첫요청 한 애가 다시 요청
+		JSessionID 3 -> HttpSession 객체 만들필요 없음 상태유지
+		클라이언트에게 3 응답을 해줌
+		
+		이러한 것을 톰캣이 다 자동으로 함
+		개발자가 할일은 1도 없음
+	*/
+	
+</script>
+</body>
 </html>

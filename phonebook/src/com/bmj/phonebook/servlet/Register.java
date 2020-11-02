@@ -27,17 +27,17 @@ public class Register extends HttpServlet {
 		String date = req.getParameter("date");
 		String genderStr= req.getParameter("gender");
 
+		
+		//형변환
 		String phoneNum = phone1 + phone2 + phone3;
 		Date birthDate = Date.valueOf(year+"-"+month+"-"+date);
 		char gender = genderStr.charAt(0);
 		//System.out.println(name + phone + date + gender);
-		
 		Phone phone = new Phone(name, phoneNum, gender, birthDate);
-		
 		int result = PhonebookDAO.insert(phone);
-		System.out.println("register.bmj "+result + "개 입력됬습니다.");
 		
 		resp.sendRedirect("/index.jsp");
+		
 	}
 
 }

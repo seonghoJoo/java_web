@@ -57,19 +57,13 @@
 				<div class="row">
 					<label for="age">생년월일</label><span id="age">
 				<select id="year" name="year">
-						<%for(int i=2020; i>1901;i--){ %>
-					<option <%if(i==phone.getYear()){ %>selected <%} %> value="<%=i%>"><%=i %></option>
-					<%} %>
+					<option selected value="<%=phone.getYear()%>"><%=phone.getYear() %></option>
 				</select><em>년</em>
 				<select id="month" name="month">
-						<%for(int i=1; i<=12;i++){ %>
-					<option <%if(i==phone.getMonth()){ %>selected <%} %> value="<%=i%>"><%=i %></option>
-					<%} %>
+					<option selected value="<%=phone.getMonth()%>"><%=phone.getMonth() %></option>
 				</select><em>월</em>
 				<select id="date" name="date">
-				<%for(int i=1; i<=31;i++){ %>
-					<option <%if(i==phone.getDate()){ %>selected <%} %> value="<%=i%>"><%=i %></option>
-					<%} %>
+					<option selected value="<%=phone.getDate()%>"><%=phone.getDate() %></option>
 				</select><em>일</em>
 				</span>
 				</div>
@@ -89,11 +83,15 @@
 					<button type="reset" class="btn">
 						<i class="fas fa-redo-alt"></i> 리 셋
 					</button>
-					<a href="" class="btn"><i class="fa fa-arrow-left"></i> 전화번호부로</a>
+					<a href="/index.js" class="btn"><i class="fa fa-arrow-left"></i> 전화번호부로</a>
 				</div>
 			</fieldset>
 		</form>
 	</div><!-- //formBox  -->
 <!-- //#contents end -->
 <%@ include file="/WEB-INF/template/footer.jsp" %>
+<script src="/js/create-date.js"></script>
+<script>
+	createYearMonth();
+</script>
 </html>
