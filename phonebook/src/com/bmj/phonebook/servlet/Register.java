@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.bmj.phonebook.dao.PhonebookDAO;
 import com.bmj.phonebook.vo.Phone;
@@ -35,7 +36,12 @@ public class Register extends HttpServlet {
 		//System.out.println(name + phone + date + gender);
 		Phone phone = new Phone(name, phoneNum, gender, birthDate);
 		int result = PhonebookDAO.insert(phone);
-		
+		if(result == 1) {
+			//HttpSession 객체를 얻어옴
+			HttpSession session = req.getSession();
+			
+			session.setAttribute("msg", phone.getName()+"님이 전화번호에 잘 등록되었습니다.");
+		}
 		resp.sendRedirect("/index.jsp");
 		
 	}

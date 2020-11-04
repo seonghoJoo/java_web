@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.bmj.phonebook.dao.PhonebookDAO;
 import com.bmj.phonebook.vo.Phone;
@@ -34,10 +35,11 @@ public class Update extends HttpServlet{
 		Date birthDate = Date.valueOf(year+"-" + month+"-" + date);
 		char gender = genderStr.charAt(0);
 		int no = Integer.parseInt(noStr);
-		System.out.println(no+ " / " + name+ " / " + phoneNum + " / " + gender + " / " + birthDate);
 		int result = PhonebookDAO.update(new Phone(no,name, phoneNum, gender, birthDate));
-		System.out.println("update.bmj POST"+result+"개 수정");
-		
+		if(result==1) {
+			HttpSession session = req.getSession();
+			session.setAttribute("msg", name+"님을 변경하였습니다.");
+		}
 		resp.sendRedirect("/index.jsp");
 		
 	}

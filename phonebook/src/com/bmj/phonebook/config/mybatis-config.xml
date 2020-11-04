@@ -9,6 +9,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 <typeAliases>
 <typeAlias type="com.bmj.phonebook.vo.PageVO" alias="PageVO"/>
 <typeAlias type="com.bmj.phonebook.vo.Phone" alias="Phone"/>
+<typeAlias type="com.bmj.phonebook.vo.Member" alias="Member"/>
 </typeAliases>
 
 <!--  데이터 베이스와 연결 환경 설정 -->
@@ -30,6 +31,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 <!--  mapper 경로 설정 '/' -->
 <mappers>
 	<mapper resource="com/bmj/phonebook/mapper/phonebook.xml"></mapper>
+	<mapper resource="com/bmj/phonebook/mapper/members.xml"></mapper>
 </mappers>
 
 </configuration>

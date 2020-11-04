@@ -101,12 +101,11 @@
 	
 	$('#form').on("submit",function(e){
 		
-		e.preventDefault();
+		//e.preventDefault();
 		
 		// 입력한 이름
 		const name = $name.val();
 		if(!nameExp.test(name)){
-			alert("이름을 2~6글자 첫글자는 한글 이고 나머지는 한글 및 숫자 입력");
 			$name.val("").focus();
 			return false;
 		}// if end
@@ -118,14 +117,19 @@
 		const phone2 = $phone2.val();
 		const phone3 = $phone3.val();
 		
-		if(!(phone_3_4Exp.test(phone2))){
-			alert("2번째 숫자 3~4 자리 제대로");
-			$phone2.val("").focus();
-			return false;
+		if(phone1 == "010"){
+			if(!(phone_4Exp.test(phone2))){
+				$phone2.val("").focus();
+				return false;
+			}
+		}else if(phone1 != "010"){
+			if(!(phone_3_4Exp.test(phone2))){
+				$phone2.val("").focus();
+				return false;
+			}
 		}
 		
 		if(!phone_4Exp.test(phone3)){
-			alert("3번째 숫자 입력 제대로");
 			$phone3.val("").focus();
 			return false;
 		}
