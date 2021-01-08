@@ -16,7 +16,7 @@
 	}catch(Exception e){
 	}//try~catch end
 	
-	int total = PhonebookDAO.selectTotal(); 
+	int total = PhonebookDAO.selectTotal();
 	int numPage = 3;
 	
 	int numBlock = 3;

@@ -9,8 +9,12 @@ public class Member {
 	public static final String LOGIN = 
 	"loginMember";
 	private int no;
+<<<<<<< HEAD
 	private String id, password, nickname
 	,profile;
+=======
+	private String id, password, nickname,profile;
+>>>>>>> branch 'master' of https://github.com/seonghoJoo/java_web.git
 	private Date birthDate;
 	private Timestamp regdate;
 	

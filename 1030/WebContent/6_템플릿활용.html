@@ -32,6 +32,16 @@
 <% })%>
 </script>
 
+<script type="text/template" id="musicTmpl2">
+<% $.each(musicList,function(idx,music){ %>
+<tr>
+	<th><%=music.title%></th>
+	<td><%=music.artist %></td>
+	<td><%=music.genre %></td>
+</tr>
+<% })%>
+</script>
+
 <script src="/js/jquery.js"></script>
 <script src="/js/underscore-min.js"></script>
 <script>
@@ -44,7 +54,7 @@
 		];
 	
 	
-	const musicTmpl = _.template($('#musicTmpl').html());
+	const musicTmpl = _.template($('#musicTmpl2').html());
 	// .html 대신 .append를 사용하면 아직없음이 있고 밑에 쌓이게 됨
 	$('tbody').html(musicTmpl({"musicList":a}));	//명 : 값 명은 each의 변수명 값:json
 	

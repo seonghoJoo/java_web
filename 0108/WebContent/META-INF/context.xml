@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  커넥션 객체를 만들어 놓기가 힘듦 (자바와 오라클을 연결하(리소스 많이 소모)는 객체) 
+20개 정도 만들어 놓고 앱 단에서 쓰고 반환 승계를 하는 pool입니다. -->
+<Context>
+	<Resource
+		name="oraclexe"
+		auth="Container"
+		driverClassName="oracle.jdbc.OracleDriver"
+		url="jdbc:oracle:thin:@localhost:1521:xe"
+		username="hr"
+		password="1111"
+		type="javax.sql.DataSource"
+		maxIdle="20"
+		maxTotal="20"
+		maxWaitMillis="-1"
+	/>
+</Context>
