@@ -11,8 +11,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 
 <!-- alias -->
 <typeAliases>
-	<typeAlias alias="Crew" type="com.doogwal.coffee.vo.Crew"></typeAlias>
-	<typeAlias alias="User" type="com.doogwal.coffee.vo.User"></typeAlias>
+	<typeAlias type="vo.Employee" alias="Employee"/>
 </typeAliases>
 
 <!--  데이터 베이스와 연결 환경 설정 -->
@@ -21,11 +20,11 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<transactionManager type="JDBC"/>
 		<!--  mybatis dataSource 클래스가 -->
 		<dataSource type="JNDI">
-			<!-- corba -->
+			<!-- corba oraclexe가 context.xml의 name과 같은지 확인-->
 			<property name="data_source" value="java:comp/env/oraclexe"/>
 			<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe" />
 			<property name="driver" value ="oracle.jdbc.OracleDriver" />
-			<property name="username" value="coffee" />
+			<property name="username" value="hr" />
 			<property name="password" value="1111" />
 		</dataSource>
 	</environment>
@@ -33,8 +32,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 
 <!--  mapper 경로 설정 '/' -->
 <mappers>
-	<mapper resource="com/doogwal/coffee/mapper/crews.xml"></mapper>
-	<mapper resource="com/doogwal/coffee/mapper/users.xml"></mapper>
+	<mapper resource="mapper/employees.xml"></mapper>
 </mappers>
 
 </configuration>

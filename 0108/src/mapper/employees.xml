@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 낙타 표기법 사용해 -->
+<mapper namespace="employees">
+	
+	<select id="selectList" resultType="Employee">
+		SELECT employee_id employeeId, first_name firstName, last_name lastName, hire_date hireDate
+		FROM employees
+		ORDER BY 1
+	</select>
+	
+</mapper>

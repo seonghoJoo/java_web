@@ -1,21 +1,20 @@
-package com.doogwal.coffee.dao;
+package dao;
 
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
-import com.doogwal.coffee.util.SqlSessionUtil;
-import com.doogwal.coffee.vo.User;
+import util.SqlSessionUtil;
+import vo.Employee;
 
+public class EmployeesDAO {
 
-public class UsersDAO {
-
-	public static List<User> selectList() {
+	public static List<Employee> selectList() {
 
 		SqlSession session = null;
 		try {
 			session = SqlSessionUtil.getSession();
-			return session.selectList("users.selectOne");
+			return session.selectList("employees.selectList");
 			
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -25,4 +24,5 @@ public class UsersDAO {
 		
 		return null;
 	}
+	
 }

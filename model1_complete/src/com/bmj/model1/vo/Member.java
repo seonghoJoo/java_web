@@ -9,8 +9,7 @@ public class Member {
 	public static final String LOGIN = 
 	"loginMember";
 	private int no;
-	private String id, password, nickname
-	,profile;
+	private String id, password, nickname,profile;
 	private Date birthDate;
 	private Timestamp regdate;
 	
