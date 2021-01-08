@@ -1,0 +1,59 @@
+@charset "UTF-8";
+
+#editor-container {
+	height: 600px;
+	color:#424242;
+	font:400 20px "Kakao","Noto Sans KR","나눔고딕",NanumGothic,"맑은고딕","Malgun Gothic","돋움",Dotum,"Helvetica Neue",Helvetica,AppleSDGothicNeo,sans-serif,"Apple Color Emoji","Segoe UI Emoji",NotoColorEmoji,"Segoe UI Symbol","Android Emoji",EmojiSymbols;
+	
+}
+/* 가난한이야기체 글자가 너무 길어서 수정 */
+.ql-snow .ql-picker.ql-font {
+	width: 140px;
+}
+
+/* 툴바에 있는 option요소에 대한 css */
+#toolbar-container
+  .ql-font span[data-label="나눔펜"]::before {
+	font-family: 'Nanum Pen Script', cursive;
+	font-size: 20px;
+}
+
+#toolbar-container
+  .ql-font span[data-label="연성체"]::before {
+	font-family: 'Yeon Sung', cursive;
+	font-size: 20px;
+}
+
+#toolbar-container
+  .ql-font span[data-label="가난한이야기체"]::before {
+	font-family: 'Poor Story', cursive;
+	font-size: 20px;
+}
+
+#toolbar-container
+  .ql-font span[data-label="주아체"]::before {
+	font-family: 'Jua', sans-serif;
+	font-size: 20px;
+}
+
+/* 에디터의 폰트 설정 css */
+.ql-font-nanumPen {
+	font-family: 'Nanum Pen Script', cursive;
+}
+
+.ql-font-yeonSung {
+	font-family: 'Yeon Sung', cursive;
+}
+
+.ql-font-poorStory {
+	font-family: 'Poor Story', cursive;
+}
+
+.ql-font-jua {
+	font-family: 'Jua', sans-serif;
+}
+
+.ql-editor .ql-video {
+	width:1000px;
+	height:563px;
+}

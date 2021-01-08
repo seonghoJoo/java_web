@@ -14,7 +14,6 @@
 		- servletContext scope
 	*/
 	session.setAttribute("aaa",member);
-	
 %>
 <!DOCTYPE html>
 <html lang="ko">

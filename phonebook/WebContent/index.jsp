@@ -12,10 +12,10 @@
 <head>
     <meta charset="utf-8">
     <title>멋진 전화번호부</title>
-    <link rel="stylesheet" href="css/reset.css"/>
-    <link rel="stylesheet" href="css/all.min.css"/>
-    <link rel="stylesheet" href="css/notosanskr.css"/>
-    <link rel="stylesheet" href="css/index.css"/>
+    <link rel="stylesheet" href="/css/reset.css"/>
+    <link rel="stylesheet" href="/css/all.min.css"/>
+    <link rel="stylesheet" href="/css/notosanskr.css"/>
+    <link rel="stylesheet" href="/css/index.css"/>
     <link rel="icon" href="favicon.png">
 </head>
 <body>

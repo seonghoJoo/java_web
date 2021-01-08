@@ -27,9 +27,8 @@ public class Register extends HttpServlet {
 		String month= req.getParameter("month");
 		String date = req.getParameter("date");
 		String genderStr= req.getParameter("gender");
-
 		
-		//형변환
+		// 형변환
 		String phoneNum = phone1 + phone2 + phone3;
 		Date birthDate = Date.valueOf(year+"-"+month+"-"+date);
 		char gender = genderStr.charAt(0);
@@ -43,7 +42,6 @@ public class Register extends HttpServlet {
 			session.setAttribute("msg", phone.getName()+"님이 전화번호에 잘 등록되었습니다.");
 		}
 		resp.sendRedirect("/index.jsp");
-		
 	}
-
+	
 }

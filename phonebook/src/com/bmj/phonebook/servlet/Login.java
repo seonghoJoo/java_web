@@ -30,6 +30,7 @@ public class Login extends HttpServlet{
 		HttpSession session = req.getSession();
 		if(loginMember == null) {
 			session.setAttribute("msg", "아이디나 비밀번호가 틀렸습니다.");
+			
 			resp.sendRedirect("/index.jsp");
 		}else {
 			// 세션객체에 속성 세팅
