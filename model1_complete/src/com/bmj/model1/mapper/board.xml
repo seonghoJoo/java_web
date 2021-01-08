@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC	
+"-//mybatis.org//DTD Mapper 3.0//EN"	
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board">
+
+	<update id="update" parameterType="Article">
+		UPDATE board 
+		SET title = #{title},
+		    contents = #{contents}
+		WHERE no = #{no}
+	</update>
+
+	<delete id="delete" parameterType="int">
+		DELETE board
+		WHERE no = #{no}
+	</delete>
+
+	<insert id="insert" parameterType="Article">
+		<selectKey order="BEFORE" resultType="int" keyProperty="no">
+			SELECT board_seq.nextval
+			FROM dual
+		</selectKey>
+		INSERT INTO board(no,title,contents,
+		member_no,hit,regdate)
+		VALUES(#{no},
+		#{title},#{contents},
+		#{memberNo},0,systimestamp)
+	</insert>
+
+	<select id="selectOne" resultType="Article" parameterType="int">
+		SELECT b.no no,title,contents,
+		member_no memberNo,hit,
+		b.regdate regdate,profile,nickname, (SELECT count(*) count
+				FROM likes
+				WHERE type = 'B'
+		AND type_no = #{no}) likeCount
+		FROM board b, members m
+		WHERE b.member_no = m.no
+		AND b.no = #{no}
+	</select>
+
+	<select id="selectTotal" resultType="int">
+		SELECT COUNT(no)
+		FROM board
+	</select>
+
+	<select id="selectPageNo" parameterType="int" resultType="int">
+		SELECT
+		TRUNC((r-1)/3)+1
+		FROM(SELECT no,rownum r
+		FROM(SELECT no
+		FROM board
+		ORDER
+		BY 1 DESC))
+		WHERE no =#{no}
+	</select>
+
+	<select id="selectList" resultType="Article"
+		parameterType="PageVO">
+		SELECT no,title,contents,regdate,memberNo,
+		hit, nickname, profile, likeCount,
+		replyCount
+		FROM(SELECT no,title,contents,regdate,memberNo,
+		hit, nickname, profile, likeCount,
+		replyCount, rownum r
+		FROM(SELECT b.no no,title,contents,
+		b.regdate regdate,member_no
+		memberNo, hit, m.nickname nickname,
+		m.profile profile,
+		NVL(l.count,0) likeCount,
+		NVL(r.replyCount,0) replyCount
+		FROM board b, members m,
+		(SELECT type_no boardNo ,count(*) count
+		FROM likes
+		WHERE type = 'B'
+		GROUP BY type_no) l,
+		(SELECT board_no boardNo,count(*) replyCount
+		FROM replies
+		GROUP BY board_no) r
+		WHERE b.member_no = m.no
+		AND b.no = l.boardNo(+)
+		AND b.no = r.boardNo(+)
+		ORDER BY 1 DESC))
+		WHERE r BETWEEN #{start} AND #{end}
+	</select>
+
+	<update id="updateHit" parameterType="int">
+		UPDATE board
+		SET hit = hit+1
+		WHERE no = #{no}
+	</update>
+</mapper>
+
+
+
+

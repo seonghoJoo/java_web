@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC	
+"-//mybatis.org//DTD Mapper 3.0//EN"	
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="replies">
+
+	<delete id="delete" parameterType="int">
+		DELETE replies
+		WHERE no = #{no}
+	</delete>
+
+	<delete id="deleteByArticleNo" parameterType="int">
+		DELETE replies
+		WHERE BOARD_NO = #{BOARD_NO}
+	</delete>
+
+	<insert id="insert" parameterType="Reply">
+		INSERT INTO
+		replies(no,member_no,board_no,contents,regdate)
+		VALUES(replies_seq.nextval,#{memberNo},
+		#{boardNo},#{contents},systimestamp)
+	</insert>
+
+	<select id="selectTotal" resultType="int" parameterType="int">
+		SELECT
+		COUNT(*)
+		FROM replies
+		WHERE board_no = #{boardNo}
+	</select>
+
+
+	<select id="selectList" parameterType="PageVO"
+		resultType="Reply">
+		SELECT no, memberNo, boardNo, contents,
+		regdate, profile,
+		nickname
+		FROM(SELECT no, memberNo, boardNo, contents,
+		regdate, profile,
+		nickname, rownum r
+		FROM(SELECT r.no no, member_no memberNo,
+		board_no
+		boardNo, contents, r.regdate
+		regdate, nickname nickname, profile
+		profile
+		FROM replies r, members m
+		WHERE r.member_no = m.no
+		AND r.board_no
+		= #{no}
+		ORDER BY 1 DESC))
+		WHERE r BETWEEN #{start} AND #{end}
+	</select>
+
+
+</mapper>
+
+
+
+
