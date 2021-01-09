@@ -2,10 +2,12 @@
     pageEncoding="UTF-8"%>
 <%
 	Object msg = session.getAttribute("msg");	
-	
+	System.out.println(msg);
 	if(msg!=null){
 		session.removeAttribute("msg");
 	}//if end
+	System.out.println(msg);
+	System.out.println("11");
 %>
 <!DOCTYPE html>
 <html lang="ko">

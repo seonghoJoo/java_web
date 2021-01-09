@@ -2,10 +2,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <% 
+	// loginMember 세션 얻기
 	Object loginMember = session.getAttribute(Member.LOGIN);
-
+	
 	System.out.println(loginMember);
-
+	
+	// 만약 세션 충족 못할시 /로 보냄
 	if(loginMember!=null) response.sendRedirect("/");
 %>    
 <!DOCTYPE html>

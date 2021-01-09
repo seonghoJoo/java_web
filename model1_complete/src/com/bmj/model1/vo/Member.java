@@ -6,8 +6,7 @@ import java.sql.Timestamp;
 public class Member {
 	
 	//상수
-	public static final String LOGIN = 
-	"loginMember";
+	public static final String LOGIN = "loginMember";
 	private int no;
 	private String id, password, nickname,profile;
 	private Date birthDate;

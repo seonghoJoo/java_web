@@ -17,7 +17,6 @@
 		response.sendRedirect("/index.jsp");
 		return;
 	}
-		
 %>    	
 <!DOCTYPE html>
 <html>

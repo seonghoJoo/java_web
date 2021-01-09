@@ -12,11 +12,7 @@ public class Category {
 	public Category() {
 		// TODO Auto-generated constructor stub
 	}
-
-	
-	
 	public Category(int no, int priorNo, String name, String icon) {
-		super();
 		this.no = no;
 		this.priorNo = priorNo;
 		this.name = name;

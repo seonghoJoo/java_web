@@ -13,6 +13,8 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 <typeAliases>
 	<typeAlias alias="Crew" type="com.doogwal.coffee.vo.Crew"></typeAlias>
 	<typeAlias alias="User" type="com.doogwal.coffee.vo.User"></typeAlias>
+	<typeAlias alias="CrewMember" type="com.doogwal.coffee.vo.CrewMember"></typeAlias>
+	<typeAlias alias="Category" type="com.doogwal.coffee.vo.Category"></typeAlias>
 </typeAliases>
 
 <!--  데이터 베이스와 연결 환경 설정 -->
@@ -35,6 +37,8 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 <mappers>
 	<mapper resource="com/doogwal/coffee/mapper/crews.xml"></mapper>
 	<mapper resource="com/doogwal/coffee/mapper/users.xml"></mapper>
+	<mapper resource="com/doogwal/coffee/mapper/crewMembers.xml"></mapper>
+	<mapper resource="com/doogwal/coffee/mapper/categories.xml"></mapper>
 </mappers>
 
 </configuration>

@@ -89,6 +89,10 @@ body {
     height: 40px;
     display: block;
 }
+
+.header_crew_list  .fa-plus-circle{
+    font-size: 40px;
+}
 .header_crew_list img {
     border-radius: 50%;
 }

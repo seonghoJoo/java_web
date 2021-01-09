@@ -5,11 +5,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="crews">
 
-	<select id="selectOwnList"  resultType="Crew">
-		SELECT no,name,cover_img coverImg
-		FROM crews
+	<select id="selectOwnList" parameterType="int"  resultType="Crew">
+		SELECT c.no, c.name, c.cover_img coverImg,c.intro,min_age minAge,max_age maxAge,max_pop maxPop,cur_pop curPop,category_no categoryNo,c.regdate,avg_age avgAge,gender_rate genderRate,point
+		FROM crew_members m, crews c
+		WHERE m.user_no=#{no} AND m.crew_no = c.no
 		ORDER BY 1
 	</select>
+	
+	
 	
 	
 </mapper>

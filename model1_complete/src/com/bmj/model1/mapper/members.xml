@@ -16,6 +16,8 @@
 		SELECT COUNT(*)
 		FROM members
 		WHERE id = #{id}
+		
+		
 	</select>
 
 	<select id="selectCheckNickname" resultType="int"
