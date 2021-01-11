@@ -31,6 +31,25 @@ public class CrewMembersDAO {
 		return null;
 	}
 	/*2021 01 11 주성호 end*/
+	/*
+		2021 01 12 주성호 start
+		no로 부터 크루원 이름얻기
+	 */
+	public static String selectMemberName(int no) {
+
+		SqlSession session = null;
+		try {
+			session = SqlSessionUtil.getSession();
+			return session.selectOne("crewMembers.selectMemberName",no);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			session.close();
+		}//try~catch~finally end
+		
+		return null;
+	}
 
 	//--------------------------------------------------------------------------------------------------------
 	

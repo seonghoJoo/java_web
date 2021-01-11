@@ -479,7 +479,7 @@ function checkValid() {
 	
 	console.log(cnt);
 	
-	if(cnt==validArr.length) {
+	if(cnt==validArr.length-1) {
 		$submitBtn.prop("disabled",false);
 	}else {
 		$submitBtn.prop("disabled",true);

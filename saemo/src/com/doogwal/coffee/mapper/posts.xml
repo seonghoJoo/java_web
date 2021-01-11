@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="posts">
+
+	<select id="selectPostDetailOne" parameterType="int" resultType="Post">
+		SELECT no,member_no memberNo,regdate,contents,like_cnt likeCnt,board_no boardNo,image_applicable imageApplicable
+		FROM posts
+		WHERE no = #{no}
+	</select>
+	
+	
+	
+	
+	
+</mapper>

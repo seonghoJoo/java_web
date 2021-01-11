@@ -20,6 +20,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE user_no = #{userNo} AND ROWNUM = 1
 	</select>
 	
+	<select id="selectMemberName" resultType="String" parameterType="int">
+		SELECT name
+		FROM crew_members m, users u
+		WHERE m.no = #{no} AND m.user_no = u.no
+	</select>
+	
 	
 	
 </mapper>

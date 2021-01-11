@@ -214,6 +214,7 @@
     })
   }//selectLocalImage() end
     
+  
     
 //Font에 대한 설정을 불러와서
   const Font = Quill.import('formats/font');
