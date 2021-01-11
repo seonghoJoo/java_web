@@ -1,5 +1,10 @@
 @charset "UTF-8";
 
+.question_num{
+    font-size: 20px;
+    font-weight: 700;
+    margin:0 5px 0 0;
+}
 .remove_answer{
     cursor: pointer;
 }
@@ -76,7 +81,7 @@
 .question_input{
     font-size: 20px;
     padding: 8px 10px;
-    margin:20px 20px 20px 0;
+    margin:20px 20px 5px 0;
 }
 .answer_input{
     font-size: 16px;
@@ -85,4 +90,11 @@
 }
 .add_box{
     margin:2.5px 0 2.5px 20px;
+}
+.question_msg{
+    margin-left: 20px;
+    margin-bottom: 10px;
+}
+.add_border{
+    border:1px solid red;
 }

@@ -1,3 +1,4 @@
+<%@page import="com.doogwal.coffee.vo.User"%>
 <%@page import="com.doogwal.coffee.vo.Category"%>
 <%@page import="com.doogwal.coffee.dao.CategoriesDAO"%>
 <%@page import="java.util.*"%>
@@ -26,7 +27,10 @@
 		}
 	}
 	
-
+	User user = (User)session.getAttribute(User.LOGIN);
+	System.out.println(user.getEmail());
+	//System.out.println(user.getBirthYear()+"년생");
+	int birthYear = user.getBirthYear();
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -109,12 +113,15 @@
             opacity: 1;
             color: #000;
         }
+        .question_num{
+        	margin-right:5px;
+        }
     </style>
 </head>
 <body>
 <%@ include file="/WEB-INF/template/header.jsp" %>
-<div id="containerCreateCrew" class="step1"><!--container start-->
-    <form method="post">
+<div id="containerCreateCrew" class="step4"><!--container start-->
+    <form action="/createCrew.do" method="post">
         <fieldset>
             <div class="step_box">
                 <h2 class="spot">카테고리 선택</h2>
@@ -159,19 +166,13 @@
                                 <img src="img/category1.jpg" width="280" height="220" title="" alt="" />
                             </div>
                             <ul class="crew_image_list">
-                                <li class="crew_image_item">
-                                    <input id="categoryImageItem1" checked="checked" name="cover_img" type="radio" value="1"/>
-                                    <label for="categoryImageItem1">
-                                        <img src="img/category1.jpg" width="150" height="100" data-src="img/category1.jpg" title="" alt="" />
-                                        <div class="crew_cover_check">
-                                            <i class="fas fa-check"></i>
-                                            <div class="check_on"></div>
-                                        </div>
-                                    </label>
-                                </li>
-                                <%for(int i=2;i<=7;i++){ %>
+                                <%for(int i=1;i<=7;i++){ %>
 	                                <li class="crew_image_item">
-	                                    <input id="categoryImageItem<%=i %>" name="cover_img" type="radio" value="<%=i %>"/>
+	                                    <input id="categoryImageItem<%=i %>" 
+	                                    <%if(i==1){ %>
+	                                    checked="checked"
+	                                    <%} %>
+	                                    name="cover_img" type="radio" value="<%=i %>"/>
 	                                    <label for="categoryImageItem<%=i %>">
 	                                        <img src="img/category<%=i %>.jpg" width="150" height="100" data-src="img/category<%=i %>.jpg" title="" alt="" />
 	                                        <div class="crew_cover_check">
@@ -187,7 +188,7 @@
                                             <i class="fas fa-camera"></i>
                                             <h4>사진추가</h4>
                                         </div>
-                                        <input id="image_input" name="cover_img" type="file" value="4" style="display: none;"/>
+                                        <input id="image_input" name="cover_img" type="file" style="display: none;"/>
                                     </label>
                                 </li>
                             </ul>
@@ -213,36 +214,26 @@
                         <h2><label for=olderYear>크루 연령대 설정</label></h2>
                         <span class="age">
                                 <select id="olderYear" name="olderYear">
-                                    <option selected value="1985">1985</option>
-                                    <option value="1986">1986</option>
-                                    <option value="1987">1987</option>
-                                    <option value="1988">1988</option>
-                                    <option value="1989">1989</option>
-                                    <option value="1990">1990</option>
-                                    <option value="1990">1991</option>
-                                    <option value="1990">1992</option>
-                                    <option value="1990">1993</option>
-                                    <option value="1990">1994</option>
-                                    <option value="1995">1995</option>
+                                <%for(int i=birthYear;i>=birthYear-10;i--){%>
+                                	<option
+                                	<%if(birthYear==i){%>
+                                		selected 
+                                	<%} %>value="<%=i %>"><%=i %></option>
+                                <%} %>
                                 </select><span class=""> ~ </span>
                         </span>
                         <label for=youngerYear></label>
                         <span class="age">
                                 <select id="youngerYear" name="youngerYear">
-                                    <option value="1985">1995</option>
-                                    <option value="1986">1996</option>
-                                    <option value="1997">1997</option>
-                                    <option value="1998">1998</option>
-                                    <option value="1999">1999</option>
-                                    <option value="2000">2000</option>
-                                    <option value="2001">2001</option>
-                                    <option value="2002">2002</option>
-                                    <option value="2003">2003</option>
-                                    <option value="2004">2004</option>
-                                    <option selected value="2005">2005</option>
+                                    <%for(int i=birthYear;i<=birthYear+10;i++){%>
+                                	<option
+                                	<%if(birthYear==i+10){%>
+                                		selected 
+                                	<%} %>value="<%=i %>"><%=i %></option>
+                                <%} %>
                                 </select><span> 년생</span>
                         </span>
-                        <h4>1985년 ~ 2005년생까지 설정할 수 있습니다.</h4>
+                        <h4><%=birthYear-10 %>년 ~ <%=birthYear+10 %>년생까지 설정할 수 있습니다.</h4>
                     </div><!--//birth_year_box end-->
                     <div class="popular_limit_box">
                         <span>
@@ -295,7 +286,7 @@
                     </div><!--//qualification_write_box end-->
                     <div class="crew_create_btn_box">
                         <button type="button" class="prev_btn"><a>이전</a></button>
-                        <button type="submit" class="next_btn next_btn_step4">제출</button>
+                        <button type="submit" class="next_btn next_btn_step4" disabled="true">제출</button>
                     </div><!--crew_create_btn_box end-->
                 </div><!--//inner end-->
             </div><!--//step4 end-->
@@ -310,29 +301,20 @@
     <li class="question_item">
         <div>
             <label>
-                <span class="question_num"><@=++question@></span><input name="quest<@=++question@>" class="question_input" placeholder='질문명을 입력해 주세요'/>
-            </label>
+                <span class="question_num"><@= ++question@></span><input name="quest<@=question@>" class="question_input" placeholder='질문명을 입력해 주세요'/>
+			</label>
             <span class="remove_question">질문 삭제</span>
+			<p class="question_msg msg">최소 5자 이상은 입력해주세요</p>
         </div>
+		<%for(int i=0;i<3;i++){%>
         <div>
             <label><span><i class="far fa-dot-circle"></i></span>
                 <input class="answer_input" placeholder='보기를 적어주세요'/>
             </label>
             <span class="remove_answer"><i class="far fa-minus-square"></i></span>
+			<p class="answer_input msg">최소 5자 이상은 입력해주세요</p>
         </div>
-        <div>
-            <label><span><i class="far fa-dot-circle"></i></span>
-                <input class="answer_input"  placeholder='보기를 적어주세요'/>
-            </label>
-            <span class="remove_answer"><i class="far fa-minus-square"></i></span>
-        </div>
-        <div>
-            <label><span><i class="far fa-dot-circle"></i></span>
-                <input class="answer_input" placeholder='보기를 적어주세요'/>
-            </label>
-            <span class="remove_answer"><i class="far fa-minus-square"></i></span>
-        </div>
-        <div class="add_box"><span class="add_answer"><i class="far fa-plus-square"></i></span></div>
+		<%}%>
     </li>
 </script>
 <!--//객관식 질문 추가 end-->
@@ -343,6 +325,7 @@
             <input class="answer_input" placeholder='보기를 적어주세요'/>
         </label>
         <span class="remove_answer"><i class="far fa-minus-square"></i></span>
+		<p class="answer_input msg">최소 5자 이상은 입력해주세요</p>
     </div>
     <div class="add_box"><span class="add_answer"><i class="far fa-plus-square"></i></span></div>
 </script>
@@ -352,14 +335,16 @@
     <li>
         <div>
             <label>
-                <span class="question_num"><@=++question@></span><input class="question_input" placeholder='질문명을 입력해 주세요'/>
+                <span class="question_num"><@=++question@> </span><input class="question_input" placeholder='질문명을 입력해 주세요'/>
             </label>
             <span class="remove_question">질문 삭제</span>
+			<p class="question_msg msg">최소 5자 이상은 입력해주세요</p>
         </div>
         <div>
             <label>
                 <input class="answer_input" for="" placeholder='(세부사항을 적어주세요)'/>
             </label>
+			<p class="desc_input msg">최소 5자 이상은 입력해주세요</p>
         </div>
     </li>
 </script>
@@ -370,9 +355,10 @@
     <li>
         <div>
             <label>
-                <span class="question_num"><@=++question@></span><input class="question_input" placeholder='질문명을 입력해 주세요'/>
+                <span class="question_num"><@=++question@> </span><input class="question_input" placeholder='질문명을 입력해 주세요'/>
             </label>
             <span class="remove_question">질문 삭제</span>
+			<p class="question_msg msg">최소 5자 이상은 입력해주세요</p>
         </div>
         <div>
             <label>
@@ -393,9 +379,7 @@
 <script src="js/step4.js"></script>
 
 <script>
-	// % -> @ 으로
-	_.templateSettings = {interpolate: /\<\@\=(.+?)\@\>/gim,evaluate: /\<\@([\s\S]+?)\@\>/gim,escape: /\<\@\-(.+?)\@\>/gim};
-    const $nameMsg = $('#nameMsg');
+	const $nameMsg = $('#nameMsg');
     const $populationMsg = $('#populationMsg');
     const $prevBtn = $('.prev_btn');
     const $nextBtn = $('.next_btn');

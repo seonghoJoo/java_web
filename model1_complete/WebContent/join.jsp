@@ -123,7 +123,7 @@ const $joinForm = $("#joinBox>form");
 /* 정규 표현식 */
 
 //아이디가  첫글자는 영어로, 영어와 숫자로 4~20글자까지라면
-const idReg = /^[a-z|A-Z][\w]{3,19}$/;
+
 //비밀번호가 4~32자로 영어, 숫자
 const pwdReg = /^[\w]{4,32}$/;
 //image인지 확인하는 정규표현식
@@ -255,9 +255,9 @@ $id.keyup(checkId)
 
 		 	//체크를 다시 시작하니까 무조건 false로
 			validArr[1] = false;
-		   
+		   	console.log(value);
 	   
-		   if(nicknameReg.test(value)) {
+		   //if(nicknameReg.test(value)) {
 			   
 			   //ajax작동시작
 			   $nicknameMsg.removeClass("ok")
@@ -288,10 +288,10 @@ $id.keyup(checkId)
 				   }//success end
 			   });//$.ajax() end
 		        
-		   }else {
-		        $nicknameMsg.removeClass("ok").text("한글로 1~5글자로 입력해주세요.");
-		        checkValid();
-		   }//if~else end
+		  //}else {
+		   //     $nicknameMsg.removeClass("ok").text("한글로 1~5글자로 입력해주세요.");
+		   //     checkValid();
+		   //}//if~else end
 	   
 	   }//if end
 		

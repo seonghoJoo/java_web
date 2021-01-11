@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>질문 누가 받을까?</title>
+<!-- restful /부터 시작해야한다. -->
+<link rel="stylesheet" href="/css/all.min.css" />
+<link rel="stylesheet" href="/css/notosanskr.css" />
+<style>
+	body{
+		font-family:'Noto Sans KR', sans-serif;
+		text-align: center;
+		background-color : #999A9C;
+	}
+	button,input{
+		/*이게 기본 굵기 / (사이즈/line-height)    / 폰트 / 칼라 */
+		font: 900 45px/5px 'Noto Sans KR', sans-serif;
+	}
+	h1{
+		color: #F5E35D;
+		font-weight:900;
+		font-size:60px;
+		text-shadow: 0 0 10px #424242;
+	}
+	#name{
+		font-weight:700;
+		font-size:45px;
+		color: #fff;
+		text-shadow: 0 0 10px #424242;
+	}
+	#showBtn{
+		background-color : #F5E35D;
+		border: none;
+		width:300px;
+		height:50px;
+		padding:10px 12px;
+		font: 900 30px/5px 'Noto Sans KR', sans-serif;
+		cursor: pointer;
+		/*기본적으로 웹 접근성을 위해서는 있는게 좋음*/
+		outline:none;
+		transition: .2s ease;
+	}
+	#showBtn:hover{
+		box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+	}
+	#showBtn:active{
+		transform:scale(.9);
+	}
+	
+</style>
+</head>
+<body>
+	<h1 id="title"><i class="far fa-question-circle"></i> 질문 받을 사람은?</h1>
+	<p id="name">???</p>
+	<button id="showBtn">눌러보세요!</button>
+<script src="/js/jquery.js"></script>
+<script>
+	//$(function(){}) or ready 이런거는 head쪽에다가 js를 쓸때 사용하는 옛날 코드
+	const names=[
+		"오승주","김거울","나혁진","강필규","김도훈","주성호","송진현",
+		"김기현","오세훈","이지수","이성정","이소현","박해원","조용규","김정석",
+		"김돈하","백경현","양성용","방현수","김상언","오경택","이아림","박형우","정진하"
+	];
+	const $name = $("#name");
+	const $showBtn = $('#showBtn');
+	$showBtn.on("click",function(){
+		// 이벤트 핸들러 클릭/호버 등...
+		// 콜백 ajax
+		const idx = Math.floor(Math.random()*names.length);
+		setTimeout(function() {$name.text(names[idx])}, 3000);
+	});//click(() end
+	
+</script>
+</body>
+</html>

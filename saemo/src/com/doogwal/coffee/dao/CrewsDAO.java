@@ -23,4 +23,22 @@ public class CrewsDAO {
 		
 		return null;
 	}
+	
+	public static int selectCheckCrewname(String name) {
+		int cnt = 0;
+		
+		SqlSession session = null;
+		
+		try {
+			session = SqlSessionUtil.getSession();
+			cnt = session.selectOne("crews.selectCheckName",name);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}//try~catch~finally end
+		
+		return cnt;
+	}//selectCheckNickname() end
 }

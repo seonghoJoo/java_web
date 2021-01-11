@@ -127,3 +127,14 @@
     font-size: 50px;
     color:#eee;
 }
+
+/*사진추가*/
+.category_upload_image{
+    background-color: #424242;
+    width: 150px;
+    height: 60px;
+    padding:20px 0;
+    text-align: center;
+    font-size: 30px;
+    cursor: pointer;
+}

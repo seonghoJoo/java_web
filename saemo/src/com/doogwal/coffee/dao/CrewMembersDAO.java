@@ -9,12 +9,18 @@ import com.doogwal.coffee.vo.Crew;
 import com.doogwal.coffee.vo.CrewMember;
 
 public class CrewMembersDAO {
-	public static List<CrewMember> selectOwnList(int no) {
+
+	
+	/*
+		2021 01 11 주성호 start
+		header.jsp 크루 이미지
+	*/
+	public static String selectPresentImgOne(int no) {
 
 		SqlSession session = null;
 		try {
 			session = SqlSessionUtil.getSession();
-			return session.selectList("crewMembers.selectOwnList",no);
+			return session.selectOne("crewMembers.selectPresentImgOne",no);
 			
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -24,4 +30,23 @@ public class CrewMembersDAO {
 		
 		return null;
 	}
+	/*2021 01 11 주성호 end*/
+
+	//--------------------------------------------------------------------------------------------------------
+	
+	//정진하 0110 09:02
+	//myPage.jsp에서 해당 유저가 속한 크루명 및 프로필 사진을 가져오기 위함
+	public static List<CrewMember> selectJoinedCrewList(int userNo) {
+		SqlSession session = null;
+		try {
+			session = SqlSessionUtil.getSession();
+			return session.selectList("crewMembers.selectList",userNo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(session!=null) session.close();
+		}//try~catch~finally end 
+		return null;
+	}
+
 }

@@ -29,12 +29,12 @@ public class CheckNickname extends HttpServlet{
 		PrintWriter out = response.getWriter();
 		
 		String nickname = request.getParameter("nickname");
-
+		System.out.println(nickname);
 		//3초후에 응답
 		//Thread.sleep(3000);
 
 		int cnt = MembersDAO.selectCheckNickname(nickname);
-
+		System.out.println(cnt);
 		out.print("{\"count\":"+cnt+"}");
 		
 	}

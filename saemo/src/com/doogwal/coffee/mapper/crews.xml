@@ -2,17 +2,21 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
 <mapper namespace="crews">
 
+<!-- 주성호 2021 01 11 header start-->
 	<select id="selectOwnList" parameterType="int"  resultType="Crew">
 		SELECT c.no, c.name, c.cover_img coverImg,c.intro,min_age minAge,max_age maxAge,max_pop maxPop,cur_pop curPop,category_no categoryNo,c.regdate,avg_age avgAge,gender_rate genderRate,point
 		FROM crew_members m, crews c
 		WHERE m.user_no=#{no} AND m.crew_no = c.no
 		ORDER BY 1
 	</select>
-	
-	
-	
-	
+	<!-- 주성호 2021 01 11 check name-->
+	<select id="selectCheckName" parameterType="String"  resultType="int">
+		SELECT COUNT(*)
+		FROM crews
+		WHERE name = #{name}
+	</select>
+<!-- 주성호 2021 01 11 end-->
+
 </mapper>

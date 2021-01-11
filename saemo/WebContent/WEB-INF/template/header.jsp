@@ -1,16 +1,24 @@
+<%@page import="com.doogwal.coffee.dao.CrewMembersDAO"%>
+<%@page import="com.doogwal.coffee.vo.User"%>
+<%@page import="com.doogwal.coffee.vo.Crew"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>    
 <%
-	Integer[] userCrews = new Integer[3];
-	String[] userCrewImgs = new String[3];
+	Crew[] userCrews = new Crew[3];
 	for(int i=0;i<3;i++){
-		System.out.println((Integer)session.getAttribute("userCrewList"+i));
-		System.out.println((String)session.getAttribute("userCrewListImg"+i));
-		userCrews[i] = (Integer)session.getAttribute("userCrewList"+i);
-		userCrewImgs[i] = (String)session.getAttribute("userCrewListImg"+i);
+		
+		userCrews[i] = (Crew)session.getAttribute("userCrewList"+i);
+		if(userCrews[i]==null){
+			System.out.println("NULL");
+		}else{
+			System.out.println(userCrews[i].getCoverImg());
+		}
+		//System.out.println(userCrews[i].getCoverImg());
 	}
 	
-		
+	User loginUser = (User)session.getAttribute(User.LOGIN);
+	
+	String presentProfileImg = CrewMembersDAO.selectPresentImgOne(loginUser.getNo()); 
 %>
 <div id="header"><!--header start-->
     <div class="inner">
@@ -29,7 +37,7 @@
                 <ul>
                 	<%for(int i=0;i<userCrews.length;i++){ %>
                 		<%if(userCrews[i]!=null){ %>
-                    		<li><a href="/<%=userCrews[i]%>"><img class="header_crew_list_on" src="<%=userCrewImgs[i] %>" width="40" height="40" /></a></li>
+                    		<li><a href="/<%=userCrews[i].getNo()%>"><img class="header_crew_list_on" src="<%=userCrews[i].getCoverImg() %>" width="40" height="40" /></a></li>
                    		<%}else{ %>
                    			<li><a href="/create_crew.jsp"><i class="fas fa-plus-circle"></i></a></li>
                    		<%} %>
@@ -37,7 +45,15 @@
                 </ul>
             </div><!--//header_crew_list -->
             <div class="header_meeting_home"><a href="/"><i class="far fa-handshake"></i></a></div>
-            <div class="header_status"><a href=""><i class="fas fa-user-circle"></i></a></div>
+            <div class="header_status">
+            <%if(loginUser==null){ %>
+            <a href="">
+            <i class="fas fa-user-circle"></i></a>
+            <%}else{ %>
+            <a href="/myPage.jsp">
+            <img src="img/<%=presentProfileImg %>" width="40" height="40"/></a>
+            <%} %>
+            </div>
             <div class="header_status_dropbox">
                 <h3 class="screen_out">내메뉴</h3>
                 <ul>

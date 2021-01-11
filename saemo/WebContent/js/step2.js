@@ -5,36 +5,39 @@ const $crew_name = $('.crew_name_input');
 const $crew_intro = $('.crew_intro_input');
 // /*step1 end*/
 /*step2 start*/
-const nameExp = /^[가-힣|a-zA-Z]{2,10}$/;
-const introExp = /^[가-힣|a-zA-z|\d]{0,20}$/;
+const nameExp = /^[ㄱ-힣|a-zA-Z|\s|0-9]{2,10}$/;
+const introExp = /^[ㄱ-힣|a-zA-z|\s|\d|~!@#$%^&*()_+|<>?:{}]{0,20}$/;
+
 let nameFlag = false, crewFlag = true,imgFlag=true;
 // input 시 글자 10자 제한
 $crew_name.keyup(function (e) {
-
+	
     let val = $crew_name.val();
     val = val.substr(0,10);
     $crew_name.val(val);
     $crewNameLenLimit.text("("+val.length+" / 10자)");    //글자수 실시간 카운팅
     if(nameExp.test(val)){
-        $nameMsg.removeClass("ok");
         //ajax를 사용하여 중복체크
-        nameFlag = true;
+        nameFlag=false;
         //중복성 검사
         //여기서 ajax로 파일 업로드 수행
         $.ajax({
-            url:"ajax/name.json",
+            url:"/ajax/checkCrewname.json",
             type : 'POST',//multipart/form-data
+			data:{"name":val},
             dataType : "json",
             error : function(xhr, error, code) {
                 alert("에러:" + code);
             },
             success:function(json) {
-                console.log("ajax 실행:"+json.result);
-
-                if(json.result==false) {
-                    $('#nameCheckMsg').addClass("ok");
+					console.log("ajax 실행:"+json.count);
+                if(json.count==0) {
+                    $nameMsg.removeClass("ok");
+					nameFlag = true;
                 }else{
-                    $('#nameCheckMsg').removeClass("ok");
+					
+					$nameMsg.addClass("ok");
+					$nameMsg.text("중복된 크루 이름입니다.");
                 }
             }
         });

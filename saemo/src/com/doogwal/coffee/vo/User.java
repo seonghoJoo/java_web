@@ -2,6 +2,7 @@ package com.doogwal.coffee.vo;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.Calendar;
 
 public class User {
 	private int no;
@@ -11,6 +12,15 @@ public class User {
 	private Timestamp regdate;
 	
 	public static final String LOGIN = "loginUser";
+	
+	//년 월 일 얻기용 SimpleDateFormat은 객체 3개 필요하나 Calendar는 하나로 조짐
+	private Calendar cal;
+	
+	//생년 구하기
+	public int getBirthYear() {
+		return cal.get(Calendar.YEAR);
+	}
+	
 	
 	public User() {
 		// TODO Auto-generated constructor stub
@@ -97,6 +107,8 @@ public class User {
 	}
 	public void setBirthDate(Date birthDate) {
 		this.birthDate = birthDate;
+		cal = Calendar.getInstance();
+		cal.setTime(birthDate);
 	}
 
 	

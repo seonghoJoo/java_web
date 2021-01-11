@@ -20,7 +20,7 @@ import com.doogwal.coffee.vo.User;
 
 @WebServlet("/login.do")
 public class Login extends HttpServlet {
-	
+	// .do
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
@@ -31,8 +31,6 @@ public class Login extends HttpServlet {
 		//아이디와 비밀번호 받기
 		String id = req.getParameter("loginId");
 		String password = req.getParameter("loginPassword");
-		
-		
 		
 		System.out.println(id);
 		System.out.println(password);
@@ -53,8 +51,7 @@ public class Login extends HttpServlet {
 			int idx=0;
 			if(ownCrewList !=null) {
 				for(Crew crew: ownCrewList) {
-					session.setAttribute("userCrewListImg"+ (idx), "/img/"+crew.getCoverImg());
-					session.setAttribute("userCrewList"+ (idx++), crew.getNo());
+					session.setAttribute("userCrewList"+ (idx++), crew);
 				}
 			}
 			System.out.println("성공");
