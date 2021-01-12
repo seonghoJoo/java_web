@@ -3,7 +3,7 @@
     pageEncoding="UTF-8"%>
 <%
 	Member loginMember = 
-	(Member)session.getAttribute(Member.LOGIN);
+	(Member)session.getAttribute("loginMember");
 %>    
 <div id="header">
     <h1><a href="/"><img src="img/logo.png" width="40"/><strong>ODEL1</strong> <span>Board</span></a></h1>

@@ -216,6 +216,7 @@ function getReplyList() {
 			alert("서버 점검중~");
 		},
 		success:function(json) {
+			console.log(json);
 			$replyBox.html(replyTmp(json));
 			fixFooter();
 		}//success end
@@ -241,6 +242,7 @@ $replyBox.on("submit","#replyForm",function(e) {
 		},
 		success:function(json) {
 			if(json.result) {
+				console.log(json);
 				getReplyList();
 				
 			}//if end
@@ -277,6 +279,7 @@ $replyBox.on("click",".delete",function(e) {
 		},
 		success:function(json) {
 			if(json.result) {
+				console.log(json);
 				getReplyList();
 			}//if end
 		}//success end

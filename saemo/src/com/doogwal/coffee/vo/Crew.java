@@ -14,9 +14,8 @@ public class Crew {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Crew(int no, int minAge, int maxAge, int maxPop, int curPop, int categoryNo, int point, float avgAge,
+	public Crew(int minAge, int maxAge, int maxPop, int curPop, int categoryNo, int point, float avgAge,
 			float genderRate, String name, String coverImg, String intro) {
-		this.no = no;
 		this.minAge = minAge;
 		this.maxAge = maxAge;
 		this.maxPop = maxPop;

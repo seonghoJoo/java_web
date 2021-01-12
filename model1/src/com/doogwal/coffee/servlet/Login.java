@@ -35,7 +35,12 @@ public class Login extends HttpServlet {
 		
 		session.setAttribute("loginMember", loginMember);
 		
-		
+		if(loginMember==null) {
+			System.out.println("실패");
+		}else {
+			System.out.println("성공");
+		}
+		resp.sendRedirect("/index.jsp");
 		// json 뷰
 		// 야 이거 html이야 혹은 json이야 알려줌
 		// resp.setContentType("application/json");

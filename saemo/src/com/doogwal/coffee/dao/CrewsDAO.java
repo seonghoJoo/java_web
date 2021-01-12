@@ -41,4 +41,21 @@ public class CrewsDAO {
 		
 		return cnt;
 	}//selectCheckNickname() end
+	
+	public static int insertCrew(Crew crew) {
+		int cnt = 0;
+		SqlSession session = null;
+		
+		try {
+			session = SqlSessionUtil.getSession();
+			cnt = session.selectOne("crews.insertCrew",crew);
+			return cnt;
+		}catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}//try~catch~finally end
+		
+		return cnt;
+	}
 }

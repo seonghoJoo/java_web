@@ -5,7 +5,7 @@
 <mapper namespace="members">
 
 	<select id="selectLogin" parameterType="Member" resultType="Member">
-		SELECT no,id,password,nickname regdate, birth_date birthDate, profile,score
+		SELECT no,id,password,nickname, regdate, birth_date birthDate, profile,score
 		FROM members
 		WHERE id = #{id} AND password = #{password}	
 	</select>

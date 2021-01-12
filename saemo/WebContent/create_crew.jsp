@@ -122,6 +122,7 @@
 <%@ include file="/WEB-INF/template/header.jsp" %>
 <div id="containerCreateCrew" class="step4"><!--container start-->
     <form action="/createCrew.do" method="post">
+    <input type="hidden" name="userNo" value="<%=user.getNo() %>" />
         <fieldset>
             <div class="step_box">
                 <h2 class="spot">카테고리 선택</h2>
@@ -301,7 +302,7 @@
     <li class="question_item">
         <div>
             <label>
-                <span class="question_num"><@= ++question@></span><input name="quest<@=question@>" class="question_input" placeholder='질문명을 입력해 주세요'/>
+                <span class="question_num"><@= ++question@></span><input name="mtp_quest" class="question_input" placeholder='질문명을 입력해 주세요'/>
 			</label>
             <span class="remove_question">질문 삭제</span>
 			<p class="question_msg msg">최소 5자 이상은 입력해주세요</p>
@@ -309,7 +310,7 @@
 		<%for(int i=0;i<3;i++){%>
         <div>
             <label><span><i class="far fa-dot-circle"></i></span>
-                <input class="answer_input" placeholder='보기를 적어주세요'/>
+                <input name="mtp_answer" class="answer_input" placeholder='보기를 적어주세요'/>
             </label>
             <span class="remove_answer"><i class="far fa-minus-square"></i></span>
 			<p class="answer_input msg">최소 5자 이상은 입력해주세요</p>
@@ -322,7 +323,7 @@
 <script type="text/template" id="multipleChoiceAnswerTmpl">
     <div>
         <label><span><i class="far fa-dot-circle"></i></span>
-            <input class="answer_input" placeholder='보기를 적어주세요'/>
+            <input name="mtp_answer" class="answer_input" placeholder='보기를 적어주세요'/>
         </label>
         <span class="remove_answer"><i class="far fa-minus-square"></i></span>
 		<p class="answer_input msg">최소 5자 이상은 입력해주세요</p>
@@ -335,14 +336,14 @@
     <li>
         <div>
             <label>
-                <span class="question_num"><@=++question@> </span><input class="question_input" placeholder='질문명을 입력해 주세요'/>
+                <span class="question_num"><@=++question@> </span><input name="subj_quest" class="question_input" placeholder='질문명을 입력해 주세요'/>
             </label>
             <span class="remove_question">질문 삭제</span>
 			<p class="question_msg msg">최소 5자 이상은 입력해주세요</p>
         </div>
         <div>
             <label>
-                <input class="answer_input" for="" placeholder='(세부사항을 적어주세요)'/>
+                <input name="subj_answer" class="answer_input" for="" placeholder='(세부사항을 적어주세요)'/>
             </label>
 			<p class="desc_input msg">최소 5자 이상은 입력해주세요</p>
         </div>
@@ -355,7 +356,7 @@
     <li>
         <div>
             <label>
-                <span class="question_num"><@=++question@> </span><input class="question_input" placeholder='질문명을 입력해 주세요'/>
+                <span class="question_num"><@=++question@> </span><input name="file_quest" class="question_input" placeholder='질문명을 입력해 주세요'/>
             </label>
             <span class="remove_question">질문 삭제</span>
 			<p class="question_msg msg">최소 5자 이상은 입력해주세요</p>

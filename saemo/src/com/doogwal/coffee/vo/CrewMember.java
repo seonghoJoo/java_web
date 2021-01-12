@@ -9,13 +9,14 @@ public class CrewMember {
 	private String profileImg,introduction;
 	private Timestamp regdate;
 	
+	private String name,coverImg;
+	
 	public CrewMember() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public CrewMember(int no, int crewNo, int userNo, int reportNum, char role, char type, String profileImg,
+	public CrewMember(int crewNo, int userNo, int reportNum, char role, char type, String profileImg,
 			String introduction) {
-		this.no = no;
 		this.crewNo = crewNo;
 		this.userNo = userNo;
 		this.reportNum = reportNum;
@@ -23,6 +24,30 @@ public class CrewMember {
 		this.type = type;
 		this.profileImg = profileImg;
 		this.introduction = introduction;
+	}
+
+	public Timestamp getRegdate() {
+		return regdate;
+	}
+
+	public void setRegdate(Timestamp regdate) {
+		this.regdate = regdate;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getCoverImg() {
+		return coverImg;
+	}
+
+	public void setCoverImg(String coverImg) {
+		this.coverImg = coverImg;
 	}
 
 	public int getNo() {

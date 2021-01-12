@@ -15,9 +15,11 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	<typeAlias alias="User" type="com.doogwal.coffee.vo.User"></typeAlias>
 	<typeAlias alias="CrewMember" type="com.doogwal.coffee.vo.CrewMember"></typeAlias>
 	<typeAlias alias="Category" type="com.doogwal.coffee.vo.Category"></typeAlias>
-	<typeAlias alias="Category" type="com.doogwal.coffee.vo.Post"></typeAlias>
-	<typeAlias alias="Category" type="com.doogwal.coffee.vo.Reply"></typeAlias>
-	<typeAlias alias="Category" type="com.doogwal.coffee.vo.PostImg"></typeAlias>
+	<!-- 
+	<typeAlias alias="Post" type="com.doogwal.coffee.vo.Post"></typeAlias>
+	<typeAlias alias="Reply" type="com.doogwal.coffee.vo.Reply"></typeAlias>
+	<typeAlias alias="PostImg" type="com.doogwal.coffee.vo.PostImg"></typeAlias>
+	 -->
 </typeAliases>
 
 <!--  데이터 베이스와 연결 환경 설정 -->
@@ -42,9 +44,11 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	<mapper resource="com/doogwal/coffee/mapper/users.xml"></mapper>
 	<mapper resource="com/doogwal/coffee/mapper/crewMembers.xml"></mapper>
 	<mapper resource="com/doogwal/coffee/mapper/categories.xml"></mapper>
+	<!-- 
 	<mapper resource="com/doogwal/coffee/mapper/posts.xml"></mapper>
 	<mapper resource="com/doogwal/coffee/mapper/replies.xml"></mapper>
 	<mapper resource="com/doogwal/coffee/mapper/postImgs.xml"></mapper>
+	 -->
 </mappers>
 
 </configuration>

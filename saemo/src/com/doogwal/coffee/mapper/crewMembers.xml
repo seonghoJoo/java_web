@@ -4,28 +4,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="crewMembers">
-	<!--20210111 1606 정진하 마이페이지에서 유저 no에 따라 프로필 사진 가져오기 위함-->
-	<select id="selectJoinedCrewList" resultType="CrewMember" parameterType="int">
-		SELECT m.no, m.profile_img profileImg, c.name crewName
+	<!--20210112 1615 주성호 헤더 -->
+	<select id="selectOwnList" parameterType="int"  resultType="CrewMember">
+		SELECT m.no, c.no, user_no userNo, role, report_num reportNum, profile_img profileImg, introduction, type, m.regdate,cover_img coverImg
 		FROM crew_members m, crews c
-		WHERE user_no = #{userNo} and m.crew_no=c.crew_no
-		ORDER BY m.regdate
+		WHERE m.user_no=#{no} AND m.crew_no = c.no
+		ORDER BY 9
 	</select>
-	
-	
-	<!-- 주성호 2021 01 11 header get 1 Crew Image-->
-	<select id="selectPresentImgOne" resultType="String" parameterType="int">
-		SELECT profile_img profileImg
-		FROM crew_members
-		WHERE user_no = #{userNo} AND ROWNUM = 1
-	</select>
-	
-	<select id="selectMemberName" resultType="String" parameterType="int">
-		SELECT name
-		FROM crew_members m, users u
-		WHERE m.no = #{no} AND m.user_no = u.no
-	</select>
-	
-	
 	
 </mapper>

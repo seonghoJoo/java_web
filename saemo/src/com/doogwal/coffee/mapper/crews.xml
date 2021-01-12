@@ -18,5 +18,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE name = #{name}
 	</select>
 <!-- 주성호 2021 01 11 end-->
+	<insert id="insertCrew" parameterType="Crew">
+		INSERT INTO crews(no, name, cover_img,intro,max_age,min_age,max_pop,category_no,regdate)
+		VALUES(crews_seq.nextval, #{name},#{coverImg} ,#{intro}, #{maxAge}, #{minAge}, #{maxPop}, #{categoryNo}, systimestamp)
+	</insert>
 
 </mapper>

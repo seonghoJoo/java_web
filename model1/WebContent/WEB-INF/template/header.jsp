@@ -1,8 +1,14 @@
+<%@page import="com.doogwal.coffee.vo.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	
+	Member loginMember = (Member)session.getAttribute("loginMember");
+
+%>
 <div id="header">
     <h1><a href="/"><img src="img/logo.png" width="40"/><strong>ODEL1</strong> <span>Board</span></a></h1>
-
+<%if(loginMember==null){ %>
     <div id="logoutBox">
         <h2 class="screen_out">로그인</h2>
         <form action="/login.bmj" method="post">
@@ -17,7 +23,7 @@
             </fieldset>
         </form>
     </div>
-
+<%}else{ %>
     <div id="loginBox">
         <h2 class="screen_out">유저정보</h2>
         <img src="/profile/IMG_1136.JPG"
@@ -31,6 +37,7 @@
             </ul><!--//profileList-->
         </div><!--//#profilePopup-->
     </div><!--// loginBox-->
+    <%} %>
     <script>
         const $profile = $("#loginBox img");
         const $profileTarget = $("#profilePopup");

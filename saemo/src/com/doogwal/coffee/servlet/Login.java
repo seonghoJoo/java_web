@@ -20,10 +20,9 @@ import com.doogwal.coffee.vo.User;
 
 @WebServlet("/login.do")
 public class Login extends HttpServlet {
-	// .do
+	// 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
 				
 		//우선 세션 얻고
 		HttpSession session = req.getSession();
@@ -44,14 +43,14 @@ public class Login extends HttpServlet {
 		User loginUser = UsersDAO.selectLogin(user);
 		
 		// 유저의 진행중인 crew 가져오기
-		List<Crew> ownCrewList = CrewsDAO.selectOwnList(loginUser.getNo());
+		List<CrewMember> ownCrewList = CrewMembersDAO.selectOwnList(loginUser.getNo());
 		System.out.println("onwCrewList 사이즈:" + ownCrewList.size());	
 		if(loginUser!=null) {
 			session.setAttribute(User.LOGIN, loginUser);
 			int idx=0;
 			if(ownCrewList !=null) {
-				for(Crew crew: ownCrewList) {
-					session.setAttribute("userCrewList"+ (idx++), crew);
+				for(CrewMember crewMember: ownCrewList) {
+					session.setAttribute("userCrewList"+ (idx++), crewMember);
 				}
 			}
 			System.out.println("성공");

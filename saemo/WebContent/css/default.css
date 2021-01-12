@@ -123,9 +123,10 @@ body {
 }
 .header_status_dropbox{
     width: 80px;
-    height: 60px;
+    min-height:30px;
+    max-height: 60px;
     right:0;
-    bottom:-60px;
+    bottom:-30px;
     position:absolute;
     border: 1px solid #424242;
     display: none;

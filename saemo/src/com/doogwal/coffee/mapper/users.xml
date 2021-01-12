@@ -9,4 +9,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM users
 		WHERE email = #{email} AND password = #{password}
 	</select>
+	
+	<select id="selectUserOne" parameterType="int" resultType="User">
+		SELECT no, name, email, password, phone_num phoneNum, gender, birth_date birthDate, address, email_check emailCheck, email_auth emailAuth, regdate
+		FROM users
+		WHERE no=#{no}
+	</select>
 </mapper>
