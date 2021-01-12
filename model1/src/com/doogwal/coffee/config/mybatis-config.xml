@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC
+"-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<!-- NULL입력 들어갈 수 있도록 세팅 -->
+	<settings>
+		<setting name="jdbcTypeForNull" value="NULL" />
+	</settings>
+
+	<!-- 편리하게 alias로 -->
+	<typeAliases>
+		<typeAlias alias="Reply"
+		 type="com.bmj.model1.vo.Reply"/>
+		<typeAlias alias="PageVO"
+		type="com.bmj.model1.vo.PageVO"/>
+		<typeAlias alias="Member"
+		 type="com.bmj.model1.vo.Member"/>
+		 <typeAlias alias="Like"
+		 type="com.bmj.model1.vo.Like"/>
+		 <typeAlias alias="Article"
+		  type="com.bmj.model1.vo.Article"/>
+	</typeAliases>
+
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC"/>
+			<dataSource type="JNDI">
+				<property name="data_source"
+				 value="java:comp/env/oraclexe"/> 
+			</dataSource>
+		</environment>
+	</environments>
+	
+	<mappers>
+		<mapper resource="com/bmj/model1/mapper/members.xml"/>
+		<mapper resource="com/bmj/model1/mapper/board.xml"/>
+		<mapper resource="com/bmj/model1/mapper/replies.xml"/>
+		<mapper resource="com/bmj/model1/mapper/likes.xml"/>
+	</mappers>
+	
+</configuration>
+

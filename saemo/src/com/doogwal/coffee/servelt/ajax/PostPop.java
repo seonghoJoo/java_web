@@ -44,6 +44,7 @@ public class PostPop extends HttpServlet{
 		// 크루원 번호로 부터 크루 이름 얻기
 		String name = CrewMembersDAO.selectMemberName(post.getMemberNo());
 		
+		// ObjectMapper
 		
 		
 		out.print("{\"count\":"+cnt+"}");
