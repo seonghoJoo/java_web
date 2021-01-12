@@ -54,20 +54,38 @@
 	<p id="name">???</p>
 	<button id="showBtn">눌러보세요!</button>
 <script src="/js/jquery.js"></script>
+<script src="/js/underscore-min.js"></script>
 <script>
 	//$(function(){}) or ready 이런거는 head쪽에다가 js를 쓸때 사용하는 옛날 코드
-	const names=[
+	let names=[
 		"오승주","김거울","나혁진","강필규","김도훈","주성호","송진현",
 		"김기현","오세훈","이지수","이성정","이소현","박해원","조용규","김정석",
 		"김돈하","백경현","양성용","방현수","김상언","오경택","이아림","박형우","정진하"
 	];
+	
+	//HTML이 랜더링되면 한번 수행
+	names = shuffleNames(names);
+	let cnt =0;
 	const $name = $("#name");
 	const $showBtn = $('#showBtn');
+	// 이름을 섞는 함수
+	function shuffleNames(names){
+		
+		return _.shuffle(names);
+	}//shuffleNames() end
+	
 	$showBtn.on("click",function(){
+		
+		if(cnt==names.length){
+			names = shuffleNames(names);
+			cnt=0;
+		}
+		
+		console.log(names[cnt]);
 		// 이벤트 핸들러 클릭/호버 등...
 		// 콜백 ajax
-		const idx = Math.floor(Math.random()*names.length);
-		setTimeout(function() {$name.text(names[idx])}, 3000);
+		//const idx = Math.floor(Math.random()*names.length);
+		$name.text(names[cnt++]);
 	});//click(() end
 	
 </script>
