@@ -11,6 +11,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE m.user_no=#{no} AND m.crew_no = c.no
 		ORDER BY 1
 	</select>
+	
+	<select id="selectCrewByName" parameterType="String" resultType="int">
+		SELECT no
+		FROM crews
+		WHERE name=#{name}
+	</select>
+	
 	<!-- 주성호 2021 01 11 check name-->
 	<select id="selectCheckName" parameterType="String"  resultType="int">
 		SELECT COUNT(*)
@@ -19,8 +26,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 <!-- 주성호 2021 01 11 end-->
 	<insert id="insertCrew" parameterType="Crew">
-		INSERT INTO crews(no, name, cover_img,intro,max_age,min_age,max_pop,category_no,regdate)
-		VALUES(crews_seq.nextval, #{name},#{coverImg} ,#{intro}, #{maxAge}, #{minAge}, #{maxPop}, #{categoryNo}, systimestamp)
+		INSERT INTO crews(no, name, cover_img, intro, min_age, max_age, max_pop, cur_pop, category_no,gender_rate,avg_age,point, regdate)
+		VALUES(crews_seq.nextval, #{name},#{coverImg} ,#{intro}, #{minAge}, #{maxAge}, #{maxPop},#{curPop} ,#{categoryNo},#{genderRate},#{avgAge},#{point} , systimestamp)
 	</insert>
-
 </mapper>

@@ -37,29 +37,70 @@ public class CreateCrew extends HttpServlet{
 		int maxAge = Integer.parseInt(youngerYearStr);
 		int maxPop = Integer.parseInt(maxPopStr);
 		
-		String[] mtpQuest = req.getParameterValues("mtp_quest");
-		String[] mtpAnswer = req.getParameterValues("mtp_answer");
-		String[] subQuest = req.getParameterValues("subj_quest");
-		String[] subAnswer = req.getParameterValues("subj_answer");
-		String[] fileQuest = req.getParameterValues("file_quest");
+		String[] mtpQuests = req.getParameterValues("mtp_quest");
+		String[] mtpAnswers = req.getParameterValues("mtp_answer");
+		String[] subQuests = req.getParameterValues("subj_quest");
+		String[] subAnswers = req.getParameterValues("subj_answer");
+		String[] fileQuests = req.getParameterValues("file_quest");
+		
+		if(mtpQuests!=null) {
+			for(String mtpQuest:mtpQuests)
+			{
+				System.out.println(mtpQuest);
+			}
+		}
+		if(mtpAnswers!=null) {
+		for(String mtpQuest:mtpAnswers)
+			{
+				System.out.println(mtpQuest);
+			}
+		}
+		if(subQuests!=null) {
+			for(String mtpQuest:subQuests)
+			{
+				System.out.println(mtpQuest);
+			}
+		}
+		if(subAnswers!=null) {
+		for(String mtpQuest:subAnswers)
+			{
+				System.out.println(mtpQuest);
+			}
+		}
+		if(fileQuests!=null) {
+			for(String mtpQuest:fileQuests)
+			{
+				System.out.println(mtpQuest);
+			}
+		}
 		
 		User user = UsersDAO.selectUserOne(userNo); 
 		Date d=new Date();  
         int year=d.getYear();  
+        System.out.println(year);
         int age=year+1900-user.getBirthYear();  
 		char gender = user.getGender();
 		
 		int no=1;
 		Crew crew;
+															
+
 		if(gender=='f' || gender=='F') {
 			crew = new Crew(minAge, maxAge, maxPop,1, categoryNo, 30000, age, 0, name, coverImg, intro);
 		}else {
 			crew = new Crew(minAge, maxAge, maxPop,1, categoryNo, 30000, age, 1, name, coverImg, intro);
 		}
 		int resultCrew = CrewsDAO.insertCrew(crew);
+		System.out.println("result: "+  resultCrew);
+		// 크루 번호 얻기
+		int crewNo = CrewsDAO.selectCrewByName(name);
+		// 크루 삽입
+		CrewMember crewMember = new CrewMember(crewNo, userNo, 0, 'C', 'A', "default.jpg",null);
 		
 		
-		CrewMember crewMember = new CrewMember(crewNo, userNo, 0, 'C', 'A', "default.jpg",null) 
+		// 질문과 정답 얻기
+		System.out.println(crewMember.getNo());
+		
 		
 		
 		String url = "/crewDetail.jsp?no="+no;

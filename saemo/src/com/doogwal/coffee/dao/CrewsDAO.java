@@ -48,7 +48,23 @@ public class CrewsDAO {
 		
 		try {
 			session = SqlSessionUtil.getSession();
-			cnt = session.selectOne("crews.insertCrew",crew);
+			cnt = session.insert("crews.insertCrew",crew);
+			return cnt;
+		}catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}//try~catch~finally end
+		
+		return cnt;
+	}
+	
+	public static int selectCrewByName(String name) {
+		int cnt = 0;
+		SqlSession session = null;
+		try {
+			session = SqlSessionUtil.getSession();
+			cnt = session.selectOne("crews.selectCrewByName",name);
 			return cnt;
 		}catch(Exception e) {
 			e.printStackTrace();

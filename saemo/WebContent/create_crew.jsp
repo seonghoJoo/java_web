@@ -120,7 +120,7 @@
 </head>
 <body>
 <%@ include file="/WEB-INF/template/header.jsp" %>
-<div id="containerCreateCrew" class="step4"><!--container start-->
+<div id="containerCreateCrew" class="step1"><!--container start-->
     <form action="/createCrew.do" method="post">
     <input type="hidden" name="userNo" value="<%=user.getNo() %>" />
         <fieldset>
@@ -287,7 +287,7 @@
                     </div><!--//qualification_write_box end-->
                     <div class="crew_create_btn_box">
                         <button type="button" class="prev_btn"><a>이전</a></button>
-                        <button type="submit" class="next_btn next_btn_step4" disabled="true">제출</button>
+                        <button type="submit" class="next_btn next_btn_step4">제출</button>
                     </div><!--crew_create_btn_box end-->
                 </div><!--//inner end-->
             </div><!--//step4 end-->

@@ -89,10 +89,6 @@ body {
     height: 40px;
     display: block;
 }
-
-.header_crew_list  .fa-plus-circle{
-    font-size: 40px;
-}
 .header_crew_list img {
     border-radius: 50%;
 }
@@ -123,13 +119,13 @@ body {
 }
 .header_status_dropbox{
     width: 80px;
-    min-height:30px;
-    max-height: 60px;
+    height: 60px;
     right:0;
-    bottom:-30px;
+    bottom:-60px;
     position:absolute;
     border: 1px solid #424242;
     display: none;
+    z-index: 100;
 }
 .header_status_dropbox li{
     width: 80px;
@@ -218,3 +214,5 @@ body {
 button,input,textarea,select {
     font-family: Arial,'NIXGONM-Vb', sans-serif;
 }
+
+
