@@ -37,40 +37,35 @@ public class CreateCrew extends HttpServlet{
 		int maxAge = Integer.parseInt(youngerYearStr);
 		int maxPop = Integer.parseInt(maxPopStr);
 		
+		
 		String[] mtpQuests = req.getParameterValues("mtp_quest");
-		String[] mtpAnswers = req.getParameterValues("mtp_answer");
 		String[] subQuests = req.getParameterValues("subj_quest");
 		String[] subAnswers = req.getParameterValues("subj_answer");
 		String[] fileQuests = req.getParameterValues("file_quest");
 		
-		if(mtpQuests!=null) {
-			for(String mtpQuest:mtpQuests)
-			{
-				System.out.println(mtpQuest);
-			}
-		}
-		if(mtpAnswers!=null) {
-		for(String mtpQuest:mtpAnswers)
-			{
-				System.out.println(mtpQuest);
-			}
-		}
-		if(subQuests!=null) {
-			for(String mtpQuest:subQuests)
-			{
-				System.out.println(mtpQuest);
-			}
-		}
-		if(subAnswers!=null) {
-		for(String mtpQuest:subAnswers)
-			{
-				System.out.println(mtpQuest);
-			}
-		}
-		if(fileQuests!=null) {
-			for(String mtpQuest:fileQuests)
-			{
-				System.out.println(mtpQuest);
+		String[] types = req.getParameterValues("type");
+		for(int i=0;i<types.length;i++) {
+			if(types[i].equals("M")) {
+				System.out.println("M");
+				if(mtpQuests.length>0) {
+					for(int j=0;j< mtpQuests.length;j++){
+						String[] mtpAnswers = req.getParameterValues("mtp_answer");
+						for(int k=0;k<)
+					}
+				}
+			}else if(types[i].equals("S")) {
+				System.out.println("S");
+				if(subQuests.length>0) {
+					for(int j=0;j< subQuests.length;j++){
+					
+					}
+				}
+			}else if(types[i].equals("F")) {
+				System.out.println("F");
+				if(fileQuests.length>0) {
+					for(int j=0;j< fileQuests.length;j++){
+					}
+				}
 			}
 		}
 		
@@ -90,16 +85,16 @@ public class CreateCrew extends HttpServlet{
 		}else {
 			crew = new Crew(minAge, maxAge, maxPop,1, categoryNo, 30000, age, 1, name, coverImg, intro);
 		}
-		int resultCrew = CrewsDAO.insertCrew(crew);
-		System.out.println("result: "+  resultCrew);
+		//int resultCrew = CrewsDAO.insertCrew(crew);
+		//System.out.println("result: "+  resultCrew);
 		// 크루 번호 얻기
-		int crewNo = CrewsDAO.selectCrewByName(name);
+		//int crewNo = CrewsDAO.selectCrewByName(name);
 		// 크루 삽입
-		CrewMember crewMember = new CrewMember(crewNo, userNo, 0, 'C', 'A', "default.jpg",null);
+		//CrewMember crewMember = new CrewMember(crewNo, userNo, 0, 'C', 'A', "default.jpg",null);
 		
 		
 		// 질문과 정답 얻기
-		System.out.println(crewMember.getNo());
+		//System.out.println(crewMember.getNo());
 		
 		
 		

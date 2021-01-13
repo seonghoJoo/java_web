@@ -37,9 +37,7 @@
 <head>
     <meta charset="UTF-8">
     <title>크루만들기</title>
-    <link rel="stylesheet" href="css/reset.css"/>
-    <link rel="stylesheet" href="css/default.css" />
-    <link rel="stylesheet" href="css/all.min.css"/>
+    <%@ include file="/WEB-INF/template/link.jsp" %>
     <link rel="stylesheet" href="css/step1.css"/>
     <link rel="stylesheet" href="css/step2.css"/>
     <link rel="stylesheet" href="css/step3.css"/>
@@ -120,7 +118,7 @@
 </head>
 <body>
 <%@ include file="/WEB-INF/template/header.jsp" %>
-<div id="containerCreateCrew" class="step1"><!--container start-->
+<div id="containerCreateCrew" class="step4"><!--container start-->
     <form action="/createCrew.do" method="post">
     <input type="hidden" name="userNo" value="<%=user.getNo() %>" />
         <fieldset>
@@ -300,30 +298,34 @@
 <!--객관식 질문 추가-->
 <script type="text/template" id="multipleChoiceTmpl">
     <li class="question_item">
+	<input type="hidden" name="type" value="M"/>
+	<input type="hidden" name="choice" value=""/>
         <div>
             <label>
-                <span class="question_num"><@= ++question@></span><input name="mtp_quest" class="question_input" placeholder='질문명을 입력해 주세요'/>
+                <span class="question_num"><@= ++question@> </span><input name="mtp_quest" class="question_input" placeholder='질문명을 입력해 주세요'/>
 			</label>
             <span class="remove_question">질문 삭제</span>
 			<p class="question_msg msg">최소 5자 이상은 입력해주세요</p>
         </div>
-		<%for(int i=0;i<3;i++){%>
+		<@for(let i=0;i<3;i++){@>
         <div>
             <label><span><i class="far fa-dot-circle"></i></span>
-                <input name="mtp_answer" class="answer_input" placeholder='보기를 적어주세요'/>
+                <input name="mtp_answer<@=i@>" class="answer_input" placeholder='보기를 적어주세요'/>
             </label>
             <span class="remove_answer"><i class="far fa-minus-square"></i></span>
 			<p class="answer_input msg">최소 5자 이상은 입력해주세요</p>
         </div>
-		<%}%>
+		<@}@>
+		<div class="add_box"><span class="add_answer"><i class="far fa-plus-square"></i></span></div>
     </li>
 </script>
 <!--//객관식 질문 추가 end-->
 <!--객관식 보기 추가--><!--2개 이하는 못지움-->
 <script type="text/template" id="multipleChoiceAnswerTmpl">
     <div>
+
         <label><span><i class="far fa-dot-circle"></i></span>
-            <input name="mtp_answer" class="answer_input" placeholder='보기를 적어주세요'/>
+            <input name="mtp_answer<@= ++answer@>" class="answer_input" placeholder='보기를 적어주세요'/>
         </label>
         <span class="remove_answer"><i class="far fa-minus-square"></i></span>
 		<p class="answer_input msg">최소 5자 이상은 입력해주세요</p>
@@ -334,9 +336,10 @@
 <!--주관식 질문 추가-->
 <script type="text/template" id="subjectiveTmpl">
     <li>
+		<input type="hidden" name="type" value="S"/>
         <div>
             <label>
-                <span class="question_num"><@=++question@> </span><input name="subj_quest" class="question_input" placeholder='질문명을 입력해 주세요'/>
+                <span class="question_num"><@= ++question@> </span><input name="subj_quest" class="question_input" placeholder='질문명을 입력해 주세요'/>
             </label>
             <span class="remove_question">질문 삭제</span>
 			<p class="question_msg msg">최소 5자 이상은 입력해주세요</p>
@@ -354,6 +357,7 @@
 <!--파일첨부 질문 추가-->
 <script type="text/template" id="fileAttachmentTmpl">
     <li>
+		<input type="hidden" name="type" value="F"/>
         <div>
             <label>
                 <span class="question_num"><@=++question@> </span><input name="file_quest" class="question_input" placeholder='질문명을 입력해 주세요'/>
@@ -369,17 +373,12 @@
     </li>
 </script>
 <!--//파일첨부 질문 추가 end-->
-
-
-<script src="js/jquery.js"></script>
-<script src="js/underscore-min.js"></script>
-<script src="js/default.js"></script>
 <script src="js/step1.js"></script>
 <script src="js/step2.js"></script>
 <script src="js/step3.js"></script>
 <script src="js/step4.js"></script>
-
 <script>
+
 	const $nameMsg = $('#nameMsg');
     const $populationMsg = $('#populationMsg');
     const $prevBtn = $('.prev_btn');
@@ -392,6 +391,8 @@
     let idx = 1;
     let progress=25;
     console.log(idx);
+    
+    let categoryPath="";
 
     // 다음 버튼 클릭
     $('.next_btn').click(changeStep);
@@ -413,9 +414,10 @@
         console.log(idx);
     };
     /* step change end*/
-
-    let categoryPath="";
+    
+ 
 
 </script>
+
 </body>
 </html>

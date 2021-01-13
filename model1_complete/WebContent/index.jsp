@@ -11,7 +11,6 @@
 
 	String pageNoStr = 
 			request.getParameter("page");
-	
 	try {
 		pageNo = Integer.parseInt(pageNoStr);
 	}catch(Exception e) {
@@ -92,7 +91,6 @@
 </div><!-- //.box_btn -->
 <%} %>
 <%@ include file="/WEB-INF/template/footer.jsp" %>
-
 </body>
 </html>
 

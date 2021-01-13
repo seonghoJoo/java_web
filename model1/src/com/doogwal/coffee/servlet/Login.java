@@ -33,12 +33,15 @@ public class Login extends HttpServlet {
 		
 		HttpSession session = req.getSession();
 		
-		session.setAttribute("loginMember", loginMember);
 		
 		if(loginMember==null) {
+			// 로그인 실패
 			System.out.println("실패");
+			session.setAttribute("msg", "아이디나 비밀번호가 틀렸습니다.");
 		}else {
+			// 로그인 성공
 			System.out.println("성공");
+			session.setAttribute("loginMember", loginMember);
 		}
 		resp.sendRedirect("/index.jsp");
 		// json 뷰

@@ -9,5 +9,17 @@
 		FROM members
 		WHERE id = #{id} AND password = #{password}	
 	</select>
+	
+	<select id="selectIdCheck" parameterType="String" resultType="int">
+		SELECT COUNT(*)
+		FROM members
+		WHERE id = #{id}
+	</select>
+	
+	<select id="selectNicknameCheck" parameterType="String" resultType="int">
+		SELECT COUNT(*)
+		FROM members
+		WHERE nickname = #{nickname}
+	</select>
 
 </mapper>

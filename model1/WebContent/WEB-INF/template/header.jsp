@@ -52,8 +52,17 @@
             }
         });//
     </script>
+<%
+	String msg = (String)session.getAttribute("msg");
+	
+	if(msg!=null){
+		session.removeAttribute("msg");	
 
-
+%>
+<script>
+	alert("<%=msg%>");
+</script>
+<%} %>
 </div><!-- //header -->
 <div id="content">
     <div class="aux"><!-- aux : 보조의 -->

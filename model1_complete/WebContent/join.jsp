@@ -217,7 +217,7 @@ function checkId() {
 			   },
 			   success:function(json) {
 				   
-				   if(json.count==0) {
+				   if(json.cnt==0) {
 					   $idMsg.addClass("ok").text("아주 좋은 아이디입니다.");
 					   validArr[0] = true;
 				   }else {

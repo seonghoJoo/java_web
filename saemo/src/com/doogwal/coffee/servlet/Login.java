@@ -42,10 +42,10 @@ public class Login extends HttpServlet {
 		//유저가 맞는지 확인
 		User loginUser = UsersDAO.selectLogin(user);
 		
-		// 유저의 진행중인 crew 가져오기
-		List<CrewMember> ownCrewList = CrewMembersDAO.selectOwnList(loginUser.getNo());
-		System.out.println("onwCrewList 사이즈:" + ownCrewList.size());	
 		if(loginUser!=null) {
+			// 유저의 진행중인 crew 가져오기
+			List<CrewMember> ownCrewList = CrewMembersDAO.selectOwnList(loginUser.getNo());
+			System.out.println("onwCrewList 사이즈:" + ownCrewList.size());	
 			session.setAttribute(User.LOGIN, loginUser);
 			int idx=0;
 			if(ownCrewList !=null) {

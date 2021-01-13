@@ -1,8 +1,10 @@
 /*step4 start*/
 // % -> @ 으로
-_.templateSettings = {interpolate: /\<\@\=(.+?)\@\>/gim,evaluate: /\<\@([\s\S]+?)\@\>/gim,escape: /\<\@\-(.+?)\@\>/gim};
-   
 let question=0;
+let answer=0;
+
+//% -> @ 으로
+_.templateSettings = {interpolate: /\<\@\=(.+?)\@\>/gim,evaluate: /\<\@([\s\S]+?)\@\>/gim,escape: /\<\@\-(.+?)\@\>/gim};    
 
 let $questionNum = $('.question_num');
 
@@ -64,12 +66,14 @@ $(document).on("click", '.remove_question',function (e) {
     });
 });
 
+
 //보기 추가 버튼 클릭
 // 템플릿으로 만들어진 애들은 인자 3개짜리로 만들어야한다.
 $(document).on("click", '.add_answer',function (e) {
     console.log("click");
     $('.question_item').append(multipleChoiceAnswerTmpl);
     $(this).parent().remove();
+	
 });
 
 // 객관식 답변 보기 삭제제
@@ -82,6 +86,7 @@ $(document).on("click", '.remove_answer',function (e){
         $(this).parent().remove();
     }
 });
+
 
 
 

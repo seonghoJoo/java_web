@@ -102,6 +102,117 @@
 <%@ include file="/WEB-INF/template/footer.jsp" %>
 
 <script>
+	//id 입력 필드
+	const $id = $('#id');
+	// id에 대한 메세지
+	const $idMsg =$('.msg.id');
+	//$id.val('크크크크크');
+	//$idMsg.text('크크크크크');
+	
+	//id 입력 필드
+	const $nickname = $('#nickname');
+	// id에 대한 메세지
+	const $nicknameMsg =$('.msg.nickname');
+	
+	// 정규표현식
+	// ^:시작 $:끝 
+	// 첫글자는 영어 쓸수 있다. 
+	// \w : 숫자 아님 영어 
+	const idRegExp = /^[a-z|A-Z]{1}[\w]{3,19}$/;
+	const nicknameRegExp = /^[가-힣|\d]{1,5}$/;
+	//console.log(idRegExp.test("111"));
+	//console.log(idRegExp.test("a1"));
+	//console.log(idRegExp.test("aa111"));
+	//console.log(idRegExp.test("aaa111"));
+	//console.log(idRegExp.test("asdasdasdasd"));
+	//$id.on("blur",function(){}) : focus가 맞았다가 떨어질때
+	
+	// 아이디 입력필드에 글자를 썼을 때
+	$id.on("keyup",function(e){
+		
+		// 유저가 입력한 id값을 얻어옴
+		let id = $id.val();
+		
+		id = id.substr(0,20);
+		$id.val(id);
+		
+		// 우선 검사중으로
+		$idMsg.removeClass("ok").text('검사중...');	
+		//우선 정규표현식으로 test
+		if(idRegExp.test(id)){
+			//이때 ajax를 실행하여 데이터베이스에 이 아이디가 존재하는지 확인
+			$.ajax({
+				url:"/ajax/checkId.json",
+				type:"GET",//방식 
+				data:{"id":id},//파라미터 data:{id:id} "문자열 생략가능"
+				dataType:"json", // 응답의자료형 xml/html/text
+				error:function(xhr,error){
+					// 콜백 함수
+					// 문앞에 피자오길 대기타는 고양이 : xhr xmlHttpRequest 객체 
+					console.log(error);
+					alert("서버 점검중!");
+				},
+				// json -> 피자
+				success:function(json){
+					// 콜백 함수
+					//중복됨
+					console.log(json.result);
+					if(json.result==0){					
+						$idMsg.addClass("ok").text("좋은 아이디군요 ^_^");
+					}
+					// 중복 안됨
+					else{
+						$idMsg.removeClass("ok").text("아이디가 중복됐습니다.");
+					}//if~else end
+				}
+			});//ajax end
+		
+		}else{
+			$idMsg.removeClass("ok").text('영어,숫자로 4~20자 입력해주세요');
+		}
+		
+		
+	});//keyup end
+	$nickname.on("blur",function(e){
+		// 유저가 입력한 id값을 얻어옴
+		let nickname = $nickname.val();
+		
+		nickname = nickname.substr(0,20);
+		$nickname.val(nickname);
+		//우선 정규표현식으로 test
+		if(nicknameRegExp.test(nickname)){
+			//이때 ajax를 실행하여 데이터베이스에 이 아이디가 존재하는지 확인
+			$.ajax({
+				url:"/ajax/checkNickname.json",
+				type:"GET",//방식 
+				data:{"nickname":nickname},//파라미터 data:{id:id} "문자열 생략가능"
+				dataType:"json", // 응답의자료형 xml/html/text
+				error:function(xhr,error){
+					// 콜백 함수
+					// 문앞에 피자오길 대기타는 고양이 : xhr xmlHttpRequest 객체 
+					console.log(error);
+					alert("서버 점검중!");
+				},
+				// json -> 피자
+				success:function(json){
+					// 콜백 함수
+					//중복됨
+					console.log(json.result);
+					if(json.result==0){					
+						$nicknameMsg.addClass("ok").text("좋은 닉넴~ ^_^");
+					}
+					// 중복 안됨
+					else{
+						$nicknameMsg.removeClass("ok").text("닉네임이 중복됐습니다.");
+					}//if~else end
+				}
+			});//ajax end
+		
+		}else{
+			$idMsg.removeClass("ok").text('영어,숫자로 4~20자 입력해주세요');
+		}
+		
+	});
 	
 </script>
 </body>

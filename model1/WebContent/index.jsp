@@ -20,6 +20,7 @@
 	<%@ %> : 지시어 : 페이지 지시어  / include 지시어
 --%>
 <%@ include file="/WEB-INF/template/header.jsp" %>
+		<%=loginMember %>
         <h2 class="title"><i class="far fa-list-alt"></i> 게시글 목록</h2>
         <ul id="articleList">
             <li class="article">
@@ -44,5 +45,9 @@
         <div class='paginate'><span title="이전 페이지 없음"><i class="fa fa-chevron-left"></i></span><strong title='현재 1페이지'>1</strong><span title='다음 페이지 없음'><i class='fa fa-chevron-right'></i></span></div>
 
 <%@ include file="/WEB-INF/template/footer.jsp" %>
+<script>
+	
+	
+</script>
 </body>
 </html>
