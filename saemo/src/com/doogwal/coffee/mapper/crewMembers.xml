@@ -12,4 +12,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY 9
 	</select>
 	
+	<insert id="insertCrewMemberByCaptin" parameterType="CrewMember">
+		INSERT INTO crews_members(no, CREW_NO, USER_NO, ROLE, REPORT_NUM, PROFILE_IMG, INTRODUCTION, TYPE, regdate)
+		VALUES(crew_members_seq.nextval, #{crewNo},#{userNo},#{role},#{reportNum},#{profileImg},#{introduction},#{type}, systimestamp)
+	</insert>
+	
 </mapper>

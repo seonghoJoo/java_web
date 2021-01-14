@@ -11,14 +11,13 @@ public class UserAns {
 		// TODO Auto-generated constructor stub
 	}
 
-	
-	
 	public UserAns(int no, int qNo, int crewApplyNo, int mtpChoiceNo) {
 		this.no = no;
 		this.qNo = qNo;
 		this.crewApplyNo = crewApplyNo;
 		this.mtpChoiceNo = mtpChoiceNo;
 	}
+
 	public int getNo() {
 		return no;
 	}
@@ -49,6 +48,14 @@ public class UserAns {
 
 	public void setMtpChoiceNo(int mtpChoiceNo) {
 		this.mtpChoiceNo = mtpChoiceNo;
+	}
+
+	public Timestamp getRegdate() {
+		return regdate;
+	}
+
+	public void setRegdate(Timestamp regdate) {
+		this.regdate = regdate;
 	}
 	
 }

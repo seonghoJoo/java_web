@@ -17,8 +17,7 @@
     <div class="aux">
         <h2 class="title"><i class="fas fa-hat-wizard"></i> 회원가입</h2>
         <div id="joinBox">
-
-            <form  method="post" action="/join.bmj">
+            <form method="post" action="/join.bmj">
                 <input type="hidden" id="profileName" name="profile" />
                 <fieldset>
                     <legend class="screen_out">회원가입폼</legend>
@@ -173,6 +172,7 @@
 		
 		
 	});//keyup end
+	// nickname에 글자를 쓸 때
 	$nickname.on("blur",function(e){
 		// 유저가 입력한 id값을 얻어옴
 		let nickname = $nickname.val();
@@ -212,6 +212,129 @@
 			$idMsg.removeClass("ok").text('영어,숫자로 4~20자 입력해주세요');
 		}
 		
+	});
+	
+	// profile(파일) input 요소  21번째 hidden 
+	const $profile = $('#profile');
+	const $profileMsg = $('.msg.profile');
+	
+	// 프로필 박스
+	const $profileBox = $('#profileBox');
+	
+	// 프로필 이미지
+	const $profileImg = $("#profileImg");
+	
+	// 프로필 이름 input hidden
+	const $profileName = $('#profileName');
+	
+	
+	
+	// 파일이 변경되었을 때
+	$profile.on("change",function(){
+		// 자바는 윗줄에서 에러가 나면 밑에서 안먹히게됨
+		// input type = file 요소에는 (file API 순수 자바스크립트)
+		// files 라는 배열이 존재함.
+		// $profile.file -> undefined
+		// this.files = 파일객체
+		// type 
+		// image : image/jpeg  // mp3 : audio/mp3
+		
+		const file = this.files[0];
+		
+		// 1) 파일의 크기가 0이상
+		if(file.size==0){
+			$profileMsg.text("제대로 된 파일을 선택하시오. -_-;");
+			return; // 밑에 것이 작동이 안됨
+		}// if end
+		
+		//const imageRegExp = /^image/\$/;
+
+		// 2) 파일의 종류가 image
+		if(!file.type.includes("image/")){
+			$profileMsg.text("이미지 파일을 선택하시오. -_-;");
+			console.log("없음");
+			return;
+		}
+		
+		$profileMsg.text("파일 업로드 중");
+		// 3) 파일 업로드 FormData 객체 생성
+		const formData = new FormData();
+		
+		// 4) formdata에 파라미터를 추가
+		
+		// ?type=P 파라미터를 넘김
+		formData.append("type","P");
+		
+		// 파일을 append 
+		// file: 13.6KB 파일 
+		// file.name: ryan.jpg
+		formData.append("profile",file,file.name);
+		
+		// enctype : 한글이 %ED%95%9C....
+		// $.ajax의 enctype의 기본값은 enctype="application/x-www-form-urlencoded"
+		// multipart/form-data로 넘겨야 함 (필수 얘네 하나라도 실수하면 file upload 불가)
+		// 1) post 방식(무조건) : get 방식의 쿼리스트링은 3MB 제한
+		// 2) processData : false
+		// 3) contentType : false
+		
+		$.ajax({
+			url:"/ajax/UploadProfile.json",
+			type : "post",
+			processData : false,
+			contentType : false,
+			data: formData,//진짜 file을 업로드함
+			dataaType:"json",
+			error:function(){
+				// json이 응답하질 않기 때문에 error
+				alert("서버 점검중!");
+			},
+			success:function(json){
+				console.log(json.profileName);
+				// img 요소의 src 속성
+				$profileImg.attr("src","/upload/"+json.profileName);
+				
+				// profile Box의 no_image 클래스를 제거
+				$profileBox.removeClass("no_image");
+				
+				// 메세지 제거
+				$profileMsg.text("");
+				
+				// input hidden에 이름을 value로 
+				$profileName.val(json.profileName);
+				
+			}
+		});// ajax() end
+		
+		
+		// 프레임워크라면 다른데서 뭘 만들었을때 file은 자바스크립트 자체에 포함되어있어서 APi라고 함
+		// 자바스크립트 자체에 포함되어 있는 것이라 
+		/*
+			웹의 역사
+			fileupload를 multipart form data를 넘김
+			
+			HTML5
+			FLASH <- adobe 블랙박스 못풀어 ㅜㅜ
+			File API
+			Form Data API
+			
+			ECMA script - 누가 주도하질 않지만 표준임 2021년 버전에는 private가 들어감.... java 는 Oracle이 주도
+			
+			WHATWG
+		*/
+	});//change() end
+	
+	//이미지 삭제 버튼
+	const $deleteBtn  =$('.delete');
+	// 이미지 삭제 버튼을 클릭했을 때
+	$deleteBtn.on("click",function(){
+		
+		alert("기본띠");
+		
+		// no_image 클래스를 add
+		$profileBox.addClass("no_image");
+		
+		// $profile의 값을 비워야함
+		$profile.val('');
 	});
 	
 </script>

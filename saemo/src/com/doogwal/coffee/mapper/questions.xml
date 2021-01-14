@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="questions">
+	
+	<select id="selectQuestionList" parameterType="int" resultType="Question">
+		SELECT no, crew_no crewNo, type, quest,regdate
+		FROM questions
+		WHERE crew_no=#{crewNo}
+	</select>
+	
+	<insert id="insertQuestion" parameterType="Question">
+		INSERT INTO questions(no,type,quest,crew_no,regdate)
+		VALUES( questions_seq.nextval,#{type},#{quest},#{crewNo},systimestamp)
+	</insert>
+	
+	
+</mapper>

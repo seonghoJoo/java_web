@@ -16,8 +16,7 @@ public class Question {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Question(int no, int crewNo, char type, String quest) {
-		this.no = no;
+	public Question(int crewNo, char type, String quest) {
 		this.crewNo = crewNo;
 		this.type = type;
 		this.quest = quest;

@@ -31,6 +31,34 @@ public class CrewMembersDAO {
 		2021 01 11 주성호 end
 		header.jsp 크루 이미지
 	 */
+	
+	/*
+	2021 01 14 주성호 start
+ 	크루 생성시 크루장 입력
+	 */
+	
+	public static int insertCrewMember(CrewMember crewMember) {
+		int cnt = 0;
+		SqlSession session = null;
+		
+		try {
+			session = SqlSessionUtil.getSession();
+			cnt = session.insert("crewMembers.insertCrewMemberByCaptin",crewMember);
+			return cnt;
+		}catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}//try~catch~finally end
+		
+		return cnt;
+	}
+	/*
+	2021 01 14 주성호 end
+ 	크루 생성시 크루장 입력
+	 */
+
+	
 	//-------------------------------------------------------------
 
 }
