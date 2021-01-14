@@ -119,8 +119,7 @@
 <body>
 <%@ include file="/WEB-INF/template/header.jsp" %>
 <div id="containerCreateCrew" class="step1"><!--container start-->
-    <form action="/createCrew.do" method="post" enctype="multipart/form-data">
-    <input type="hidden" name="userNo" value="<%=user.getNo() %>" />
+    <form action="/createCrew.do" method="post">
         <fieldset>
             <div class="step_box">
                 <h2 class="spot">카테고리 선택</h2>
@@ -136,10 +135,10 @@
                                 <%for(Category category: secondCategories[i]){ 
                                 	int categoryNo = category.getNo();
                                 %>
-                                    <li class="category_detail_item">
-                                        <input id="categoryDetailItem<%=categoryNo %>"  name="category_no" type="radio" value="<%=categoryNo %>"/>
-                                        <h4><label for="categoryDetailItem<%=categoryNo %>"><%=category.getName() %></label></h4>
-                                    </li>
+                                <li class="category_detail_item">
+                                    <input id="categoryDetailItem<%=categoryNo %>"  name="category_no" type="radio" value="<%=categoryNo %>"/>
+                                    <h4><label for="categoryDetailItem<%=categoryNo %>"><%=category.getName() %></label></h4>
+                                </li>
                                 <%} %>
                     			</ul><!--category_detail_list end -->
                    			</div><!--category_detail_box end-->
@@ -163,6 +162,7 @@
                         <div class="crew_create_cover_inner">
                             <div class="crew_image_selected">
                                 <img src="img/category1.jpg" width="280" height="220" title="" alt="" />
+                                <div class="msg profile">가가가가가가가가가</div>
                             </div>
                             <ul class="crew_image_list">
                                 <%for(int i=1;i<=7;i++){ %>
@@ -171,9 +171,9 @@
 	                                    <%if(i==1){ %>
 	                                    checked="checked"
 	                                    <%} %>
-	                                    name="cover_img" type="radio" value="<%=i %>"/>
+	                                    name="cover_img" type="radio" value="/img/category/<%=i %>.jpg"/>
 	                                    <label for="categoryImageItem<%=i %>">
-	                                        <img src="img/category<%=i %>.jpg" width="150" height="100" data-src="img/category<%=i %>.jpg" title="" alt="" />
+	                                        <img src="/img/category<%=i %>.jpg" width="150" height="100" data-src="img/category<%=i %>.jpg" title="" alt="" />
 	                                        <div class="crew_cover_check">
 	                                            <i class="fas fa-check"></i>
 	                                            <div class="check_on"></div>
@@ -182,12 +182,12 @@
 	                                </li>
                                 <%} %>
                                 <li class="crew_image_item">
-                                    <label for="image_input">
+                                    <label for="user_image_input">
                                         <div class="category_upload_image">
                                             <i class="fas fa-camera"></i>
                                             <h4>사진추가</h4>
                                         </div>
-                                        <input id="image_input" name="cover_img" type="file" style="display: none;"/>
+                                        <input id="user_image_input" name="cover_img" type="file" style="display: none;"/>
                                     </label>
                                 </li>
                             </ul>
@@ -409,8 +409,65 @@
     };
     /* step change end*/
     
- 
-
+    /*step 2 start*/
+    const $userImageInput = $('#user_image_input');
+    const $profileMsg = $('.msg.profile');
+    $userImageInput.on("change",function(){
+    	
+    	const file = this.files[0];
+    	
+    	// 1) 파일의 크기가 0이상
+    	if(file.size==0){
+    		console.log("크기가 0");
+			//$profileMsg.text("제대로 된 파일을 선택하시오. -_-;").addClass("");
+			return; // 밑에 것이 작동이 안됨
+		}// if end
+		
+    	// 2) 파일의 종류가 image
+		if(!file.type.includes("image/")){
+			$profileMsg.text("이미지 파일을 선택하시오. -_-;");
+			console.log("없음");
+			return;
+		}
+    	
+		$profileMsg.text("파일 업로드 중");
+		// 3) 파일 업로드 FormData 객체 생성
+		const formData = new FormData();
+		
+		// 4) formdata에 파라미터를 추가
+		
+		// ?type=P 파라미터를 넘김
+		formData.append("type","P");
+		
+		// 파일을 append 
+		// file: 13.6KB 파일 
+		// file.name: ryan.jpg
+		formData.append("profile",file,file.name);
+		
+		$.ajax({
+			url:"/ajax/UploadCrewImage.json",
+			type : "post",
+			processData : false,
+			contentType : false,
+			data: formData,//진짜 file을 업로드함
+			dataaType:"json",
+			error:function(){
+				// json이 응답하질 않기 때문에 error
+				alert("서버 점검중!");
+			},
+			success:function(json){
+				console.log(json.profileName);
+				$crewImageSelectedImg.attr("src","/upload/"+json.profileName);
+                // image
+                // delta라는 개념을 하나 만들어라
+                // 요소를 직접 못넣는다. custom delta
+                $(".crew_image_item input:checked").prop("checked",false);
+			}
+		});// ajax() end
+		
+    	
+    });
+    
 </script>
 
 </body>

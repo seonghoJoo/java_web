@@ -37,7 +37,7 @@
                 <ul>
                 	<%for(int i=0;i<userCrews.length;i++){ %>
                 		<%if(userCrews[i]!=null){ %>
-                    		<li><a href="/<%=userCrews[i].getNo()%>"><img class="header_crew_list_on" src="/crew/<%=userCrews[i].getCoverImg() %>" width="40" height="40" /></a></li>
+                    		<li><a href="/<%=userCrews[i].getNo()%>"><img class="header_crew_list_on" src="/img/<%=userCrews[i].getCoverImg() %>" width="40" height="40" /></a></li>
                    		<%}else{ %>
                    			<li><a href="/create_crew.jsp"><i class="fas fa-plus-circle"></i></a></li>
                    		<%} %>
@@ -46,7 +46,7 @@
             </div><!--//header_crew_list -->
             <div class="header_meeting_home"><a href="/"><i class="far fa-handshake"></i></a></div>
             <div class="header_status">
-            <%if(loginUser==null){ %>
+            <%if(loginUser==null || userCrews[0] == null){ %>
             <a href="/">
             <i class="fas fa-user-circle"></i></a>
             <%}else{ %>

@@ -88,7 +88,7 @@ const $crewImageSelectedImg = $('.crew_image_selected img');
 
 const $crewImageItem = $('.crew_image_item input');
 
-
+/*
 $("#image_input").on("change",function() {
 
     const file = this.files[0];
@@ -141,3 +141,4 @@ $("#image_input").on("change",function() {
         alert("이미지를 선택해주세요!");
     }
 });
+*/
