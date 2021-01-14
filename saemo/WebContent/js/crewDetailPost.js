@@ -10,10 +10,6 @@ switch(imageNumber){
     case 3: $postingImage.addClass("image_box_type3"); break;
     case 4: $postingImage.addClass("image_box_type4"); break;
     default: $postingImage.addClass("image_box_type5");
-        // $postingImageList.children().eq(0).css("display","block");
-        // $postingImageList.children().eq(1).css("display","block");
-        // $postingImageList.children().eq(2).css("display","block");
-        // $postingImageList.children().eq(3).css("display","block");
         $postingImageList.children().eq(3).addClass("more_image");
         break;
 }

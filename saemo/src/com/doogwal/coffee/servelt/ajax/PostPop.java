@@ -21,33 +21,5 @@ import com.doogwal.coffee.vo.PostImg;
 @WebServlet(value="/ajax/match_history.json")
 public class PostPop extends HttpServlet{
 
-//	@Override
-//	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		
-//		response.setContentType("application/json; charset=UTF-8");
-//		
-//		PrintWriter out = response.getWriter();
-//		
-//		String noStr = request.getParameter("no");
-//		int no = Integer.parseInt(noStr);
-//		
-//		//3초후에 응답
-//		//Thread.sleep(3000);
-//		
-//		// post 번호 받기
-//		Post post = PostsDAO.selectPostDetailOne(no);
-//		
-//		// 이미지 불러오기
-//		List<String> postImgs = PostImgsDAO.selectImageList(no);
-//		
-//		
-//		// 크루원 번호로 부터 크루 이름 얻기
-//		String name = CrewMembersDAO.selectMemberName(post.getMemberNo());
-//		
-//		// ObjectMapper
-//		
-//		
-//		out.print("{\"count\":"+cnt+"}");
-//		
-//	}
+	
 }

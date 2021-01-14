@@ -38,10 +38,10 @@
     <meta charset="UTF-8">
     <title>크루만들기</title>
     <%@ include file="/WEB-INF/template/link.jsp" %>
-    <link rel="stylesheet" href="css/step1.css"/>
-    <link rel="stylesheet" href="css/step2.css"/>
-    <link rel="stylesheet" href="css/step3.css"/>
-    <link rel="stylesheet" href="css/step4.css"/>
+    <link rel="stylesheet" href="/css/crewstep1.css"/>
+    <link rel="stylesheet" href="/css/crewstep2.css"/>
+    <link rel="stylesheet" href="/css/crewstep3.css"/>
+    <link rel="stylesheet" href="/css/crewstep4.css"/>
     
     <style>
         /*2020-12-17 주성호 step 변화*/
@@ -367,10 +367,10 @@
     </li>
 </script>
 <!--//파일첨부 질문 추가 end-->
-<script src="js/step1.js"></script>
-<script src="js/step2.js"></script>
-<script src="js/step3.js"></script>
-<script src="js/step4.js"></script>
+<script src="/js/crewstep1.js"></script>
+<script src="/js/crewstep2.js"></script>
+<script src="/js/crewstep3.js"></script>
+<script src="/js/crewstep4.js"></script>
 <script>
 
 	const $nameMsg = $('#nameMsg');
