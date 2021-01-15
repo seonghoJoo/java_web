@@ -370,6 +370,37 @@
 /*-------------------------------------------------------------------*/
 
 /*------------------------ 크루 포스트 컨테이너 ------------------------*/
+/* 1-4) 글쓰기 버튼 */
+.posting_box{
+    width: 540px;
+    height: 50px;
+    position: relative;
+}
+.posting_btn{
+    display: block;
+    font-family: 'NIXGONM-Vb', sans-serif;
+    width: 540px;
+    height: 45px;
+    background-color: white;
+    border: none;
+    box-shadow: 0 0 2px 0 #6b6b6b inset;
+    cursor: pointer;
+}
+.posting_btn>span{
+    font-size: 15px;
+    color: #717171;
+    position: absolute;
+    top: 15px;
+    left: 30px;
+}
+.posting_btn i{
+    margin-left: 5px;
+}
+.posting_btn:hover i{
+    color: #FFAB40;
+}
+
+
 #crewFunctionBar{
     width: 260px;
     float: right;

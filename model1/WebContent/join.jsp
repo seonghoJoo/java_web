@@ -92,7 +92,7 @@
                         <div class="msg profile"></div>
                     </div><!--//profileRow -->
                     <div class="box_btn">
-                        <button class="btn submit" disabled type="submit"><i class="fas fa-sign-in-alt"></i> 회원가입</button>
+                        <button class="btn submit" type="submit"><i class="fas fa-sign-in-alt"></i> 회원가입</button>
                         <a class="btn" href="/index.jsp"><i class="far fa-list-alt"></i> index으로</a>
                     </div><!--//box_btn -->
                 </fieldset>
@@ -291,7 +291,7 @@
 			success:function(json){
 				console.log(json.profileName);
 				// img 요소의 src 속성
-				$profileImg.attr("src","/upload/"+json.profileName);
+				$profileImg.attr("src","/profile/"+json.profileName);
 				
 				// profile Box의 no_image 클래스를 제거
 				$profileBox.removeClass("no_image");

@@ -12,7 +12,7 @@ public class SqlSessionUtil {
 	
 	static {
 		try {
-			Reader reader = Resources.getResourceAsReader("com/doogwal/coffee/config/mybatis-config.xml");
+			Reader reader = Resources.getResourceAsReader("/com/doogwal/coffee/config/mybatis-config.xml");
 			factory = new SqlSessionFactoryBuilder().build(reader);
 		}catch(Exception e) {
 			e.printStackTrace();

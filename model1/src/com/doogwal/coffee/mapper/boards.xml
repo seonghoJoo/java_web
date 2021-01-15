@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC	
+"-//mybatis.org//DTD Mapper 3.0//EN"	
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="boards">
+
+	
+	<insert id="insert" parameterType="Article">
+		INSERT INTO board(no,title,contents,member_no, hit, regdate)
+		VALUES(board_seq.nextval,#{title},#{contents},#{memberNo},#{hit},systimestamp)
+	</insert>
+	
+	<select id="selectList" resultType="Article"
+		parameterType="PageVO">
+		SELECT no,title,contents,regdate,memberNo,
+		hit, nickname, profile, likeCount,
+		replyCount
+		FROM(SELECT no,title,contents,regdate,memberNo,
+		hit, nickname, profile, likeCount,
+		replyCount, rownum r
+		FROM(SELECT b.no no,title,contents,
+		b.regdate regdate,member_no
+		memberNo, hit, m.nickname nickname,
+		m.profile profile,
+		NVL(l.count,0) likeCount,
+		NVL(r.replyCount,0) replyCount
+		FROM board b, members m,
+		(SELECT type_no boardNo ,count(*) count
+		FROM likes
+		WHERE type = 'B'
+		GROUP BY type_no) l,
+		(SELECT board_no boardNo,count(*) replyCount
+		FROM replies
+		GROUP BY board_no) r
+		WHERE b.member_no = m.no
+		AND b.no = l.boardNo(+)
+		AND b.no = r.boardNo(+)
+		ORDER BY 1 DESC))
+		WHERE r BETWEEN #{start} AND #{end}
+	</select>
+	
+	<select id="selectTotal" resultType="int">
+		SELECT COUNT(no)
+		FROM board
+	</select>
+
+</mapper>

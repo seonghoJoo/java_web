@@ -1,13 +1,32 @@
+<%@page import="com.doogwal.coffee.dao.BoardsDAO"%>
+<%@page import="com.doogwal.coffee.vo.Board"%>
+<%@page import="java.util.List"%>
+<%@page import="com.doogwal.coffee.vo.CrewPost"%>
+<%@page import="com.doogwal.coffee.dao.CrewPostsDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>    
+    pageEncoding="UTF-8"%>
+    
+<%
+	
+	String crewNoStr = request.getParameter("crewNo");
+	int crewNo = Integer.parseInt(crewNoStr);
+	System.out.println(crewNo);
+	
+	List<Board> boards = BoardsDAO.selectBoards(crewNo);
+	
+	List<CrewPost> crewPosts = CrewPostsDAO.selectPostDetailList(crewNo);
+%>    
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
    	<%@ include file="/WEB-INF/template/link.jsp" %>
-    <link rel="stylesheet" href="css/crewDetailPage.css" />
-    <link rel="stylesheet" href="css/crewDetailPost.css" />
+    <link rel="stylesheet" href="/css/crewDetailPage.css" />
+    <link rel="stylesheet" href="/css/crewDetailPost.css" />
+    <link rel="stylesheet" href="/css/quill.core.css" />
+    <link rel="stylesheet" href="/css/quill.snow.css"/>
+    <link rel="stylesheet" href="/css/popWritePost.css" />
     <style>
     #header{
         position: fixed;
@@ -138,17 +157,25 @@
                         </ul>
                     </div><!--fixingPostContainer-->
                 </div><!--//precedence_fixing_post_box-->
+                
+                 <div class="posting_box"><!--posting_box-->
+                    <a class="posting_btn"><span>크루원들은 당신의 얘기를 기다리고 있어요<i class="fas fa-feather-alt"></i></span></a>
+                </div><!--//posting_box-->
+                
+                
                 <div class="post_variable_box"><!--post_variable_box-->
 
 
+
+
 <!-- ----------------------------------주성호 2021 01 14 start----------------------------------------------- -->
-                    <div id="crewPostWrap"><!--crewPostWrap-->
-                        <div id="postingUserInformationContainer"><!--postingUserInformationContainer-->
+                    <div class="crewPostWrap"><!--crewPostWrap-->
+                        <div class="postingUserInformationContainer"><!--postingUserInformationContainer-->
                             <!-- -----------------------postUserInfoTmpl------------------------------ -->
 
 
                         </div><!--//postingUserInformationContainer-->
-                        <div id="postingContentsContainer"><!--postingContentsContainer-->
+                        <div class="postingContentsContainer"><!--postingContentsContainer-->
                             <p class="posting_text">다 들어와</p>
                             <div class="posting_image"><!--posting_image-->
                                 <ul class="posting_image_list"><!--posting_image_list-->
@@ -163,7 +190,7 @@
                                 </ul><!--//posting_image_list-->
                             </div><!--//posting_image-->
                         </div><!--//postingContentsContainer-->
-                        <div id="postCountContainer"><!--postCountContainer-->
+                        <div class="postCountContainer"><!--postCountContainer-->
                             <div class="like_box"><!--like_box-->
                                 <div class="like_icon"><i class="fas fa-heart"></i></div>
                                 <span class="like_count">2</span>
@@ -185,27 +212,27 @@
                                 <span class="comment_count">2</span>
                             </div><!--//comment_box-->
                         </div><!--//postCountContainer-->
-                        <div id="postReactionContainer"><!--postReactionContainer-->
-                            <div class="like_btn"><input id="likeBtn" type="checkbox" /></div>
+                        <div class="postReactionContainer"><!--postReactionContainer-->
+                            <div class="like_btn"><input class="likeBtn" type="checkbox" /></div>
                             <button class="comment_btn"></button>
                         </div><!--//postReactionContainer-->
-                        <div id="commentContainer"><!--commentContainer-->
+                        <div class="commentContainer"><!--commentContainer-->
                             <ul class="commented_list"><!--commented_list-->
                                 <!-- ----------------------------- commentListTmpl -----------------------------------  -->
 
                             </ul><!--//commented_list-->
                         </div><!--//commentContainer-->
-                        <div id="commentingContainer"><!--commentingContainer-->
+                        <div class="commentingContainer"><!--commentingContainer-->
                             <form action="">
-                                <input id="commeningInput" />
+                                <input class="commeningInput" />
                                 <div class="commenting_user_profile"><img src="img/5.jpg" /></div>
-                                <button id="commentingBtn">보내기</button>
+                                <button class="commentingBtn">보내기</button>
                             </form>
                         </div><!--//commentingContainer-->
                     </div><!--//crewPostWrap-->
 
 
-<!-- ----------------------------------주성호 2021 01 14 start----------------------------------------------- -->
+<!-- ----------------------------------주성호 2021 01 14 end----------------------------------------------- -->
                 </div><!--//post_variable_box-->
             </div><!--//crewPostContainer-->
             <div id="crewFunctionBar"><!--crewFunctionBar-->
@@ -250,9 +277,77 @@
     </div><!--//crewDetailContainerWrap--> 
 
 
+    <div class="pop_write_wrap">
+        <div class="pop_write"><!-- popWrite start-->
+            <form id="writeForm">
+                <!-- 질문 2 : fieldset 추가 적당한지-->
+                <fieldset>
+                    <input type="hidden" id="contents" name="contents" />
+                    <h2>글쓰기</h2>
+                    <div id="standalone-container">
+                        <div id="toolbar-container">
+                            <!--                    <span class="ql-formats">-->
+                            <select class="ql-size">
+                                <option>20px</option>
+                                <option>28px</option>
+                                <option>36px</option>
+                                <option>48px</option>
+                            </select>
+                            <!--                    </span>-->
+                            <!--                    <span class="ql-formats">-->
+                            <button class="ql-bold" data-toggle="tooltip" data-placement="bottom" title="Bold"></button>
+                            <button class="ql-italic" data-toggle="tooltip" data-placement="bottom" title="Italic"></button>
+                            <button class="ql-underline" data-toggle="tooltip" data-placement="bottom" title="Underline"></button>
+                            <button class="ql-strike" data-toggle="tooltip" data-placement="bottom" title="Strike"></button>
+                            <select class="ql-color">
+                                <option selected></option>
+                                <option value="red"></option>
+                                <option value="orange"></option>
+                                <option value="yellow"></option>
+                                <option value="green"></option>
+                                <option value="blue"></option>
+                                <option value="purple"></option>
+                            </select>
+                        </div>
+                        <!-- 에디터 감싸는 컨테이너 -->
+                        <div id="editorContainer"></div>
+                        <div class="file_box">
+                            <ul class="file_list"></ul>
+                        </div>
+                        <!-- 에디터 -->
+                        <div class="editor_upload_box">
+                            <ul class="editor_write_images">
+                                <li>
+                                    <label for="image_input"><i class="far fa-image"></i>
+                                    </label>
+                                    <input id="image_input" type="file" style="display: none;"/>
+                                </li>
+                                <li>
+                                    <label for="file_input"><i class="fas fa-paperclip"></i>
+                                    </label>
+                                    <input id="file_input" type="file" style="display: none;"/>
+                                </li>
+                            </ul>
+                            <div>
+                                <label for="post_top_input">게시글 상위 고정</label>
+                                <input type="checkbox" id="post_top_input" name="post_top" value="T"/><!--질문 3: value 뭐가 좋을지? -->
+                            </div>
+
+                            <div class="post_submit_btn"><button type="submit">저장</button></div>
+                        </div><!--//editor_upload_box end-->
+                        <div class="close"><i class="fas fa-times"></i></div>
+                    </div>
+                </fieldset>
+            </form>
+        </div><!--// popWrite end-->
+    </div><!-- //pop_write_wrap -->
 
 
 
+
+
+
+<button class="testBtn" type="button">클릭</button>
 
 <%@ include file="/WEB-INF/template/footer.jsp" %>
 
@@ -262,23 +357,24 @@
     <span class="posting_date"><@= post.writedate@></span>
 </script>
 
+
 <script type="text/template" id="sortingLikeListTmpl">
-    <@ _.each(liker, function(){ @>
+    <@ _.each(liker, function(l){ @>
     <li class="sorting_like_list_item">
-        <div class="like_user_profile"><img src="img/<@= liker.getProfileImage()@>" width="40" height="40" /></div>
-        <span class="like_user_name"><@= liker.getName()@></span>
+        <div class="like_user_profile"><img src="img/<@= l.profileImage@>" width="40" height="40" /></div>
+        <span class="like_user_name"><@= l.name@></span>
     </li>
     <@})@>
 </script>
 
 <script type="text/template" id="commentListTmpl">
-    <@ _.each(reply, function(){ @>
+    <@ _.each(reply, function(r){ @>
     <li class="commented_item"><!--commented_item-->
-        <div class="commented_user_profile"><img src="img/arimProfile.jpg" width="40" height="40" /></div>
-        <span class="commented_user_name">이아림</span>
-        <p class="commented_text">ㅎㅇㅎㅇ 방가</p>
+        <div class="commented_user_profile"><img src="img/<@=r.profileImage@>" width="40" height="40" /></div>
+        <span class="commented_user_name"><@=r.name@></span>
+        <p class="commented_text"><@=r.contents@></p>
         <div class="commented_reaction_box"><!--commented_add_box-->
-            <span class="commented_date">2020년 12월 3일 오전 9:30</span>
+            <span class="commented_date"><@=r.regdate@></span>
             <button class="like_btn">좋아요</button><!--
          --><button class="comment_btn">답글쓰기</button>
         </div><!--//commented_add_box-->
@@ -286,30 +382,103 @@
     <@})@>
 </script>
 
+<!--파일 밑부분 추가-->
+<script type="text/template" id="fileAttachmentTmpl">
+    <li class="file_item">
+        <h4>파일</h4>
+        <h3>bold-solid.svg</h3>
+        <span class="remove_question"><i class="fas fa-times"></i></span>
+    </li>
+</script>
+
 
 <script src="/js/crewDetailPage.js"></script>
 <script src="/js/crewDetailPost.js"></script>
+
+<script src="js/quill.core.js"></script>
+<script src="js/quill.min.js"></script>
+<script src="js/popWritePost.js"></script>
 <script>
 	_.templateSettings = {interpolate: /\<\@\=(.+?)\@\>/gim,evaluate: /\<\@([\s\S]+?)\@\>/gim,escape: /\<\@\-(.+?)\@\>/gim};
 	
+	const $testBtn = $('.testBtn');
+	$testBtn.click(function(e){
+		alert("클릭");
+		$.ajax({
+		    url:"/ajax/getCrewPost.json",
+		    type:'get',
+		    dataType:'json',
+		    data:{
+		    	crewNo:<%=crewNo%>,
+				userCrews:"0"
+		    },
+		    error : function(xhr, error, code) {
+		        alert("에러:" + code);
+		    },
+		    success:function (json){
+		        
+		    }
+		});
+	});
+	
 	/*이름 / 작성자 / 프로필*/
-	const $postingUserInformationContainer = $('#postingUserInformationContainer');
+	const $postingUserInformationContainer = $('.postingUserInformationContainer');
 	const postUserInfoTmpl = _.template($('#postUserInfoTmpl').html());
 	$.ajax({
-	    url:"/ajax/postInfo.json",
+	    url:"ajax/postInfo.json",
 	    type:'post',
 	    dataType:'json',
 	    error : function(xhr, error, code) {
-	        alert("에러:" + code);
+	       // alert("에러:" + code);
 	    },
 	    success:function (json){
 	        $postingUserInformationContainer.html(postUserInfoTmpl({post:json}));
 	    }
 	});
 	
-	/*좋아요 이미지*/
-	const $sortingLikeList = $('.sorting_like_list');
+	/*좋아요 작성자 이미지*/
 	const $sortingLikeListTmpl = _.template($('#sortingLikeListTmpl').html());
+	$.ajax({
+	    url:"ajax/liker.json",
+	    type:'post',
+	    dataType:'json',
+	    error : function(xhr, error, code) {
+	        //alert("에러:" + code);
+	    },
+	    success:function (json){
+	        console.log(json.name);
+	        $sortingLikeList.html($sortingLikeListTmpl({liker:json}));
+	    }
+	});
+
+    /*답글글*/
+    /*
+    const $commentedList = $('.commented_list');
+    const $commentListTmpl = _.template($('#commentListTmpl').html());
+    $.ajax({
+        url:"ajax/reply.json",
+        type:'post',
+        dataType:'json',
+        error : function(xhr, error, code) {
+            alert("에러:" + code);
+        },
+        success:function (json){
+            console.log(json.name);
+            $commentedList.html($commentListTmpl({reply:json}));
+        }
+    });
+    */
+    
+    /*무한 스크롤링*/
+    
+    $(window).scroll(function() {
+	    if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+	      console.log(++page);
+	      $("#enters").append("<h1>Page " + page + "</h1><BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~");
+	      
+	    }
+	});	
+    
 </script>
 </body>
 </html>

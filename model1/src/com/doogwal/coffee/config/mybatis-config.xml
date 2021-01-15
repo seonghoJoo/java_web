@@ -13,6 +13,10 @@
 	<typeAliases>
 		<typeAlias alias="Member"
 		 type="com.doogwal.coffee.vo.Member"/>
+		<typeAlias alias="Article"
+		 type="com.doogwal.coffee.vo.Article"/>
+		<typeAlias alias="PageVO"
+		 type="com.doogwal.coffee.vo.PageVO"/>
 	</typeAliases>
 
 	<environments default="development">
@@ -27,6 +31,7 @@
 	
 	<mappers>
 		<mapper resource="com/doogwal/coffee/mapper/members.xml"/>
+		<mapper resource="com/doogwal/coffee/mapper/boards.xml"/>
 	</mappers>
 	
 </configuration>

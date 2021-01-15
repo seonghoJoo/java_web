@@ -17,7 +17,7 @@ switch(imageNumber){
 
 // 좋아요 기능
 const $likeBtnBox = $(".like_btn");
-const $likeBtn = $(".like_btn>#likeBtn");
+const $likeBtn = $(".like_btn>.likeBtn");
 
 $likeBtnBox.click(function(){
     if($likeBtn.prop("checked")){

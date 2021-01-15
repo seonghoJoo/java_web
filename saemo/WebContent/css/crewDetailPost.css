@@ -1,10 +1,10 @@
-#crewPostWrap{
+.crewPostWrap{
     width: 540px;
     border: 1px solid #eaeaea;
     box-shadow: 0 0 2px 1px #eaeaea;
     background-color: white;
 }
-#postingUserInformationContainer {
+.postingUserInformationContainer {
     height: 55px;
     position: relative;
 }
@@ -20,7 +20,7 @@
     height: 40px;
     border-radius: 50%;
 }
-#postingUserInformationContainer>.posting_user_name{
+.postingUserInformationContainer>.posting_user_name{
     position: absolute;
     top: 0;
     left: 0;
@@ -28,7 +28,7 @@
     margin-left: 70px;
     font-size: 15px;
 }
-#postingUserInformationContainer>.posting_date{
+.postingUserInformationContainer>.posting_date{
     position: absolute;
     top: 0;
     left: 0;
@@ -38,7 +38,7 @@
     color: #9f9f9f;
 }
 
-#postingContentsContainer{
+.postingContentsContainer{
     width: 500px;
     font-size: 17px;
     overflow: hidden;
@@ -46,11 +46,11 @@
     position: relative;
     margin-bottom: 15px;
 }
-#postingContentsContainer>.posting_text{
+.postingContentsContainer>.posting_text{
     margin-top: 10px;
     margin-left: 20px;
 }
-#postingContentsContainer>.posting_image{
+.postingContentsContainer>.posting_image{
     width: 496px;
     margin-top: 15px;
     margin-left: 20px;
@@ -162,7 +162,7 @@
     font-weight: bold;
     color: #e3e3e3;
 }
-#postCountContainer{
+.postCountContainer{
     height: 24px;
     display: flex;
     flex-direction: row;
@@ -265,7 +265,7 @@
     font-weight: bold;
 }
 
-#postReactionContainer{
+.postReactionContainer{
     width: 540px;
     height: 42px;
     margin-top: 8px;
@@ -274,7 +274,7 @@
     display: flex;
     flex-direction: row;
 }
-#postReactionContainer>.like_btn, #postReactionContainer>.comment_btn{
+.postReactionContainer>.like_btn, .postReactionContainer>.comment_btn{
     width: 270px;
     height: 42px;
     cursor: pointer;
@@ -285,14 +285,14 @@
 .like_btn>input{
     display: none;
 }
-#postReactionContainer>.like_btn::before{
+.postReactionContainer>.like_btn::before{
     content: '\f004';
     font-family: "Font Awesome 5 Free";
     font-size: 17px;
     color: #d50000;
     margin-right: 5px;
 }
-#postReactionContainer>.like_btn.like::before{
+.postReactionContainer>.like_btn.like::before{
     content: '\f004';
     font-family: "Font Awesome 5 Free";
     font-size: 17px;
@@ -300,29 +300,29 @@
     margin-right: 5px;
     font-weight: bold;
 }
-#postReactionContainer>.like_btn::after{
+.postReactionContainer>.like_btn::after{
     content: '좋아요';
     font-size: 17px;
 }
-#postReactionContainer>.comment_btn{
+.postReactionContainer>.comment_btn{
     background-color: transparent;
     outline: none;
     border: none;
 }
-#postReactionContainer>.comment_btn::before{
+.postReactionContainer>.comment_btn::before{
     content: '\f4ad';
     font-family: "Font Awesome 5 Free";
     font-size: 17px;
     color: #919191;
     margin-right: 5px;
 }
-#postReactionContainer>.comment_btn::after{
+.postReactionContainer>.comment_btn::after{
     content: '댓글쓰기';
     font-family: 'NIXGONM-Vb', sans-serif;
     font-size: 17px;
 }
 
-#commentContainer{
+.commentContainer{
     width: 540px;
 }
 .commented_item{
@@ -380,14 +380,14 @@
     vertical-align: middle;
 }
 
-#commentingContainer{
+.commentingContainer{
     width: 540px;
     display: flex;
     flex-direction: row;
     position: relative;
     align-items: center;
 }
-#commentingContainer #commeningInput{
+.commentingContainer .commeningInput{
     width: 370px;
     height: 22px;
     margin: 10px 0 10px 20px;
@@ -398,19 +398,19 @@
     font-size: 15px;
     box-shadow: 0 0 2px 1px #eaeaea;
 }
-#commentingContainer .commenting_user_profile{
+.commentingContainer .commenting_user_profile{
     position: absolute;
     top: 0;
     left: 0;
     margin-top: 14px;
     margin-left: 28px;
 }
-#commentingContainer .commenting_user_profile>img{
+.commentingContainer .commenting_user_profile>img{
     border-radius: 50%;
     width: 27px;
     height: 27px;
 }
-#commentingContainer #commentingBtn{
+.commentingContainer .commentingBtn{
     width: 72px;
     height: 34px;
     padding: 5px;

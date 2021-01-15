@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 
 
 <!DOCTYPE html>
@@ -6,76 +8,21 @@
     <meta charset="UTF-8">
     <title>게시글 쓰기</title>
 
-    <link rel="stylesheet" href="/css/reset.css" />
-    <link rel="stylesheet" href="/css/notosanskr.css" />
-    <link rel="stylesheet" href="/css/all.min.css" />
-    <link rel="stylesheet" href="/css/default.css" />
-    <link rel="icon" type="image/x-icon"
-          href="/img/logo.png"/>
-    <script src="/js/jquery.js"></script>
-    <script src="/js/underscore-min.js"></script>
-    <script src="/js/moment-with-locales.js"></script>
-
-    <link rel="stylesheet" href="css/quill.snow.css" />
-    <link rel="stylesheet" href="css/form.css" />
-    <link rel="stylesheet" href="css/quill-custom.css" />
+	<%@ include file="/WEB-INF/template/link.jsp" %>
+	  
+    <link rel="stylesheet" href="/css/quill.snow.css" />
+    <link rel="stylesheet" href="/css/form.css" />
+    <link rel="stylesheet" href="/css/quill-custom.css" />
     <link href="https://fonts.googleapis.com/css?family=Jua|Nanum+Pen+Script|Poor+Story|Yeon+Sung&display=swap"
           rel="stylesheet">
+          <style>
+          .ql-editor strong{
+            font-weight:bold;
+        	}
+          </style>
 </head>
 <body>
-
-
-
-<div id="header">
-    <h1><a href="/"><img src="img/logo.png" width="40"/><strong>ODEL1</strong> <span>Board</span></a></h1>
-
-    <div id="loginBox">
-        <h2 class="screen_out">유저정보</h2>
-        <img src="/profile/IMG_1136.JPG"
-             class="profile_on"  width="60" height="60"
-             alt="화염병"
-             title="화염병"/>
-        <div id="profilePopup" class="profile_on">
-            <ul id="profileList">
-                <li class="profile"><a href="/user.jsp?no=1"><span class="open_door" >문</span> 마이페이지</a></li>
-                <li class="profile"><a href="/logout.bmj"><span class="close_door" >문</span> 로그아웃</a></li>
-            </ul><!--//profileList-->
-        </div><!--//#profilePopup-->
-    </div><!--// loginBox-->
-    <script>
-        const $profile = $("#loginBox img");
-        const $profileTarget = $("#profilePopup");
-
-        $profile.click(function () {
-            $profileTarget.toggle();
-        });// profileBox click end
-
-        $("html").click(function(e){
-            if(!$(e.target).hasClass("profile_on")){
-                $profileTarget.hide();
-            }
-        });//
-    </script>
-
-</div><!-- //header -->
-<div id="content">
-    <div class="aux">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	<%@ include file="/WEB-INF/template/header.jsp" %>
         <h2 class="title">
             <i class="fas fa-pen-nib"></i> 게시글쓰기
         </h2>
@@ -162,27 +109,7 @@
             </form>
             <input type="file" name="upload" id="upload" />
         </div>
-
-
-    </div><!--//.aux -->
-</div><!--//content-->
-<div id="footer">
-    <div id="policy">
-        <h4 class="screen_out">정책 및 약관</h4>
-        <ul>
-            <li><a href="">회사소개</a></li><!--
-	 --><li><a href="">광고</a></li><!--
-	 --><li><a href="">검색등록</a></li><!--
-	 --><li><a href="">제휴제안</a></li><!--
-	 --><li><a href="">이용약관</a></li><!--
-	 --><li><a href=""><strong>개인정보이용약관</strong></a></li><!--
-	 --><li><a href="">청소년보호정책</a></li><!--
-	 --><li><a href="">고객센터</a></li>
-        </ul>
-    </div><!--//policy -->
-    <address>&copy; 2021 <a href="">BMJ.com</a></address>
-</div><!--// footer -->
-<script src="js/fix-footer.js"></script>
+	<%@ include file="/WEB-INF/template/footer.jsp" %>
 <script src="js/quill.min.js"></script>
 <script>
 

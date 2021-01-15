@@ -1,19 +1,21 @@
 package com.doogwal.coffee.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
 import com.doogwal.coffee.util.SqlSessionUtil;
-import com.doogwal.coffee.vo.PostImg;
+import com.doogwal.coffee.vo.Reply;
 
-public class PostImgsDAO {
-	public static List<PostImg> selectImageList(int postNo) {
+public class RepliesDAO {
+	
+	public static List<Reply> selectReplyList(Map<String,Object> map) {
 
 		SqlSession session = null;
 		try {
 			session = SqlSessionUtil.getSession();
-			return session.selectList("postImgs.selectImageList",postNo);
+			return session.selectList("replies.selectReplyList",map);
 			
 		}catch(Exception e) {
 			e.printStackTrace();

@@ -21,5 +21,10 @@
 		FROM members
 		WHERE nickname = #{nickname}
 	</select>
+	
+	<insert id="insert" parameterType="Member">
+		INSERT INTO members(no,id,password,nickname, regdate, profile,birth_date,score)
+		VALUES(members_seq.nextval,#{id},#{password},#{nickname},systimestamp,#{profile},#{birthDate},0)
+	</insert>
 
 </mapper>

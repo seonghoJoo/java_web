@@ -5,10 +5,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="postImgs">
 
-	<select id="selectImageList" parameterType="int" resultType="String">
-		SELECT images
+	<select id="selectImageList" parameterType="int" resultType="PostImg">
+		SELECT no,image, post_no postNo
 		FROM post_imgs
-		WHERE post_no = #{no}
+		WHERE post_no = #{postNo}
 	</select>
 	
 	

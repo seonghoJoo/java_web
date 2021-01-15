@@ -11,7 +11,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE no = #{no}
 	</select>
 	
-	
+	<select id="selectPostDetailList" parameterType="int" resultType="CrewPost">
+		SELECT p.no,p.member_no memberNo,p.regdate,contents,like_cnt likeCnt,board_no boardNo,image_applicable imageApplicable
+		FROM posts p, boards b
+		WHERE b.crew_no = #{crewNo} AND board_no = b.no
+	</select>
 	
 	
 	

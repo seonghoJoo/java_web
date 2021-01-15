@@ -13,6 +13,18 @@ public class Member {
 	public Member() {
 		// TODO Auto-generated constructor stub
 	}
+	
+	
+	
+	public Member(String id, String password, String nickname, String profile, Date birthDate) {
+		this.id = id;
+		this.password = password;
+		this.nickname = nickname;
+		this.profile = profile;
+		this.birthDate = birthDate;
+	}
+
+
 
 	public int getNo() {
 		return no;

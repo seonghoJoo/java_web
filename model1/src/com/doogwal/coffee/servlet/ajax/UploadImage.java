@@ -15,8 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
-@WebServlet("/ajax/UploadProfile.json")
-public class UploadProfile extends HttpServlet{
+@WebServlet("/ajax/uploadImage.json")
+public class UploadImage extends HttpServlet{
 
 		@Override
 		protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -54,23 +54,15 @@ public class UploadProfile extends HttpServlet{
 			
 			// FormData의 append 부분과 동일
 			// 파일 이름 파라미터 명
-			String imageName = mr.getFilesystemName("profile");
+			String imageName = mr.getFilesystemName("uploadImage");
 			
-			// profile 폴더에
-			
-			// profile 폴더 경로
-			String profilePath = root + "profile" + File.separator;
-			
-			
-			// 리사이즈 해서 저장
-			ResizeImageUtil.resize(uploadPath+imageName,profilePath+imageName,140);
 			
 			//2) json으로 응답
 			resp.setContentType("appliction/json; charset=UTF-8");
 			
 			PrintWriter out = resp.getWriter();
 			
-			out.print("{\"profileName\" : \""+imageName+"\"}");
+			out.print("{\"imageName\" : \""+imageName+"\"}");
 			
 		}
 	

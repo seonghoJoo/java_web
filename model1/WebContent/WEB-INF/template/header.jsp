@@ -26,7 +26,7 @@
 <%}else{ %>
     <div id="loginBox">
         <h2 class="screen_out">유저정보</h2>
-        <img src="/profile/IMG_1136.JPG"
+        <img src="/profile/<%=loginMember.getProfile() %>"
              class="profile_on"  width="60" height="60"
              alt="화염병"
              title="화염병"/>

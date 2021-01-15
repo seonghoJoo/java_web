@@ -1,8 +1,7 @@
 package com.doogwal.coffee.vo;
 
 public class PageVO {
-	
-	private int start, end, no;
+private int start, end, no;
 	
 	public PageVO() {
 		// TODO Auto-generated constructor stub
