@@ -1,32 +1,33 @@
 package com.doogwal.coffee.vo;
 
-public class CrewPostPageVO {
+public class PageVO {
 	
-	private int start, end, crewNo;
+	// no 멤버필드를 자신이 원하는 번호로 이용할 수 있음.(예 :crewNo / postNo / replyNo...등등)
+	private int start, end, no;
 	
-	public CrewPostPageVO() {
+	public PageVO() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public CrewPostPageVO(int pageNo, int numPage) {
+	public PageVO(int pageNo, int numPage) {
 		end = pageNo * numPage;
 		start = end-numPage+1;
 	}
 	
-	public CrewPostPageVO(int pageNo, 
+	public PageVO(int pageNo, 
 			int numPage,
-			int crewNo) {
+			int no) {
 		end = pageNo * numPage;
 		start = end-numPage+1;
-		this.crewNo = crewNo;
+		this.no = no;
 	}
 	
-	public int getCrewNo() {
-		return crewNo;
+	public int getNo() {
+		return no;
 	}
 
-	public void setCrewNo(int crewNo) {
-		this.crewNo = crewNo;
+	public void setNo(int no) {
+		this.no = no;
 	}
 
 	public int getStart() {

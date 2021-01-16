@@ -12,9 +12,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY 9
 	</select>
 	
+	<!-- 2021 01 15 주성호 크루 멤버 넣기 -->
 	<insert id="insertCrewMemberByCaptin" parameterType="CrewMember">
 		INSERT INTO crew_members(no, CREW_NO, USER_NO, ROLE, REPORT_NUM, PROFILE_IMG, INTRODUCTION, TYPE, regdate)
 		VALUES(crew_members_seq.nextval, #{crewNo}, #{userNo}, #{role}, #{reportNum},#{profileImg},#{introduction},#{type}, systimestamp)
 	</insert>
+	
+	<!-- 2021 01 16 주성호 크루 멤버 한명 불러오기 -->
+	<select id="selectCrewMemberOneByNo" parameterType="int" resultType="UserMember">
+		SELECT c.no, crew_no crewNo,user_no userNo , role, report_num reportNum, profile_img profileImg, introduction, type, c.regdate, u.name
+		FROM crew_members c, users u
+		WHERE c.user_no = u.no
+		AND c.no = #{no}
+	</select>
+	
 	
 </mapper>

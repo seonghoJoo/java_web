@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 
 public class Post {
 
-	private int no,memberNo,likeCnt,boardNo;
+	private int no,memberNo,likeCnt,boardNo,replyCnt;
 	private char imageApplicable;
 	private String contents;
 	private Timestamp regdate;
@@ -13,6 +13,26 @@ public class Post {
 		// TODO Auto-generated constructor stub
 	}
 	
+
+	public int getReplyCnt() {
+		return replyCnt;
+	}
+
+
+	public void setReplyCnt(int replyCnt) {
+		this.replyCnt = replyCnt;
+	}
+
+
+	public Timestamp getRegdate() {
+		return regdate;
+	}
+
+
+	public void setRegdate(Timestamp regdate) {
+		this.regdate = regdate;
+	}
+
 
 	public Post(int no, int memberNo, int likeCnt, int boardNo, char imageApplicable, String contents) {
 		this.no = no;

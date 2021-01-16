@@ -1,4 +1,4 @@
-package filter;
+package com.doogwal.coffee.filter;
 
 import java.io.IOException;
 

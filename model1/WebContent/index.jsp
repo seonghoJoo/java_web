@@ -1,6 +1,6 @@
 <%@page import="com.doogwal.coffee.util.PaginateUtil"%>
 <%@page import="com.doogwal.coffee.vo.Article"%>
-<%@page import="com.doogwal.coffee.vo.CrewPostPageVO"%>
+<%@page import="com.doogwal.coffee.vo.PageVO"%>
 <%@page import="com.doogwal.coffee.dao.BoardDAO"%>
 <%@page import="java.util.List"%>
 <%@page import="com.doogwal.coffee.vo.Member"%>
@@ -9,42 +9,42 @@
     
 <%
     	//현재 페이지 번호
-    	int pageNo = 1;
+        	int pageNo = 1;
 
-    	String pageNoStr = 
-    	request.getParameter("page");
-    	try {
-    		pageNo = Integer.parseInt(pageNoStr);
-    	}catch(Exception e) {
-    		response.sendRedirect("/index.jsp?page=1");
-    		return;
-    	}
-    	
-    	//한 페이지에 보여지는 게시물수
-    	int numPage = 3;
+        	String pageNoStr = 
+        	request.getParameter("page");
+        	try {
+        		pageNo = Integer.parseInt(pageNoStr);
+        	}catch(Exception e) {
+        		response.sendRedirect("/index.jsp?page=1");
+        		return;
+        	}
+        	
+        	//한 페이지에 보여지는 게시물수
+        	int numPage = 3;
 
-    	CrewPostPageVO pageVO = 
-    	new CrewPostPageVO(pageNo,numPage);	
+        	PageVO pageVO = 
+        	new PageVO(pageNo,numPage);	
 
-      List<Article> list
-      = BoardDAO.selectList(pageVO);
-      
-      if(pageNo!=1 && list.isEmpty()) {
-      	response.sendRedirect("/index.jsp?page=1");
-      	return;
-      }//if end
-      
-      int total = BoardDAO.selectTotal();
-      
-      String paginate = 
-      PaginateUtil.getPaginate(
-      		pageNo, //현재 페이지번호
-      		total,//전체게시물수 
-      		numPage,//한페이지에보여지는게시물수
-      		3,//페이지네이트의 블록갯수
-      		"/index.jsp",//서버주소
-      		"page="//파라미터명
-      		);
+          List<Article> list
+          = BoardDAO.selectList(pageVO);
+          
+          if(pageNo!=1 && list.isEmpty()) {
+          	response.sendRedirect("/index.jsp?page=1");
+          	return;
+          }//if end
+          
+          int total = BoardDAO.selectTotal();
+          
+          String paginate = 
+          PaginateUtil.getPaginate(
+          		pageNo, //현재 페이지번호
+          		total,//전체게시물수 
+          		numPage,//한페이지에보여지는게시물수
+          		3,//페이지네이트의 블록갯수
+          		"/index.jsp",//서버주소
+          		"page="//파라미터명
+          		);
     %>
 <!DOCTYPE html>
 <html lang="ko">

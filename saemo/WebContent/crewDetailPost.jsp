@@ -1,3 +1,4 @@
+<%@page import="com.doogwal.coffee.vo.PageVO"%>
 <%@page import="com.doogwal.coffee.dao.BoardsDAO"%>
 <%@page import="com.doogwal.coffee.vo.Board"%>
 <%@page import="java.util.List"%>
@@ -7,15 +8,28 @@
     pageEncoding="UTF-8"%>
     
 <%
-	
-	String crewNoStr = request.getParameter("crewNo");
-	int crewNo = Integer.parseInt(crewNoStr);
-	System.out.println(crewNo);
-	
-	List<Board> boards = BoardsDAO.selectBoards(crewNo);
-	
-	List<CrewPost> crewPosts = CrewPostsDAO.selectPostDetailList(crewNo);
-%>    
+    	String crewNoStr = request.getParameter("crewNo");
+    	int crewNo = Integer.parseInt(crewNoStr);
+    	System.out.println(crewNo);
+
+    	/*페이지 처리 start*/
+    	//현재 페이지 번호
+    	int pageNo = 1;
+
+    	//한 페이지에 보여지는 게시물수 
+    	int numPage = 2;
+
+    	
+    	PageVO pageVO = 
+    	new PageVO(pageNo,numPage,crewNo);	
+    	
+    	
+    	/*페이지 처리 end*/
+    	
+    	List<Board> boards = BoardsDAO.selectBoards(crewNo);
+    	
+    	//List<CrewPost> crewPosts = CrewPostsDAO.selectPostDetailList(crewNo);
+    %>    
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -169,67 +183,6 @@
 
 
 <!-- ----------------------------------주성호 2021 01 14 start----------------------------------------------- -->
-                    <div class="crewPostWrap"><!--crewPostWrap-->
-                        <div class="postingUserInformationContainer"><!--postingUserInformationContainer-->
-                            <!-- -----------------------postUserInfoTmpl------------------------------ -->
-
-
-                        </div><!--//postingUserInformationContainer-->
-                        <div class="postingContentsContainer"><!--postingContentsContainer-->
-                            <p class="posting_text">다 들어와</p>
-                            <div class="posting_image"><!--posting_image-->
-                                <ul class="posting_image_list"><!--posting_image_list-->
-                                    <li class="posting_image_item"><img src="img/arimPost.png" width="100%" height="100%" /></li>
-                                    <li class="posting_image_item"><img src="img/arimPost.png" width="100%" height="100%" /></li>
-                                    <li class="posting_image_item"><img src="img/arimPost.png" width="100%" height="100%" /></li>
-                                    <li class="posting_image_item"><img src="img/arimPost.png" width="100%" height="100%" /></li>
-                                    <li class="posting_image_item"><img src="img/arimPost.png" width="100%" height="100%" /></li>
-                                    <li class="posting_image_item"><img src="img/arimPost.png" width="100%" height="100%" /></li>
-                                    <li class="posting_image_item"><img src="img/arimPost.png" width="100%" height="100%" /></li>
-                                    <li class="posting_image_item"><img src="img/arimPost.png" width="100%" height="100%" /></li>
-                                </ul><!--//posting_image_list-->
-                            </div><!--//posting_image-->
-                        </div><!--//postingContentsContainer-->
-                        <div class="postCountContainer"><!--postCountContainer-->
-                            <div class="like_box"><!--like_box-->
-                                <div class="like_icon"><i class="fas fa-heart"></i></div>
-                                <span class="like_count">2</span>
-                                <div class="like_sort_icon"><i class="far fa-caret-square-down"></i></div>
-                                <div class="sorting_like_box"><!--sorting_like_box-->
-                                    <div class="sorting_like_title_box"><!--sorting_like_title_box-->
-                                        <div class="like_icon"><i class="fas fa-heart"></i></div>
-                                        <span class="like_count">2개</span>
-                                    </div><!--//sorting_like_title_box-->
-                                    <ul class="sorting_like_list"><!--sorting_like_list_box_list-->
-                                <!-- -----------------------------sortingLikeListTmpl -----------------------------------  -->
-
-
-                                    </ul><!--//sorting_like_box_list-->
-                                </div><!--//sorting_like_box-->
-                            </div><!--//like_box-->
-                            <div class="comment_box"><!--comment_box-->
-                                <span class="comment_title">댓글</span>
-                                <span class="comment_count">2</span>
-                            </div><!--//comment_box-->
-                        </div><!--//postCountContainer-->
-                        <div class="postReactionContainer"><!--postReactionContainer-->
-                            <div class="like_btn"><input class="likeBtn" type="checkbox" /></div>
-                            <button class="comment_btn"></button>
-                        </div><!--//postReactionContainer-->
-                        <div class="commentContainer"><!--commentContainer-->
-                            <ul class="commented_list"><!--commented_list-->
-                                <!-- ----------------------------- commentListTmpl -----------------------------------  -->
-
-                            </ul><!--//commented_list-->
-                        </div><!--//commentContainer-->
-                        <div class="commentingContainer"><!--commentingContainer-->
-                            <form action="">
-                                <input class="commeningInput" />
-                                <div class="commenting_user_profile"><img src="img/5.jpg" /></div>
-                                <button class="commentingBtn">보내기</button>
-                            </form>
-                        </div><!--//commentingContainer-->
-                    </div><!--//crewPostWrap-->
 
 
 <!-- ----------------------------------주성호 2021 01 14 end----------------------------------------------- -->
@@ -340,7 +293,7 @@
                 </fieldset>
             </form>
         </div><!--// popWrite end-->
-    </div><!-- //pop_write_wrap -->
+  	</div><!-- //pop_write_wrap -->
 
 
 
@@ -351,36 +304,86 @@
 
 <%@ include file="/WEB-INF/template/footer.jsp" %>
 
-<script type="text/template" id="postUserInfoTmpl">
-    <div class="posting_user_profile"><img src="img/<@= post.img@>" /></div>
-    <span class="posting_user_name"><@= post.writer@></span>
-    <span class="posting_date"><@= post.writedate@></span>
-</script>
+<script type="text/template" id="postsTmpl">
+    <@ _.each(crewPost,function(c){@>
+    <div class="crewPostWrap"><!--crewPostWrap-->
+        <div class="postingUserInformationContainer"><!--postingUserInformationContainer-->
+            <!-- -----------------------postUserInfoTmpl------------------------------ -->
+ 			<div class="posting_user_profile"><img src="/img/<@=c.userMember.profileImg@>" /></div>
+        	<span class="posting_user_name"><@=c.userMember.name @></span>
+        	<span class="posting_date"><@=c.dateTime @></span>
 
+        </div><!--//postingUserInformationContainer-->
+        <div class="postingContentsContainer"><!--postingContentsContainer-->
+            <p class="posting_text"><@=c.contents@></p>
+            <div class="posting_image"><!--posting_image-->
+                <ul class="posting_image_list"><!--posting_image_list-->
+				<@ for(let i=0;i<c.postImgs.length;i++){ @>
+					<li class="posting_image_item"><img src="/img/<@=c.postImgs[i].image@>" width="100%" height="100%" /></li>
+                <@} @>
+				</ul><!--//posting_image_list-->
+            </div><!--//posting_image-->
+        </div><!--//postingContentsContainer-->
+        <div class="postCountContainer"><!--postCountContainer-->
+            <div class="like_box"><!--like_box-->
+                <div class="like_icon"><i class="fas fa-heart"></i></div>
+                <span class="like_count"><@=c.likeCnt @></span>
+                <div class="like_sort_icon"><i class="far fa-caret-square-down"></i></div>
+                <div class="sorting_like_box"><!--sorting_like_box-->
+                    <div class="sorting_like_title_box"><!--sorting_like_title_box-->
+                        <div class="like_icon"><i class="fas fa-heart"></i></div>
+                        <span class="like_count"><@=c.likeCnt@></span>
+                    </div><!--//sorting_like_title_box-->
+                    <ul class="sorting_like_list"><!--sorting_like_list_box_list-->
+                        <!-- -----------------------------sortingLikeListTmpl -----------------------------------  -->
+					<@ for(let i=0;i<c.likeMembers.length;i++){ @>
+						<li class="sorting_like_list_item">
+                        	<div class="like_user_profile"><img src="/img/<@=c.likeMembers[i].profileImg @>.jpg" width="40" height="40" /><i class="fas fa-heart"></i></div>
+                        	<span class="like_user_name"><@=c.likeMembers[i].name @></span>
+                    	</li>
+					<@} @>
 
-<script type="text/template" id="sortingLikeListTmpl">
-    <@ _.each(liker, function(l){ @>
-    <li class="sorting_like_list_item">
-        <div class="like_user_profile"><img src="img/<@= l.profileImage@>" width="40" height="40" /></div>
-        <span class="like_user_name"><@= l.name@></span>
-    </li>
+                    </ul><!--//sorting_like_box_list-->
+                </div><!--//sorting_like_box-->
+            </div><!--//like_box-->
+            <div class="comment_box"><!--comment_box-->
+                <span class="comment_title">댓글</span>
+                <span class="comment_count"><@=c.replyCnt @></span>
+            </div><!--//comment_box-->
+        </div><!--//postCountContainer-->
+        <div class="postReactionContainer"><!--postReactionContainer-->
+            <div class="like_btn"><input class="likeBtn" type="checkbox" /></div>
+            <button class="comment_btn"></button>
+        </div><!--//postReactionContainer-->
+        <div class="commentContainer"><!--commentContainer-->
+            <ul class="commented_list"><!--commented_list-->
+                <!-- ----------------------------- commentListTmpl -----------------------------------  -->
+			<@ for(let i=0;i<c.postImgs.length;i++){ @>
+				<li class="commented_item"><!--commented_item-->
+                	<div class="commented_user_profile"><img src="img/arimProfile.jpg" width="40" height="40" /></div>
+                	<span class="commented_user_name">이아림</span>
+                	<p class="commented_text">젖밥들이 깝치긴 왜 깝쳐</p>
+                	<div class="commented_reaction_box"><!--commented_add_box-->
+                    <span class="commented_date">2020년 12월 3일 오전 9:30</span>
+                    <button class="like_btn">좋아요</button><!--
+                    --><button class="comment_btn">답글쓰기</button>
+                </div><!--//commented_add_box-->
+            	</li><!--//commented_item-->
+			<@} @>
+
+            </ul><!--//commented_list-->
+        </div><!--//commentContainer-->
+        <div class="commentingContainer"><!--commentingContainer-->
+            <form action="">
+                <input class="commeningInput" />
+                <div class="commenting_user_profile"><img src="img/5.jpg" /></div>
+                <button class="commentingBtn">보내기</button>
+            </form>
+        </div><!--//commentingContainer-->
+    </div><!--//crewPostWrap-->
     <@})@>
 </script>
 
-<script type="text/template" id="commentListTmpl">
-    <@ _.each(reply, function(r){ @>
-    <li class="commented_item"><!--commented_item-->
-        <div class="commented_user_profile"><img src="img/<@=r.profileImage@>" width="40" height="40" /></div>
-        <span class="commented_user_name"><@=r.name@></span>
-        <p class="commented_text"><@=r.contents@></p>
-        <div class="commented_reaction_box"><!--commented_add_box-->
-            <span class="commented_date"><@=r.regdate@></span>
-            <button class="like_btn">좋아요</button><!--
-         --><button class="comment_btn">답글쓰기</button>
-        </div><!--//commented_add_box-->
-    </li><!--//commented_item-->
-    <@})@>
-</script>
 
 <!--파일 밑부분 추가-->
 <script type="text/template" id="fileAttachmentTmpl">
@@ -391,7 +394,7 @@
     </li>
 </script>
 
-
+<script src="/js/moment-with-locales.js"></script>
 <script src="/js/crewDetailPage.js"></script>
 <script src="/js/crewDetailPost.js"></script>
 
@@ -401,42 +404,17 @@
 <script>
 	_.templateSettings = {interpolate: /\<\@\=(.+?)\@\>/gim,evaluate: /\<\@([\s\S]+?)\@\>/gim,escape: /\<\@\-(.+?)\@\>/gim};
 	
+	
 	const $testBtn = $('.testBtn');
 	$testBtn.click(function(e){
-		alert("클릭");
-		$.ajax({
-		    url:"/ajax/getCrewPost.json",
-		    type:'get',
-		    dataType:'json',
-		    data:{
-		    	crewNo:<%=crewNo%>,
-				userCrews:"0"
-		    },
-		    error : function(xhr, error, code) {
-		        alert("에러:" + code);
-		    },
-		    success:function (json){
-		        
-		    }
-		});
+		getPost();
 	});
 	
-	/*이름 / 작성자 / 프로필*/
-	const $postingUserInformationContainer = $('.postingUserInformationContainer');
-	const postUserInfoTmpl = _.template($('#postUserInfoTmpl').html());
-	$.ajax({
-	    url:"ajax/postInfo.json",
-	    type:'post',
-	    dataType:'json',
-	    error : function(xhr, error, code) {
-	       // alert("에러:" + code);
-	    },
-	    success:function (json){
-	        $postingUserInformationContainer.html(postUserInfoTmpl({post:json}));
-	    }
-	});
+	const $postingDate = $('.posting_date'); 
+	//$postingDate.text(moment.unix(c.regdate).format("YYYY/MM/DD HH시 mm분 ss초")); 
 	
-	/*좋아요 작성자 이미지*/
+	
+	/*좋아요 작성자 이미지
 	const $sortingLikeListTmpl = _.template($('#sortingLikeListTmpl').html());
 	$.ajax({
 	    url:"ajax/liker.json",
@@ -449,7 +427,7 @@
 	        console.log(json.name);
 	        $sortingLikeList.html($sortingLikeListTmpl({liker:json}));
 	    }
-	});
+	});*/
 
     /*답글글*/
     /*
@@ -469,13 +447,40 @@
     });
     */
     
-    /*무한 스크롤링*/
+    let pageNo = 1;
+
+	//한 페이지에 보여지는 게시물수 
+	let numPage = 2;
     
-    $(window).scroll(function() {
+	const $postVariableBox = $('.post_variable_box');
+	const postsTmpl = _.template($('#postsTmpl').html());
+    
+	function getPost(){
+    	$.ajax({
+    	    url:"/ajax/getCrewPost.json",
+    	    type:'get',
+    	    dataType:'json',
+    	    data:{
+    	    	crewNo:<%=crewNo%>,
+    			start:pageNo++,
+    			end:numPage
+    	    },
+    	    error : function(xhr, error, code) {
+    	       // alert("에러:" + code);
+    	    },
+    	    success:function (json){
+    	    
+    	    	console.log(json);
+    	        $postVariableBox.append(postsTmpl({crewPost:json}));
+    	    }
+    	});
+    }
+	getPost();
+    
+    /*무한 스크롤링*/
+    $(window).scroll(function(e) {
 	    if ($(window).scrollTop() == $(document).height() - $(window).height()) {
-	      console.log(++page);
-	      $("#enters").append("<h1>Page " + page + "</h1><BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~");
-	      
+	    	getPost();
 	    }
 	});	
     

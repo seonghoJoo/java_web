@@ -1,6 +1,7 @@
 package com.doogwal.coffee.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -103,4 +104,27 @@ public class CrewsDAO {
  	2021 01 14 주성호 end
  	크루 이름으로 번호 받기
 	 * */
+	
+	//20210114 이아림 검색결과에 크루 목록 보여주기 start 
+	public static List<Crew> selectSearchList(Map<String, Object> data) {
+		
+		List<Crew> list = null;
+		SqlSession session = null;
+		
+		try {
+			session = SqlSessionUtil.getSession();
+			list = session.selectList("crews.selectSearchList",data);
+						
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(session!=null) {
+				session.close();
+		}//if end
+		}//try~catch~finally end
+
+		return list;
+		}//selectList() end
+	//20210114 이아림 end
+
 }

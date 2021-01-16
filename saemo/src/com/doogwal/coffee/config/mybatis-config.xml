@@ -23,6 +23,8 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	<typeAlias alias="Board" type="com.doogwal.coffee.vo.Board"></typeAlias>
 	<typeAlias alias="PostImg" type="com.doogwal.coffee.vo.PostImg"></typeAlias>
 	<typeAlias alias="Like" type="com.doogwal.coffee.vo.Like"></typeAlias>
+	<typeAlias alias="PageVO" type="com.doogwal.coffee.vo.PageVO"></typeAlias>
+	<typeAlias alias="UserMember" type="com.doogwal.coffee.vo.UserMember"></typeAlias>
 </typeAliases>
 
 <!--  데이터 베이스와 연결 환경 설정 -->

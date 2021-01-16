@@ -5,9 +5,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="likes">
 
 	<select id="selectLikesList" parameterType="map" resultType="Like">
-		SELECT no, regdate, liker_no likerNo, post_no postNo
-		FROM likes
-		WHERE post_no = #{postNo} AND liker_no = #{crewMemberNo}
+		SELECT l.no, l.regdate, liker_no likerNo, post_no postNo, u.name name, m.profile_img profileImg
+		FROM likes l, crew_members m, users u
+		WHERE post_no = #{postNo} AND liker_no = m.no AND u.no = m.user_no
 	</select>
 
 </mapper>

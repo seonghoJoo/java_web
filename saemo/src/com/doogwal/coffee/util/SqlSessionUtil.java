@@ -19,7 +19,9 @@ public class SqlSessionUtil {
 		}// try~catch end
 	}//static 영역
 	
-	public static SqlSession getSession() {
+	public static SqlSession getSession() throws Exception {
 		return factory.openSession(true);
 	}//getSession end
 }// SqlSessionUtil end
+
+

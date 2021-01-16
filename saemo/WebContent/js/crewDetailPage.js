@@ -58,13 +58,13 @@ $participants.hover(function(){
 }, function(){
     $participantsListBox.css("display", "none");
 }); //$participants.hover end
-
+/*
 const $headerStatus = $('.header_status');
 const $headerStatusDropbox = $('.header_status_dropbox');
 $headerStatus.click(function (e) {
     e.preventDefault();
     $headerStatusDropbox.toggleClass("show");
-});
+});*/
 //-------------------------------------------------
 
 // 가입조건 3개 초과시 숨기고 더 보기 띄우는 기능

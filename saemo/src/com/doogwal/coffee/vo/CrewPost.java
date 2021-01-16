@@ -1,20 +1,51 @@
 package com.doogwal.coffee.vo;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class CrewPost {
 	
-	private int no,memberNo,likeCnt,boardNo;
+	private int no,memberNo,likeCnt,boardNo,replyCnt;
 	private char imageApplicable;
 	private String contents;
 	private Timestamp regdate;
 	
+	public int getReplyCnt() {
+		return replyCnt;
+	}
+
+	public void setReplyCnt(int replyCnt) {
+		this.replyCnt = replyCnt;
+	}
+
 	private List<Reply> replies;
 	private List<Like> likeMembers;
 	private List<PostImg> postImgs;
 	
+	private UserMember userMember;
+	
+	private String dateTime;
+	
+	public String getDateTime() {
+		return dateTime;
+	}
+
+	public void setDateTime(String dateTime) {
+		this.dateTime = dateTime;
+	}
+
+	public UserMember getUserMember() {
+		return userMember;
+	}
+
+	public void setUserMember(UserMember userMember) {
+		this.userMember = userMember;
+	}
+
 	public CrewPost() {
 		// TODO Auto-generated constructor stub
 	}

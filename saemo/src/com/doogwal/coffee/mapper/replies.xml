@@ -13,13 +13,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	
 	<select id="selectReplyList" parameterType="map" resultType="Reply">
-		SELECT no, post_no postNo, seq, reply, member_no memberNo, regdate
-		FROM replies
-		WHERE post_no = #{no} AND member_no = #{memberNo}
+		SELECT r.no, post_no postNo, seq, reply, r.member_no memberNo, r.regdate, u.name, m.profile_img progfileImg
+		FROM replies r, crew_members m, users u
+		WHERE post_no = #{postNo} AND member_no = m.no AND m.user_no = u.no
 	</select>
-	
-	
-	
-	
 	
 </mapper>

@@ -8,6 +8,32 @@ public class Reply {
 	private String reply;
 	private Timestamp regdate;
 	
+	private String name,profileImg;
+	
+	public Timestamp getRegdate() {
+		return regdate;
+	}
+
+	public void setRegdate(Timestamp regdate) {
+		this.regdate = regdate;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getProfileImg() {
+		return profileImg;
+	}
+
+	public void setProfileImg(String profileImg) {
+		this.profileImg = profileImg;
+	}
+
 	public Reply() {
 		// TODO Auto-generated constructor stub
 	}
