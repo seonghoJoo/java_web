@@ -12,7 +12,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	
-	
-	
+	<insert id="insertPostImages" parameterType="PostImg">
+		INSERT INTO post_imgs(no, image,post_no)
+		VALUES(post_imgs_seq.nextval, #{image}, #{postNo})
+	</insert>
 	
 </mapper>

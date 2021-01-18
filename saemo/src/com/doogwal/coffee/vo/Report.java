@@ -11,8 +11,7 @@ public class Report {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Report(int no, int postNo, int memberNo, int reporter, char type) {
-		this.no = no;
+	public Report(int postNo, int memberNo, int reporter, char type) {
 		this.postNo = postNo;
 		this.memberNo = memberNo;
 		this.reporter = reporter;

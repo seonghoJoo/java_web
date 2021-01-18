@@ -40,11 +40,13 @@ public class GetCrewPost extends HttpServlet{
 		PrintWriter out = resp.getWriter();
 		
 		String crewNoStr = req.getParameter("crewNo");
+		String crewMemberNoStr = req.getParameter("crewMemberNo");
 		String startStr = req.getParameter("start");
 		String endStr = req.getParameter("end");
 		//String userCrewsStr = req.getParameter("userCrews");
 		
 		int crewNo = Integer.parseInt(crewNoStr);
+		int myMemberNo = Integer.parseInt(crewMemberNoStr);
 		int start = Integer.parseInt(startStr);
 		int end = Integer.parseInt(endStr);
 		//int userCrews = Integer.parseInt(userCrewsStr);
@@ -52,29 +54,20 @@ public class GetCrewPost extends HttpServlet{
 		PageVO pageVO = new PageVO(start, end, crewNo);		
 		List<CrewPost> list = CrewPostsDAO.selectPostDetailList(pageVO);
 		
-		SimpleDateFormat sdf = new SimpleDateFormat( "yy년 MM월 dd일 HH:mm:ss" , Locale.KOREA );
 		
 		for(CrewPost cp : list) {
 			cp.setUserMember(CrewMembersDAO.selectCrewMemberOneByNo(cp.getMemberNo()));
-			cp.setDateTime(sdf.format(cp.getRegdate().getTime()));
+			System.out.println(cp.getMemberNo());
 			Map<String,Object> map = new ConcurrentHashMap<String, Object>();
 			System.out.println("postNo: " +cp.getNo() + "crewMemberNo: " + cp.getMemberNo());
 			map.put("postNo",cp.getNo());
 			map.put("crewMemberNo",cp.getMemberNo());
 			cp.setReplies(RepliesDAO.selectReplyList(map));
-			for(Reply reply : cp.getReplies()) {
-				System.out.println("reply : "+reply.getReply());
-			}
 			cp.setPostImgs(PostImgsDAO.selectImageList(cp.getNo()));
-			for(PostImg postImg: cp.getPostImgs()) {
-				System.out.println("postImgs: "+ postImg.getImage());
-			}
 			
 			cp.setLikeMembers(LikesDAO.selectLikesList(map));
-			for(Like like: cp.getLikeMembers()) {
-				System.out.println("like : " + like.getLikerNo());
-			}
-			
+			map.put("myMemberNo",myMemberNo);
+			cp.setMyLikeCount(LikesDAO.selectWhetherLike(map));
 		}// for end
 		ObjectMapper om = new ObjectMapper();
 		

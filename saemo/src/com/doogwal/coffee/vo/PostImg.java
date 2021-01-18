@@ -9,8 +9,7 @@ public class PostImg {
 		// TODO Auto-generated constructor stub
 	}
 
-	public PostImg(int no, int postNo, String image) {
-		this.no = no;
+	public PostImg(int postNo, String image) {
 		this.postNo = postNo;
 		this.image = image;
 	}

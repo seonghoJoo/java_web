@@ -3,7 +3,43 @@
     border: 1px solid #eaeaea;
     box-shadow: 0 0 2px 1px #eaeaea;
     background-color: white;
+    position:relative;
 }
+.option_btn{
+    position: absolute;
+    width:10px;
+    height:17px;
+    right: 22px;
+    top:20px;
+    color: #424242;
+    cursor: pointer;
+}
+.option_list{
+	background-color:#fff;
+    position: absolute;
+    top: 20px;
+    right: 0px;
+    border: 1px solid #919191;
+    width: 100px;
+    min-height: 51px;
+    max-height: 103px;
+    display:none;
+}
+.option_list li{
+	padding:5px 0;
+    text-align: center;
+    font-size: 15px;
+    cursor: pointer;
+}
+.option_list li:nth-child(1){
+    border-bottom: 1px solid #919191;
+}
+
+.option_list li:nth-child(3){
+    border-top: 1px solid #919191;
+    border-bottom: 1px solid #919191;
+}
+
 .postingUserInformationContainer {
     height: 55px;
     position: relative;
@@ -46,7 +82,7 @@
     position: relative;
     margin-bottom: 15px;
 }
-.postingContentsContainer>.posting_text{
+.postingContentsContainer>p{
     margin-top: 10px;
     margin-left: 20px;
 }
@@ -204,9 +240,13 @@
     z-index: 1;
     display: none;
 }
+.sorting_like_list{
+      overflow-y: auto;
+  }
 .sorting_like_title_box{
     border-bottom: 1px solid #e0e0e0;
-    height: 36px;
+    min-height: 36px;
+    max-height: 358px;
     position: relative;
 }
 .sorting_like_title_box>.like_icon{
@@ -229,10 +269,6 @@
     content:"좋아요 ";
     font-size: 18px;
     margin-left: 10px;
-}
-.sorting_like_list_box.over{
-    height: 358px;
-    overflow-y: scroll;
 }
 .sorting_like_list_item{
     position: relative;

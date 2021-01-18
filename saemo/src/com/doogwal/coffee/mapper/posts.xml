@@ -6,7 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="posts">
 
 	<select id="selectPostDetailOne" parameterType="int" resultType="Post">
-		SELECT no,member_no memberNo,regdate,contents,like_cnt likeCnt,board_no boardNo,image_applicable imageApplicable,reply_cnt replyCnt
+		SELECT no,member_no memberNo,regdate,contents,like_cnt likeCnt,board_no boardNo,image_applicable imageApplicable,reply_cnt replyCnt,texts
 		FROM posts
 		WHERE no = #{no}
 	</select>
@@ -20,10 +20,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 -->
 	
 	<select id="selectPostDetailList" resultType="CrewPost" parameterType="PageVO">
-		SELECT no, memberNo, regdate, contents, likeCnt, boardNo, imageApplicable,replyCnt
-		FROM	(SELECT no, memberNo, regdate, contents, likeCnt, boardNo, imageApplicable,replyCnt, rownum r
+		SELECT no, memberNo, regdate, contents, likeCnt, boardNo, imageApplicable,replyCnt,texts
+		FROM	(SELECT no, memberNo, regdate, contents, likeCnt, boardNo, imageApplicable,replyCnt,texts, rownum r
 				FROM	(
-						SELECT	p.no,p.member_no memberNo,p.regdate,contents,like_cnt likeCnt,board_no boardNo,image_applicable imageApplicable, reply_cnt replyCnt
+						SELECT	p.no,p.member_no memberNo,p.regdate,contents,like_cnt likeCnt,board_no boardNo,image_applicable imageApplicable, reply_cnt replyCnt,texts
 						FROM posts p, boards b
 						WHERE b.crew_no = #{no} AND board_no = b.no
 						ORDER BY 3 DESC
@@ -32,4 +32,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE r BETWEEN #{start} AND #{end}
 	</select>
 	
+	<update id="postPushLike" parameterType="int">
+		UPDATE posts
+		SET like_cnt = like_cnt+1
+		WHERE no=#{no} 
+	</update>
+	
+	<update id="postUnPushLike" parameterType="int">
+		UPDATE posts
+		SET like_cnt = like_cnt-1
+		WHERE no=#{no} 
+	</update>
+	
+	<insert id="insertPost" parameterType="Post">
+		INSERT INTO posts(no,member_no,regdate,contents,like_cnt,board_no,image_applicable,top,reply_cnt,texts)
+		VALUES(posts_seq.nextval,#{memberNo},systimestamp,#{contents},0,#{boardNo},#{imageApplicable},#{top},0,#{texts})
+	</insert>
+	
+	<delete id="deletePost" parameterType="int">
+		DELETE
+		FROM posts
+		WHERE no=#{no}
+	</delete>
+	
+	<select id="selectpostNo" resultType="int">
+		SELECT posts_seq.nextval-1
+		FROM dual
+	</select>
 </mapper>

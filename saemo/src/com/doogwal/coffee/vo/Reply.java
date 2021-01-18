@@ -10,6 +10,17 @@ public class Reply {
 	
 	private String name,profileImg;
 	
+	public Reply() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public Reply(int postNo, int memberNo, String reply) {
+		this.postNo = postNo;
+		this.memberNo = memberNo;
+		this.reply = reply;
+	}
+	
+	
 	public Timestamp getRegdate() {
 		return regdate;
 	}
@@ -32,18 +43,6 @@ public class Reply {
 
 	public void setProfileImg(String profileImg) {
 		this.profileImg = profileImg;
-	}
-
-	public Reply() {
-		// TODO Auto-generated constructor stub
-	}
-
-	public Reply(int no, int postNo, int seq, int memberNo, String reply) {
-		this.no = no;
-		this.postNo = postNo;
-		this.seq = seq;
-		this.memberNo = memberNo;
-		this.reply = reply;
 	}
 
 	public int getNo() {

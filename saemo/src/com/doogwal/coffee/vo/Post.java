@@ -5,12 +5,33 @@ import java.sql.Timestamp;
 public class Post {
 
 	private int no,memberNo,likeCnt,boardNo,replyCnt;
-	private char imageApplicable;
+	private char imageApplicable,top;
 	private String contents;
 	private Timestamp regdate;
 	
+	private String texts;
+
+	
+	public String getTexts() {
+		return texts;
+	}
+
+	public void setTexts(String texts) {
+		this.texts = texts;
+	}
+
 	public Post() {
 		// TODO Auto-generated constructor stub
+	}
+	
+	public Post(int memberNo, int likeCnt, int boardNo, char imageApplicable, String contents,char top,String texts) {
+		this.memberNo = memberNo;
+		this.likeCnt = likeCnt;
+		this.boardNo = boardNo;
+		this.imageApplicable = imageApplicable;
+		this.contents = contents;
+		this.top = top;
+		this.texts = texts;
 	}
 	
 
@@ -33,14 +54,13 @@ public class Post {
 		this.regdate = regdate;
 	}
 
+	public char getTop() {
+		return top;
+	}
 
-	public Post(int no, int memberNo, int likeCnt, int boardNo, char imageApplicable, String contents) {
-		this.no = no;
-		this.memberNo = memberNo;
-		this.likeCnt = likeCnt;
-		this.boardNo = boardNo;
-		this.imageApplicable = imageApplicable;
-		this.contents = contents;
+
+	public void setTop(char top) {
+		this.top = top;
 	}
 
 

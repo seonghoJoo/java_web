@@ -25,4 +25,19 @@ public class RepliesDAO {
 		
 		return null;
 	}
+	
+	public static int insertReply(Reply reply) {
+		SqlSession session = null;
+		try {
+			session = SqlSessionUtil.getSession();
+			return session.insert("replies.insertReply",reply);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			session.close();
+		}//try~catch~finally end
+		
+		return -1;
+	}
+	
 }

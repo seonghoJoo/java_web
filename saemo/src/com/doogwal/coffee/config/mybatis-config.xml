@@ -25,6 +25,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	<typeAlias alias="Like" type="com.doogwal.coffee.vo.Like"></typeAlias>
 	<typeAlias alias="PageVO" type="com.doogwal.coffee.vo.PageVO"></typeAlias>
 	<typeAlias alias="UserMember" type="com.doogwal.coffee.vo.UserMember"></typeAlias>
+	<typeAlias alias="Report" type="com.doogwal.coffee.vo.Report"></typeAlias>
 </typeAliases>
 
 <!--  데이터 베이스와 연결 환경 설정 -->
@@ -56,6 +57,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	<mapper resource="com/doogwal/coffee/mapper/boards.xml"></mapper>
 	<mapper resource="com/doogwal/coffee/mapper/postImgs.xml"></mapper>
 	<mapper resource="com/doogwal/coffee/mapper/likes.xml"></mapper>
+	<mapper resource="com/doogwal/coffee/mapper/reports.xml"></mapper>
 </mappers>
 
 </configuration>

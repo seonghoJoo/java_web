@@ -9,8 +9,13 @@
     
 <%
     	String crewNoStr = request.getParameter("crewNo");
+		String memberNoStr = request.getParameter("memberNo");
+		String crewOrderStr = request.getParameter("crewOrder");
     	int crewNo = Integer.parseInt(crewNoStr);
-    	System.out.println(crewNo);
+    	int crewMemberNo = Integer.parseInt(memberNoStr);
+		int crewOrder = Integer.parseInt(crewOrderStr);  
+		System.out.println(crewOrder);
+    	/**/
 
     	/*페이지 처리 start*/
     	//현재 페이지 번호
@@ -27,6 +32,8 @@
     	/*페이지 처리 end*/
     	
     	List<Board> boards = BoardsDAO.selectBoards(crewNo);
+    	
+    	int boardNo = boards.get(0).getNo();
     	
     	//List<CrewPost> crewPosts = CrewPostsDAO.selectPostDetailList(crewNo);
     %>    
@@ -45,6 +52,24 @@
     #header{
         position: fixed;
         z-index: 1;
+    }
+    .appear{
+    	display:block;
+    }
+    
+    .crewPostWrap{
+    	margin-bottom:20px;
+    }
+    .option_btn{
+    	z-index:1;
+    }
+    .editor_upload_box.ql-toolbar.ql-snow{
+    	border-bottom:0;
+    	padding:0;
+    }
+    .pop_write_wrap .pop_write .post_submit_btn>button{
+    	width:50px;
+    	
     }
     </style>
 </head>
@@ -232,13 +257,217 @@
 
     <div class="pop_write_wrap">
         <div class="pop_write"><!-- popWrite start-->
-            <form id="writeForm">
+            <form id="writeForm" method="post" action="/writePost.do">
                 <!-- 질문 2 : fieldset 추가 적당한지-->
                 <fieldset>
-                    <input type="hidden" id="contents" name="contents" />
+                    <input type="hidden" id="contents" name="contents" value=""/>
+                    <input type="hidden" name="boardNo" value="<%=boardNo %>"/>
+                    <input type="hidden" name="memberNo" value="<%=crewMemberNo%>"/>
+                    <input class="imageApplicable" type="hidden" name="imageApplicable" value="N" />
                     <h2>글쓰기</h2>
                     <div id="standalone-container">
                         <div id="toolbar-container">
+                            <!--                    <span class="ql-formats">-->
+                            <select class="ql-size">
+                                <option>20px</option>
+                                <option>28px</option>
+                                <option>36px</option>
+                                <option>48px</option>
+                            </select>
+                            <!--                    </span>-->
+                            <!--                    <span class="ql-formats">-->
+                            <button class="ql-bold" data-toggle="tooltip" data-placement="bottom" title="Bold"></button>
+                            <button class="ql-italic" data-toggle="tooltip" data-placement="bottom" title="Italic"></button>
+                            <button class="ql-underline" data-toggle="tooltip" data-placement="bottom" title="Underline"></button>
+                            <button class="ql-strike" data-toggle="tooltip" data-placement="bottom" title="Strike"></button>
+                            <select class="ql-color">
+                                <option selected></option>
+                                <option value="red"></option>
+                                <option value="orange"></option>
+                                <option value="yellow"></option>
+                                <option value="green"></option>
+                                <option value="blue"></option>
+                                <option value="purple"></option>
+                            </select>
+                            <span class="ql-formats">
+						      <button class="ql-link"></button>
+						      <button class="ql-image"></button>
+						      <button class="ql-video"></button>
+						    </span>
+                        </div>
+                        <!-- 에디터 감싸는 컨테이너 -->
+                        <div id="editorContainer"></div>
+                        <div class="file_box">
+                            <ul class="file_list"></ul>
+                        </div>
+                        <!-- 에디터 -->
+                        <div class="editor_upload_box ql-toolbar ql-snow">
+                        	
+                        	<span class="ql-formats">
+							      <button class="ql-link"></button>
+							      <button class="ql-image"></button>
+							      <button class="ql-video"></button>
+						    </span>
+                             
+                            <ul class="editor_write_images">
+                                <li>
+                                    <label for="image_input"><i class="far fa-image"></i>
+                                    </label>
+                                    <input id="image_input" type="file" style="display: none;"/>
+                                </li>
+                                <li>
+                                    <label for="file_input"><i class="fas fa-paperclip"></i>
+                                    </label>
+                                    <input id="file_input" type="file" style="display: none;"/>
+                                </li>
+                            </ul>
+                            
+                            <div>
+                                <label for="post_top_input">게시글 상위 고정</label>
+                                <input type="checkbox" id="post_top_input" name="post_top" value="T"/><!--질문 3: value 뭐가 좋을지? -->
+                            </div>
+
+                            <div class="post_submit_btn"><button type="submit">저장</button></div>
+                        </div><!--//editor_upload_box end-->
+                        <div class="close"><i class="fas fa-times"></i></div>
+                    </div>
+                </fieldset>
+            </form>
+        </div><!--// popWrite end-->
+  	</div><!-- //pop_write_wrap -->
+
+	<div class="pop_update_wrap"><!--// pop_update_wrap start-->
+		
+	
+	
+	</div><!--// pop_update_wrap end-->
+	
+	
+
+
+<%@ include file="/WEB-INF/template/footer.jsp" %>
+
+<script type="text/template" id="postsTmpl">
+    <@ _.each(crewPost,function(c){@>
+    <div class="crewPostWrap"><!--crewPostWrap-->
+		<div class="option_btn">
+        	<a><i class="fas fa-ellipsis-v"></i></a>
+        	<ul class="option_list">
+            	<li class="top_item">상위글로 고정</li>
+            	<li class="ban_item">신고하기</li>
+				<@if(crewMemberNo == c.memberNo){ @>
+				<li class="delete_post_item">삭제하기</li>
+				<li class="update_post_item">수정하기</li>
+				<@}@>
+        		</ul>
+		<input type="hidden" value="<@= c.no@>"/>
+		<input type="hidden" value="<@=c.memberNo"@>"/>
+    </div>
+        <div class="postingUserInformationContainer"><!--postingUserInformationContainer-->
+            <!-- -----------------------postUserInfo------------------------------ -->
+ 			<div class="posting_user_profile"><img src="/img/<@=c.userMember.profileImg@>" /></div>
+        	<span class="posting_user_name"><@=c.userMember.name @></span>
+        	<span class="posting_date"><@= moment(c.regdate).format("YYYY년 MM월 DD일 HH:mm:ss")@></span>
+			<!-- -----------------------postUserInfoTmpl------------------------------ -->
+        </div><!--//postingUserInformationContainer-->
+        <div class="postingContentsContainer"><!--postingContentsContainer-->
+            <p class="posting_text"><@=c.texts@></p>
+            <div class="posting_image image_box_type<@if(c.postImgs.length>5){@><@=4@><@}else{@><@=c.postImgs.length@><@}@>"><!--posting_image-->
+                <ul class="posting_image_list"><!--posting_image_list-->
+			<!-- -----------------------posting Imags------------------------------ -->
+				<@ for(let i=0;i<c.postImgs.length;i++){ @>
+					<li class="posting_image_item"><img src="<@=c.postImgs[i].image@>" width="100%" height="100%" /></li>
+                <@} @>
+			<!-- -----------------------posting Imags------------------------------ -->
+				</ul><!--//posting_image_list-->
+            </div><!--//posting_image-->
+        </div><!--//postingC
+ontentsContainer-->
+        <div class="postCountContainer"><!--postCountContainer-->
+            <div class="like_box"><!--like_box-->
+                <div class="like_icon"><i class="fas fa-heart"></i></div>
+			<!-- -----------------------like Cnt ------------------------------ -->
+                <span class="like_count"><@=c.likeCnt @></span>
+			<!-- -----------------------like Cnt ------------------------------ -->
+                <div class="like_sort_icon"><i class="far fa-caret-square-down"></i></div>
+                <div class="sorting_like_box"><!--sorting_like_box-->
+                    <div class="sorting_like_title_box"><!--sorting_like_title_box-->
+                        <div class="like_icon"><i class="fas fa-heart"></i></div>
+				<!-- -----------------------sorting Cnt ------------------------------ -->
+                        <span class="like_count"><@=c.likeCnt@></span>
+				<!-- -----------------------sorting Cnt ------------------------------ -->
+                    </div><!--//sorting_like_title_box-->
+                    <ul class="sorting_like_list"><!--sorting_like_list_box_list-->
+                        <!-- -----------------------------sortingLikeList -----------------------------------  -->
+					<@ for(let i=0;i<c.likeMembers.length;i++){ @>
+						<li class="sorting_like_list_item">
+                        	<div class="like_user_profile"><img src="/img/<@=c.likeMembers[i].profileImg @>.jpg" width="40" height="40" /><i class="fas fa-heart"></i></div>
+                        	<span class="like_user_name"><@=c.likeMembers[i].name @></span>
+                    	</li>
+					<@} @>
+					<!-- -----------------------------sortingLikeList -----------------------------------  -->
+                    </ul><!--//sorting_like_box_list-->
+                </div><!--//sorting_like_box-->
+            </div><!--//like_box-->
+            <div class="comment_box"><!--comment_box-->
+                <span class="comment_title">댓글</span>
+                <span class="comment_count"><@=c.replyCnt @></span>
+            </div><!--//comment_box-->
+        </div><!--//postCountContainer-->
+        <div class="postReactionContainer"><!--postReactionContainer-->
+            <div class="like_btn <@if(c.myLikeCount>0){ @>
+				like
+				<@}@>">
+				<input class="likeBtn" type="checkbox" 
+				<@if(c.myLikeCount>0){ @>
+				checked="checked"
+				<@}@>"/>
+				<input type="hidden" value="<@= c.no@>"/>
+			</div>
+            <button class="comment_btn"></button>
+        </div><!--//postReactionContainer-->
+        <div class="commentContainer"><!--commentContainer-->
+            <ul class="commented_list"><!--commented_list-->
+            <!-- ----------------------------- replyList -----------------------------------  -->
+			<@ for(let i=0;i<c.replies.length;i++){ @>
+				<li class="commented_item"><!--commented_item-->
+                	<div class="commented_user_profile"><img src="/img/<@=c.replies[i].profileImg @>" width="40" height="40" /></div>
+                	<span class="commented_user_name"><@=c.replies[i].name @></span>
+                	<p class="commented_text"><@= c.replies[i].reply@></p>
+                	<div class="commented_reaction_box"><!--commented_add_box-->
+                    <span class="commented_date"><@= moment(c.replies[i].regdate).format("YYYY년 MM월 DD일 HH:mm:ss")@></span>
+                    <!--<button class="comment_btn">답글쓰기</button>-->
+                </div><!--//commented_add_box-->
+            	</li><!--//commented_item-->
+			<@} @>
+			<!-- ----------------------------- replyList -----------------------------------  -->
+            </ul><!--//commented_list-->
+        </div><!--//commentContainer-->
+        <div class="commentingContainer"><!--commentingContainer-->
+            <form class="reply_form" method="get" action="/ajax/insertReply.json">
+                <input class="commeningInput" name="reply"/>
+				<input type="hidden" value="<@= c.no@>"/>
+                <div class="commenting_user_profile"><img src="/img/<%=userCrews[crewOrder].getProfileImg() %>" /></div>
+                <button class="commentingBtn">보내기</button>
+            </form>
+        </div><!--//commentingContainer-->
+    </div><!--//crewPostWrap-->
+    <@})@>
+</script>
+
+<script type="text/template" id="updatePostsTmpl">
+	<div class="pop_write_wrap">
+        <div class="pop_write"><!-- popWrite start-->
+            <form id="writeForm" method="post" action="/updatePost.do">
+                <!-- 질문 2 : fieldset 추가 적당한지-->
+                <fieldset>
+                    <input type="hidden" id="contents" name="contents" value=""/>
+                    <input type="hidden" name="boardNo" value="<%=boardNo %>"/>
+                    <input type="hidden" name="memberNo" value="<%=crewMemberNo%>"/>
+                    <input class="imageApplicable" type="hidden" name="imageApplicable" value="N" />
+                    <h2>글쓰기</h2>
+                    <div class="standalone-container">
+                        <div class="toolbar-container">
                             <!--                    <span class="ql-formats">-->
                             <select class="ql-size">
                                 <option>20px</option>
@@ -294,55 +523,66 @@
             </form>
         </div><!--// popWrite end-->
   	</div><!-- //pop_write_wrap -->
+</script>
 
 
-
-
-
-
-<button class="testBtn" type="button">클릭</button>
-
-<%@ include file="/WEB-INF/template/footer.jsp" %>
-
-<script type="text/template" id="postsTmpl">
-    <@ _.each(crewPost,function(c){@>
-    <div class="crewPostWrap"><!--crewPostWrap-->
+<script type="text/template" id="detailPostsTmpl">
+	<div class="popCrewPost"><!--crewPostWrap-->
+		<div class="option_btn">
+        	<a><i class="fas fa-ellipsis-v"></i></a>
+        	<ul class="option_list">
+            	<li class="top_item">상위글로 고정</li>
+            	<li class="ban_item">신고하기</li>
+				<@if(crewMemberNo == c.memberNo){ @>
+				<li class="delete_post_item">삭제하기</li>
+				<li class="update_post_item">수정하기</li>
+				<@}@>
+        		</ul>
+		<input type="hidden" value="<@= c.no@>"/>
+    </div>
         <div class="postingUserInformationContainer"><!--postingUserInformationContainer-->
-            <!-- -----------------------postUserInfoTmpl------------------------------ -->
+            <!-- -----------------------postUserInfo------------------------------ -->
  			<div class="posting_user_profile"><img src="/img/<@=c.userMember.profileImg@>" /></div>
         	<span class="posting_user_name"><@=c.userMember.name @></span>
-        	<span class="posting_date"><@=c.dateTime @></span>
-
+        	<span class="posting_date"><@= moment(c.regdate).format("YYYY년 MM월 DD일 HH:mm:ss")@></span>
+			<!-- -----------------------postUserInfoTmpl------------------------------ -->
         </div><!--//postingUserInformationContainer-->
         <div class="postingContentsContainer"><!--postingContentsContainer-->
-            <p class="posting_text"><@=c.contents@></p>
-            <div class="posting_image"><!--posting_image-->
+            <p class="posting_text"><@=c.texts@></p>
+            <div class="posting_image image_box_type<@if(c.postImgs.length>5){@><@=4@><@}else{@><@=c.postImgs.length@><@}@>"><!--posting_image-->
                 <ul class="posting_image_list"><!--posting_image_list-->
+			<!-- -----------------------posting Imags------------------------------ -->
 				<@ for(let i=0;i<c.postImgs.length;i++){ @>
-					<li class="posting_image_item"><img src="/img/<@=c.postImgs[i].image@>" width="100%" height="100%" /></li>
+					<li class="posting_image_item"><img src="<@=c.postImgs[i].image@>" width="100%" height="100%" /></li>
                 <@} @>
+			<!-- -----------------------posting Imags------------------------------ -->
 				</ul><!--//posting_image_list-->
             </div><!--//posting_image-->
-        </div><!--//postingContentsContainer-->
+        </div><!--//postingC
+ontentsContainer-->
         <div class="postCountContainer"><!--postCountContainer-->
             <div class="like_box"><!--like_box-->
                 <div class="like_icon"><i class="fas fa-heart"></i></div>
+			<!-- -----------------------like Cnt ------------------------------ -->
                 <span class="like_count"><@=c.likeCnt @></span>
+			<!-- -----------------------like Cnt ------------------------------ -->
                 <div class="like_sort_icon"><i class="far fa-caret-square-down"></i></div>
                 <div class="sorting_like_box"><!--sorting_like_box-->
                     <div class="sorting_like_title_box"><!--sorting_like_title_box-->
                         <div class="like_icon"><i class="fas fa-heart"></i></div>
+				<!-- -----------------------sorting Cnt ------------------------------ -->
                         <span class="like_count"><@=c.likeCnt@></span>
+				<!-- -----------------------sorting Cnt ------------------------------ -->
                     </div><!--//sorting_like_title_box-->
                     <ul class="sorting_like_list"><!--sorting_like_list_box_list-->
-                        <!-- -----------------------------sortingLikeListTmpl -----------------------------------  -->
+                        <!-- -----------------------------sortingLikeList -----------------------------------  -->
 					<@ for(let i=0;i<c.likeMembers.length;i++){ @>
 						<li class="sorting_like_list_item">
                         	<div class="like_user_profile"><img src="/img/<@=c.likeMembers[i].profileImg @>.jpg" width="40" height="40" /><i class="fas fa-heart"></i></div>
                         	<span class="like_user_name"><@=c.likeMembers[i].name @></span>
                     	</li>
 					<@} @>
-
+					<!-- -----------------------------sortingLikeList -----------------------------------  -->
                     </ul><!--//sorting_like_box_list-->
                 </div><!--//sorting_like_box-->
             </div><!--//like_box-->
@@ -352,137 +592,411 @@
             </div><!--//comment_box-->
         </div><!--//postCountContainer-->
         <div class="postReactionContainer"><!--postReactionContainer-->
-            <div class="like_btn"><input class="likeBtn" type="checkbox" /></div>
+            <div class="like_btn <@if(c.myLikeCount>0){ @>
+				like
+				<@}@>">
+				<input class="likeBtn" type="checkbox" 
+				<@if(c.myLikeCount>0){ @>
+				checked="checked"
+				<@}@>"/>
+				<input type="hidden" value="<@= c.no@>"/>
+			</div>
             <button class="comment_btn"></button>
         </div><!--//postReactionContainer-->
         <div class="commentContainer"><!--commentContainer-->
             <ul class="commented_list"><!--commented_list-->
-                <!-- ----------------------------- commentListTmpl -----------------------------------  -->
-			<@ for(let i=0;i<c.postImgs.length;i++){ @>
+            <!-- ----------------------------- replyList -----------------------------------  -->
+			<@ for(let i=0;i<c.replies.length;i++){ @>
 				<li class="commented_item"><!--commented_item-->
-                	<div class="commented_user_profile"><img src="img/arimProfile.jpg" width="40" height="40" /></div>
-                	<span class="commented_user_name">이아림</span>
-                	<p class="commented_text">젖밥들이 깝치긴 왜 깝쳐</p>
+                	<div class="commented_user_profile"><img src="/img/<@=c.replies[i].profileImg @>" width="40" height="40" /></div>
+                	<span class="commented_user_name"><@=c.replies[i].name @></span>
+                	<p class="commented_text"><@= c.replies[i].reply@></p>
                 	<div class="commented_reaction_box"><!--commented_add_box-->
-                    <span class="commented_date">2020년 12월 3일 오전 9:30</span>
-                    <button class="like_btn">좋아요</button><!--
-                    --><button class="comment_btn">답글쓰기</button>
+                    <span class="commented_date"><@= moment(c.replies[i].regdate).format("YYYY년 MM월 DD일 HH:mm:ss")@></span>
+                    <!--<button class="comment_btn">답글쓰기</button>-->
                 </div><!--//commented_add_box-->
             	</li><!--//commented_item-->
 			<@} @>
-
+			<!-- ----------------------------- replyList -----------------------------------  -->
             </ul><!--//commented_list-->
         </div><!--//commentContainer-->
         <div class="commentingContainer"><!--commentingContainer-->
-            <form action="">
-                <input class="commeningInput" />
-                <div class="commenting_user_profile"><img src="img/5.jpg" /></div>
+            <form class="reply_form" method="get" action="/ajax/insertReply.json">
+                <input class="commeningInput" name="reply"/>
+				<input type="hidden" value="<@= c.no@>"/>
+                <div class="commenting_user_profile"><img src="/img/<%=userCrews[crewOrder].getProfileImg() %>" /></div>
                 <button class="commentingBtn">보내기</button>
             </form>
         </div><!--//commentingContainer-->
     </div><!--//crewPostWrap-->
-    <@})@>
 </script>
 
 
-<!--파일 밑부분 추가-->
-<script type="text/template" id="fileAttachmentTmpl">
-    <li class="file_item">
-        <h4>파일</h4>
-        <h3>bold-solid.svg</h3>
-        <span class="remove_question"><i class="fas fa-times"></i></span>
-    </li>
-</script>
 
+
+<script type="text/template" id="replyTmpl">
+
+<li class="commented_item"><!--commented_item-->
+	<div class="commented_user_profile"><img src="/img/<@=r.profileImg @>" width="40" height="40" /></div>
+    <span class="commented_user_name"><@=r.name @></span>
+    <p class="commented_text"><@= r.reply@></p>
+    <div class="commented_reaction_box"><!--commented_add_box-->
+    <span class="commented_date">방금 전</span>
+                    
+    </div><!--//commented_add_box-->
+ </li><!--//commented_item-->
+</script>
 <script src="/js/moment-with-locales.js"></script>
 <script src="/js/crewDetailPage.js"></script>
 <script src="/js/crewDetailPost.js"></script>
-
 <script src="js/quill.core.js"></script>
 <script src="js/quill.min.js"></script>
-<script src="js/popWritePost.js"></script>
 <script>
+	
+	const crewMemberNo = <%=crewMemberNo %>;
 	_.templateSettings = {interpolate: /\<\@\=(.+?)\@\>/gim,evaluate: /\<\@([\s\S]+?)\@\>/gim,escape: /\<\@\-(.+?)\@\>/gim};
 	
 	
-	const $testBtn = $('.testBtn');
-	$testBtn.click(function(e){
-		getPost();
+	const $updatePostsTmpl = _.template($('#updatePostsTmpl').html());
+	//$('.commented_list').append($replyTmpl({r:json}))
+	// 업데이트 start
+	$postVariableBox.on("click",".update_post_item",function(e){
+		const $that = $(this).parent().next();
+		const val = $that.val();
+		$.ajax({
+    	    url:"/ajax/updateSelectPost.json",
+    	    type:'post',
+    	    data:{
+    	    	crewNo:<%=crewNo%>,
+    	    	crewMemberNo:<%=crewMemberNo%>,
+    	    	postNo:val
+    	    },
+    	    error : function(xhr, error, code) {
+    	        alert("에러:" + code);
+    	    },
+    	    success:function (json){
+    	    	//$('.commented_list').append($updatePostsTmpl({r:json}))
+    	    	console.log(json);
+    	    }
+    	});
+	});
+	// 업데이트 start
+	
+	
+	
+	$(document).on("click", '.remove_question',function (e) {
+	    const $this = $(this);
+	    //여기서 ajax로 파일 업로드 수행
+	    $.ajax({
+	        url:"ajax/deleteFile.json",
+	        type : 'POST',//multipart/form-data
+	        dataType : "json",
+	        error : function(xhr, error, code) {
+	            alert("에러:" + code);
+	        },
+	        success:function(json) {
+	            alert(json.result);
+	            if(json.result==true) {
+	                $this.parent().remove();
+	            }
+	        }
+	    });
 	});
 	
-	const $postingDate = $('.posting_date'); 
-	//$postingDate.text(moment.unix(c.regdate).format("YYYY/MM/DD HH시 mm분 ss초")); 
+	/*post*/
 	
-	
-	/*좋아요 작성자 이미지
-	const $sortingLikeListTmpl = _.template($('#sortingLikeListTmpl').html());
-	$.ajax({
-	    url:"ajax/liker.json",
-	    type:'post',
-	    dataType:'json',
-	    error : function(xhr, error, code) {
-	        //alert("에러:" + code);
-	    },
-	    success:function (json){
-	        console.log(json.name);
-	        $sortingLikeList.html($sortingLikeListTmpl({liker:json}));
-	    }
-	});*/
-
-    /*답글글*/
-    /*
-    const $commentedList = $('.commented_list');
-    const $commentListTmpl = _.template($('#commentListTmpl').html());
-    $.ajax({
-        url:"ajax/reply.json",
-        type:'post',
-        dataType:'json',
-        error : function(xhr, error, code) {
-            alert("에러:" + code);
-        },
-        success:function (json){
-            console.log(json.name);
-            $commentedList.html($commentListTmpl({reply:json}));
-        }
-    });
-    */
-    
-    let pageNo = 1;
+	let pageNo = 1;
 
 	//한 페이지에 보여지는 게시물수 
 	let numPage = 2;
-    
-	const $postVariableBox = $('.post_variable_box');
+	
+	//const $postVariableBox = $('.post_variable_box');
 	const postsTmpl = _.template($('#postsTmpl').html());
-    
+	
 	function getPost(){
-    	$.ajax({
-    	    url:"/ajax/getCrewPost.json",
-    	    type:'get',
-    	    dataType:'json',
-    	    data:{
-    	    	crewNo:<%=crewNo%>,
-    			start:pageNo++,
-    			end:numPage
-    	    },
-    	    error : function(xhr, error, code) {
-    	       // alert("에러:" + code);
-    	    },
-    	    success:function (json){
-    	    
-    	    	console.log(json);
-    	        $postVariableBox.append(postsTmpl({crewPost:json}));
-    	    }
-    	});
-    }
+		$.ajax({
+		    url:"/ajax/getCrewPost.json",
+		    type:'get',
+		    dataType:'json',
+		    data:{
+		    	crewNo:<%=crewNo%>,
+		    	crewMemberNo:<%=crewMemberNo%>,
+				start:pageNo++,
+				end:numPage
+		    },
+		    error : function(xhr, error, code) {
+		       // alert("에러:" + code);
+		    },
+		    success:function (json){
+		    	console.log(json);
+		        $postVariableBox.append(postsTmpl({crewPost:json}));
+		    }
+		});
+	}
 	getPost();
-    
-    /*무한 스크롤링*/
-    $(window).scroll(function(e) {
+	function pushLike(url,postNo){
+		$.ajax({
+		    "url": url,
+		    type:'get',
+		    dataType:'json',
+		    data:{
+		    	postNo: postNo,
+				likerNo: <%=crewMemberNo%>
+		    },
+		    error : function(xhr, error, code) {
+		       // alert("에러:" + code);
+		    },
+		    success:function (json){
+		    	console.log(json);
+		    }
+		});
+	}
+	
+
+
+	
+	/*무한 스크롤링*/
+	$(window).scroll(function(e) {
 	    if ($(window).scrollTop() == $(document).height() - $(window).height()) {
 	    	getPost();
 	    }
 	});	
+	
+	$postVariableBox.on("click",'.option_btn',function(e){
+		const $that = $(this).children().next();
+		$that.toggleClass('appear');
+	});
+	
+	$postVariableBox.on("click",'.top_item',function(e){
+		const $that = $(this).parent();
+		$that.toggleClass('appear');
+	});
+	
+	$postVariableBox.on("click",'.ban_item',function(e){
+		const $that = $(this).parent().next();
+		const postNo = $that.val();
+		const writerMemberNo = $that.next().val();
+		$that.toggleClass('appear');
+		
+		$.ajax({
+		    url: "/ajax/insertReport.json",
+		    type:'get',
+		    dataType:'json',
+		    data:{
+		    	postNo: postNo,
+				reporterMemberNo : <%=crewMemberNo%>,
+		    	writerMemberNo: writerMemberNo,
+		    },
+		    error : function(xhr, error, code) {
+		       // alert("에러:" + code);
+		    },
+		    success:function (json){
+		    	console.log(json);
+		    }
+		});
+		
+	});
+	
+	
+	$postVariableBox.on("click",'.comment_btn',function(e){
+		const $that = $(this).parent().next().next().children().children().eq(0);
+		console.log($that);
+		$that.focus();
+	});
+	
+	
+	$postVariableBox.on("click",'.like_btn',function(e){
+	// likeBtn
+	const $that = $(this).children();
+	const val = $that.next().val();
+	alert(val);
+	if($that.prop("checked")){
+	    $that.attr("checked",false);
+	    $(this).removeClass("like");
+	    pushLike("/ajax/unPushLike.json",val);
+	}else{
+	    $that.attr("checked",true);
+	    $(this).addClass("like");
+	    pushLike("/ajax/pushLike.json",val);
+	}
+	});
+
+	
+	const $replyTmpl = _.template($('#replyTmpl').html());
+	$postVariableBox.on("submit",'.reply_form',function(e){
+		e.preventDefault();
+		const $that = $(this).children();
+		let val = $that.val().substr(0,30);
+		const postNoVal = $(this).children().next().val();
+		
+		$.ajax({
+		    url: "/ajax/insertReply.json",
+		    type:'get',
+		    dataType:'json',
+		    data:{
+		    	postNo: postNoVal,
+		    	memberNo: <%=crewMemberNo%>,
+				reply:val
+		    },
+		    error : function(xhr, error, code) {
+		       // alert("에러:" + code);
+		    },
+		    success:function (json){
+		    	console.log(json);
+		    	$that.val('');
+		    	$('.commented_list').append($replyTmpl({r:json}))
+		    }
+		});
+		
+	});
+	
+	
+    /*post*/
+    
+    
+    /*popWrite start*/
+	const $contents = $("#contents");
+	
+	const $popWriteWrap= $(".pop_write_wrap");
+	const $popWrite = $('.pop_write');
+	// 닫기 버튼
+	const $close = $('.close');
+	$close.click(function (e) {
+	    $popWriteWrap.removeClass('on');
+	});
+	
+	const $postingBtn = $('.posting_btn');
+	$postingBtn.click(function (e) {
+	    e.preventDefault();
+	    $popWriteWrap.addClass("on");
+	    quill.focus();
+	})
+	// 삭제하기
+	$postVariableBox.on("click",".delete_post_item",function(e){
+		const $that = $(this).parent().next();
+		const $popWrap = $(this).parent().parent().parent();
+		const val = $that.val();
+		console.log($popWrap);
+		$.ajax({
+    	    url:"/ajax/deletePost.json",
+    	    type:'get',
+    	    data:{
+    	    	postNo:val
+    	    },
+    	    error : function(xhr, error, code) {
+    	        alert("에러:" + code);
+    	    },
+    	    success:function (){
+    	    	$popWrap.remove();    
+    	    }
+    	});
+	});
+	// 삭제하기 END
+	
+	
+	const $post_top_input = $('#post_top_input');
+	$("#writeForm").on("submit",function (e) {
+	
+	    const contents = 
+        	$(".ql-editor").html();
+
+        const text = $(".ql-editor").text();
+        $contents.val(contents);
+        console.log("text:"+text);
+        console.log("contents:"+contents);
+        
+        if (text.length <= 0) {
+            alert("내용을 입력하세요.");
+            return false;
+        }//if end
+	    // 첫번째 값이 엔터면 아무것도 글자를 쓰지 않았음
+	    else if(contents.ops[0].insert=="\n") {
+	        alert("글자를 입력해주세요!");
+	        return false;
+	    }else {
+	        //const contentString =JSON.stringify(contents);
+	        //input type=hidden에 value로 세팅
+	    	/*if(!$("#post_top_input").prop('checked')){
+	    		$post_top_input.val('N');
+	    	}*/
+	        
+	        // 수정
+	        //$contents.val(contentString);
+           	$popWriteWrap.removeClass('on');
+	        return false;
+	    }
+	
+	});//#writeForm submit() end
+	
+	var quill = new Quill('#editorContainer', {
+	    modules: {
+	        toolbar: {
+	            container: '#toolbar-container',
+	        }
+	    },
+	    theme: 'snow'
+	});
+	
+	$("#image_input").on("change",function() {
+	
+	    const file = this.files[0];
+	
+	
+	    console.log(file);
+	
+	    //image/ 로 시작하는
+	
+	    if (/^image\//.test(file.type)) {
+	
+	        //alert("여기에 오면 파일이 있고 사진임");
+	
+	        //multipart/form-data에 필요함
+	        const formData = new FormData();
+	
+	        formData.append("uploadImage", file, file.name);
+	
+	        //여기서 ajax로 파일 업로드 수행
+	        $.ajax({
+	            url:"/ajax/uploadPostImage.json",
+	            processData : false,//multipart/form-data
+	            contentType : false,//multipart/form-data
+	            data : formData,//multipart/form-data
+	            type : 'POST',//multipart/form-data
+	            dataType : "json",
+	            error : function(xhr, error, code) {
+	                alert("에러:" + code);
+	            },
+	            success:function(json) {
+	                const range = quill.getSelection();
+	                console.log(range);
+	                $('.imageApplicable').val('T');
+	                let idx = 0;
+	                if(range!=null) {
+	                    idx = range.index;
+	                }
+	                // image
+	                // delta라는 개념을 하나 만들어라
+	                // 요소를 직접 못넣는다. custom delta
+	                quill.insertEmbed(idx, 'image', "/upload/"+json.imageName);
+	                quill.insertText( quill.getSelection() + 1, ' ', Quill.sources.SILENT);
+	
+	            }
+	        });
+	
+	
+	    } else {
+	        alert("이미지를 선택해주세요!");
+	    }
+	})
+	
+	var Size = Quill.import('attributors/style/size');
+	Size.whitelist = ['20px', '28px', '36px','48px'];
+	Quill.register(Size, true);
+	
+	var ColorClass = Quill.import('attributors/class/color');
+	Quill.register(ColorClass, true);
+	
+	/*popWrite end*/
     
 </script>
 </body>

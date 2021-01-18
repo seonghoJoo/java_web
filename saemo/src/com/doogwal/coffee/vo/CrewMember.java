@@ -11,6 +11,10 @@ public class CrewMember {
 	
 	private String name,coverImg;
 	
+//	NO	CREWNO	USERNO	ROLE	REPORTNUM	PROFILEIMG	INTRODUCTION	TYPE	REGDATE	COVERIMG	
+//	1000	1000	1000	C	0	profile/1.jpg	<NULL>	A	2021-01-04 20:10:21.0	운동스포츠/2.jpg	
+
+	
 	public CrewMember() {
 		// TODO Auto-generated constructor stub
 	}

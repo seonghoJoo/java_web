@@ -23,12 +23,11 @@ $boardAdding.click(function(){
 })
 
 $("html").click(function(e){
-    console.log(e.target);
     if(!($(e.target).parents("#boardPlusContainer").hasClass("board_plus_container")||$(e.target).hasClass("board_adding"))){
         $boardPlusContainer.css("display", "none");
         $("html").css("overflow-y","scroll");
     }else{
-        ;
+        
     }
 })
 //-------------------------------------------------

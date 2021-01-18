@@ -23,4 +23,20 @@ public class PostImgsDAO {
 		
 		return null;
 	}
+	
+	public static int insertPostImages(PostImg postImage) {
+
+		SqlSession session = null;
+		try {
+			session = SqlSessionUtil.getSession();
+			return session.insert("postImgs.insertPostImages",postImage);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			session.close();
+		}//try~catch~finally end
+		return -1;
+	}
+	
+	
 }

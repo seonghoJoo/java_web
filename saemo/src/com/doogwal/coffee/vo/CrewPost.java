@@ -11,33 +11,34 @@ public class CrewPost {
 	
 	private int no,memberNo,likeCnt,boardNo,replyCnt;
 	private char imageApplicable;
-	private String contents;
+	private String contents,texts;
 	private Timestamp regdate;
 	
-	public int getReplyCnt() {
-		return replyCnt;
-	}
-
-	public void setReplyCnt(int replyCnt) {
-		this.replyCnt = replyCnt;
-	}
 
 	private List<Reply> replies;
 	private List<Like> likeMembers;
 	private List<PostImg> postImgs;
-	
 	private UserMember userMember;
+
+	private int myLikeCount;
 	
-	private String dateTime;
 	
-	public String getDateTime() {
-		return dateTime;
+	public int getMyLikeCount() {
+		return myLikeCount;
 	}
 
-	public void setDateTime(String dateTime) {
-		this.dateTime = dateTime;
+	public void setMyLikeCount(int myLikeCount) {
+		this.myLikeCount = myLikeCount;
 	}
 
+	public int getReplyCnt() {
+		return replyCnt;
+	}
+	
+	public void setReplyCnt(int replyCnt) {
+		this.replyCnt = replyCnt;
+	}
+	
 	public UserMember getUserMember() {
 		return userMember;
 	}
@@ -128,6 +129,14 @@ public class CrewPost {
 
 	public void setPostImgs(List<PostImg> postImgs) {
 		this.postImgs = postImgs;
+	}
+
+	public String getTexts() {
+		return texts;
+	}
+
+	public void setTexts(String texts) {
+		this.texts = texts;
 	}
 	
 	

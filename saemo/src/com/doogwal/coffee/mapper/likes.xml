@@ -9,5 +9,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM likes l, crew_members m, users u
 		WHERE post_no = #{postNo} AND liker_no = m.no AND u.no = m.user_no
 	</select>
+	
+	<insert id="pushLike" parameterType="map">
+		INSERT INTO likes(no,regdate,liker_no,post_no)
+		VALUES(likes_seq.nextval,systimestamp,#{likerNo},#{postNo})
+	</insert>
+	
+	<delete id="unPushLike" parameterType="map">
+		DELETE
+		FROM likes
+		WHERE post_no=#{postNo} AND liker_no = #{likerNo}
+	</delete>
+	
+	<select id="selectWhetherLike" parameterType="map" resultType="int">
+		SELECT COUNT(*)
+		FROM likes
+		WHERE post_no = #{postNo} AND liker_no = #{myMemberNo}
+	</select>
 
 </mapper>
