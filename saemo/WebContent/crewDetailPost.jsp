@@ -256,7 +256,7 @@
 
 
     <div class="pop_write_wrap">
-        <div class="pop_write"><!-- popWrite start-->
+    	<div class="pop_write"><!-- popWrite start-->
             <form id="writeForm" method="post" action="/writePost.do">
                 <!-- 질문 2 : fieldset 추가 적당한지-->
                 <fieldset>
@@ -289,11 +289,6 @@
                                 <option value="blue"></option>
                                 <option value="purple"></option>
                             </select>
-                            <span class="ql-formats">
-						      <button class="ql-link"></button>
-						      <button class="ql-image"></button>
-						      <button class="ql-video"></button>
-						    </span>
                         </div>
                         <!-- 에디터 감싸는 컨테이너 -->
                         <div id="editorContainer"></div>
@@ -301,14 +296,7 @@
                             <ul class="file_list"></ul>
                         </div>
                         <!-- 에디터 -->
-                        <div class="editor_upload_box ql-toolbar ql-snow">
-                        	
-                        	<span class="ql-formats">
-							      <button class="ql-link"></button>
-							      <button class="ql-image"></button>
-							      <button class="ql-video"></button>
-						    </span>
-                             
+                        <div class="editor_upload_box">
                             <ul class="editor_write_images">
                                 <li>
                                     <label for="image_input"><i class="far fa-image"></i>
@@ -321,7 +309,6 @@
                                     <input id="file_input" type="file" style="display: none;"/>
                                 </li>
                             </ul>
-                            
                             <div>
                                 <label for="post_top_input">게시글 상위 고정</label>
                                 <input type="checkbox" id="post_top_input" name="post_top" value="T"/><!--질문 3: value 뭐가 좋을지? -->
@@ -336,11 +323,6 @@
         </div><!--// popWrite end-->
   	</div><!-- //pop_write_wrap -->
 
-	<div class="pop_update_wrap"><!--// pop_update_wrap start-->
-		
-	
-	
-	</div><!--// pop_update_wrap end-->
 	
 	
 
@@ -350,7 +332,7 @@
 <script type="text/template" id="postsTmpl">
     <@ _.each(crewPost,function(c){@>
     <div class="crewPostWrap"><!--crewPostWrap-->
-		<div class="option_btn">
+		<div class="option_btn"><!--//option_btn start-->
         	<a><i class="fas fa-ellipsis-v"></i></a>
         	<ul class="option_list">
             	<li class="top_item">상위글로 고정</li>
@@ -359,11 +341,12 @@
 				<li class="delete_post_item">삭제하기</li>
 				<li class="update_post_item">수정하기</li>
 				<@}@>
-        		</ul>
-		<input type="hidden" value="<@= c.no@>"/>
-		<input type="hidden" value="<@=c.memberNo"@>"/>
-    </div>
-        <div class="postingUserInformationContainer"><!--postingUserInformationContainer-->
+			</ul>
+			<input type="hidden" value="<@= c.no@>"/>
+			<input type="hidden" value="<@=c.memberNo@>"/>
+    	</div><!--//option_btn end-->
+
+	<div class="postingUserInformationContainer"><!--postingUserInformationContainer-->
             <!-- -----------------------postUserInfo------------------------------ -->
  			<div class="posting_user_profile"><img src="/img/<@=c.userMember.profileImg@>" /></div>
         	<span class="posting_user_name"><@=c.userMember.name @></span>
@@ -381,8 +364,7 @@
 			<!-- -----------------------posting Imags------------------------------ -->
 				</ul><!--//posting_image_list-->
             </div><!--//posting_image-->
-        </div><!--//postingC
-ontentsContainer-->
+        </div><!--//postingContentsContainer-->
         <div class="postCountContainer"><!--postCountContainer-->
             <div class="like_box"><!--like_box-->
                 <div class="like_icon"><i class="fas fa-heart"></i></div>
@@ -451,79 +433,12 @@ ontentsContainer-->
                 <button class="commentingBtn">보내기</button>
             </form>
         </div><!--//commentingContainer-->
+
     </div><!--//crewPostWrap-->
     <@})@>
 </script>
 
-<script type="text/template" id="updatePostsTmpl">
-	<div class="pop_write_wrap">
-        <div class="pop_write"><!-- popWrite start-->
-            <form id="writeForm" method="post" action="/updatePost.do">
-                <!-- 질문 2 : fieldset 추가 적당한지-->
-                <fieldset>
-                    <input type="hidden" id="contents" name="contents" value=""/>
-                    <input type="hidden" name="boardNo" value="<%=boardNo %>"/>
-                    <input type="hidden" name="memberNo" value="<%=crewMemberNo%>"/>
-                    <input class="imageApplicable" type="hidden" name="imageApplicable" value="N" />
-                    <h2>글쓰기</h2>
-                    <div class="standalone-container">
-                        <div class="toolbar-container">
-                            <!--                    <span class="ql-formats">-->
-                            <select class="ql-size">
-                                <option>20px</option>
-                                <option>28px</option>
-                                <option>36px</option>
-                                <option>48px</option>
-                            </select>
-                            <!--                    </span>-->
-                            <!--                    <span class="ql-formats">-->
-                            <button class="ql-bold" data-toggle="tooltip" data-placement="bottom" title="Bold"></button>
-                            <button class="ql-italic" data-toggle="tooltip" data-placement="bottom" title="Italic"></button>
-                            <button class="ql-underline" data-toggle="tooltip" data-placement="bottom" title="Underline"></button>
-                            <button class="ql-strike" data-toggle="tooltip" data-placement="bottom" title="Strike"></button>
-                            <select class="ql-color">
-                                <option selected></option>
-                                <option value="red"></option>
-                                <option value="orange"></option>
-                                <option value="yellow"></option>
-                                <option value="green"></option>
-                                <option value="blue"></option>
-                                <option value="purple"></option>
-                            </select>
-                        </div>
-                        <!-- 에디터 감싸는 컨테이너 -->
-                        <div id="editorContainer"></div>
-                        <div class="file_box">
-                            <ul class="file_list"></ul>
-                        </div>
-                        <!-- 에디터 -->
-                        <div class="editor_upload_box">
-                            <ul class="editor_write_images">
-                                <li>
-                                    <label for="image_input"><i class="far fa-image"></i>
-                                    </label>
-                                    <input id="image_input" type="file" style="display: none;"/>
-                                </li>
-                                <li>
-                                    <label for="file_input"><i class="fas fa-paperclip"></i>
-                                    </label>
-                                    <input id="file_input" type="file" style="display: none;"/>
-                                </li>
-                            </ul>
-                            <div>
-                                <label for="post_top_input">게시글 상위 고정</label>
-                                <input type="checkbox" id="post_top_input" name="post_top" value="T"/><!--질문 3: value 뭐가 좋을지? -->
-                            </div>
 
-                            <div class="post_submit_btn"><button type="submit">저장</button></div>
-                        </div><!--//editor_upload_box end-->
-                        <div class="close"><i class="fas fa-times"></i></div>
-                    </div>
-                </fieldset>
-            </form>
-        </div><!--// popWrite end-->
-  	</div><!-- //pop_write_wrap -->
-</script>
 
 
 <script type="text/template" id="detailPostsTmpl">
@@ -656,8 +571,7 @@ ontentsContainer-->
 	const crewMemberNo = <%=crewMemberNo %>;
 	_.templateSettings = {interpolate: /\<\@\=(.+?)\@\>/gim,evaluate: /\<\@([\s\S]+?)\@\>/gim,escape: /\<\@\-(.+?)\@\>/gim};
 	
-	
-	const $updatePostsTmpl = _.template($('#updatePostsTmpl').html());
+	//const $updatePostsTmpl = _.template($('#updatePostsTmpl').html());
 	//$('.commented_list').append($replyTmpl({r:json}))
 	// 업데이트 start
 	$postVariableBox.on("click",".update_post_item",function(e){
@@ -711,7 +625,7 @@ ontentsContainer-->
 	let numPage = 2;
 	
 	//const $postVariableBox = $('.post_variable_box');
-	const postsTmpl = _.template($('#postsTmpl').html());
+	const $postsTmpl = _.template($('#postsTmpl').html());
 	
 	function getPost(){
 		$.ajax({
@@ -729,7 +643,7 @@ ontentsContainer-->
 		    },
 		    success:function (json){
 		    	console.log(json);
-		        $postVariableBox.append(postsTmpl({crewPost:json}));
+		        $postVariableBox.append($postsTmpl({crewPost:json}));
 		    }
 		});
 	}
@@ -863,14 +777,19 @@ ontentsContainer-->
 	const $close = $('.close');
 	$close.click(function (e) {
 	    $popWriteWrap.removeClass('on');
+	    $popWriteWrap.children().remove();
 	});
 	
+	
+	// 새글 쓰기 버튼 on
 	const $postingBtn = $('.posting_btn');
 	$postingBtn.click(function (e) {
 	    e.preventDefault();
 	    $popWriteWrap.addClass("on");
+	    //$popWriteWrap.append($updatePostsTmpl({w:json}));
 	    quill.focus();
 	})
+	
 	// 삭제하기
 	$postVariableBox.on("click",".delete_post_item",function(e){
 		const $that = $(this).parent().next();
