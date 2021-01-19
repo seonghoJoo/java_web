@@ -105,4 +105,22 @@ public class PostsDAO {
 		return -1;
 	}
 	
+	public static Post selectPostUpdateOne(int no) {
+		Post post;
+		
+		SqlSession session = null;
+		
+		try {
+			session = SqlSessionUtil.getSession();
+			return session.selectOne("posts.selectPostUpdateOne",no);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}//try~catch~finally end
+		
+		return null;
+	}//selectCheckNickname() end
+	
 }

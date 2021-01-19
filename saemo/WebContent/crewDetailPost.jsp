@@ -567,6 +567,81 @@ ontentsContainer-->
 <script src="/js/moment-with-locales.js"></script>
 <script src="/js/crewDetailPage.js"></script>
 <script src="/js/crewDetailPost.js"></script>
+
+<script type="text/template" id="popUpdateTmpl">
+
+<div class="pop_write"><!-- popWrite start-->
+            <form id="writeForm" method="post" action="/writePost.do">
+                <!-- 질문 2 : fieldset 추가 적당한지-->
+                <fieldset>
+                    <input type="hidden" id="contents" name="contents" value=""/>
+                    <input type="hidden" name="boardNo" value="<%=boardNo %>"/>
+                    <input type="hidden" name="memberNo" value="<%=crewMemberNo%>"/>
+                    <input class="imageApplicable" type="hidden" name="imageApplicable" value="N" />
+                    <h2>글수정</h2>
+                    <div id="standalone-container">
+                        <div id="toolbar-container">
+                            <!--                    <span class="ql-formats">-->
+                            <select class="ql-size">
+                                <option>20px</option>
+                                <option>28px</option>
+                                <option>36px</option>
+                                <option>48px</option>
+                            </select>
+                            <!--                    </span>-->
+                            <!--                    <span class="ql-formats">-->
+                            <button class="ql-bold" data-toggle="tooltip" data-placement="bottom" title="Bold"></button>
+                            <button class="ql-italic" data-toggle="tooltip" data-placement="bottom" title="Italic"></button>
+                            <button class="ql-underline" data-toggle="tooltip" data-placement="bottom" title="Underline"></button>
+                            <button class="ql-strike" data-toggle="tooltip" data-placement="bottom" title="Strike"></button>
+                            <select class="ql-color">
+                                <option selected></option>
+                                <option value="red"></option>
+                                <option value="orange"></option>
+                                <option value="yellow"></option>
+                                <option value="green"></option>
+                                <option value="blue"></option>
+                                <option value="purple"></option>
+                            </select>
+                        </div>
+                        <!-- 에디터 감싸는 컨테이너 -->
+                        <div id="editorContainer">
+							<div class="ql-editor update_contents" data-gramm="false" contenteditable="true">
+							<@=c.contents @>
+							</div>
+						</div>
+                        <div class="file_box">
+                            <ul class="file_list"></ul>
+                        </div>
+                        <!-- 에디터 -->
+                        <div class="editor_upload_box">
+                            <ul class="editor_write_images">
+                                <li>
+                                    <label for="image_input"><i class="far fa-image"></i>
+                                    </label>
+                                    <input id="image_input" type="file" style="display: none;"/>
+                                </li>
+                                <li>
+                                    <label for="file_input"><i class="fas fa-paperclip"></i>
+                                    </label>
+                                    <input id="file_input" type="file" style="display: none;"/>
+                                </li>
+                            </ul>
+                            <div>
+                                <label for="post_top_input">게시글 상위 고정</label>
+                                <input type="checkbox" id="post_top_input" name="post_top" value="T"/><!--질문 3: value 뭐가 좋을지? -->
+                            </div>
+
+                            <div id="post_submit_btn"><button type="submit">저장</button></div>
+                        </div><!--//editor_upload_box end-->
+                        <div class="close"><i class="fas fa-times"></i></div>
+                    </div>
+                </fieldset>
+            </form>
+        </div><!--// popWrite end-->
+
+</script>
+
 <script src="js/quill.core.js"></script>
 <script src="js/quill.min.js"></script>
 <script>
@@ -575,6 +650,7 @@ ontentsContainer-->
 	_.templateSettings = {interpolate: /\<\@\=(.+?)\@\>/gim,evaluate: /\<\@([\s\S]+?)\@\>/gim,escape: /\<\@\-(.+?)\@\>/gim};
 	
 	const $detailPostsTmpl = _.template($('#detailPostsTmpl').html());
+	const $popUpdateTmpl = _.template($('#popUpdateTmpl').html());
 	//$('.commented_list').append($replyTmpl({r:json}))
 	// 업데이트 start
 	$postVariableBox.on("click",".update_post_item",function(e){
@@ -713,15 +789,58 @@ ontentsContainer-->
 		});
 		
 	});
+	// ---------------------------------------------------------------------
+	/*수정하기*/
+	$postVariableBox.on("click",'.update_post_item',function(e){
+		const $that = $(this).parent().next();
+		const postNo = $that.val();
+		const writerMemberNo = $that.next().val();
+		const $updateContents = $('.update_contents');
+		$that.toggleClass('appear');
+		console.log(postNo+" / "+ writerMemberNo);
+		
+		$.ajax({
+		    url: "/ajax/updateSelectPost.json",
+		    type:'post',
+		    dataType:'json',
+		    data:{
+		    	postNo: postNo,
+				reporterMemberNo : <%=crewMemberNo%>,
+		    	writerMemberNo: writerMemberNo,
+		    },
+		    error : function(xhr, error, code) {
+		       // alert("에러:" + code);
+		    },
+		    success:function (json){
+		    	console.log(json);
+		    	$popWriteWrap.append($popUpdateTmpl({c:json}));
+		    	$popWriteWrap.addClass("on");
+			    
+			    quill = new Quill('#editorContainer', {
+				    modules: {
+				        toolbar: {
+				            container: '#toolbar-container',
+				        }
+				    },
+				    theme: 'snow'
+				});
+			    quill.focus();
+		    }
+		});
+		
+	});
+	/*수정하기*/
 	
 	
+	/*댓글 누르기*/
 	$postVariableBox.on("click",'.comment_btn',function(e){
 		const $that = $(this).parent().next().next().children().children().eq(0);
 		console.log($that);
 		$that.focus();
 	});
+	/*댓글 누르기*/
 	
-	
+	/*좋아요 누르기*/
 	$postVariableBox.on("click",'.like_btn',function(e){
 	// likeBtn
 	const $that = $(this).children();
@@ -737,7 +856,8 @@ ontentsContainer-->
 	    pushLike("/ajax/pushLike.json",val);
 	}
 	});
-
+	/*좋아요 누르기*/
+	
 	// 댓글 달기
 	const $replyTmpl = _.template($('#replyTmpl').html());
 	$postVariableBox.on("submit",'.reply_form',function(e){
@@ -795,16 +915,13 @@ ontentsContainer-->
 	});
 	
     /*post*/
-    
-    
     /*popWrite start*/
-	
-	
 	const $popWriteWrap= $(".pop_write_wrap");
 	const $popWrite = $('.pop_write');
+	
 	// 닫기 버튼
-	const $close = $('.close');
-	$postVariableBox.on("click",'.close',function (e) {
+	$popWriteWrap.on("click",'.close',function (e) {
+		alert("클릭");
 		//pop_write_wrap
 		const $that = $(this).parent().parent().parent().parent().parent();
 	    $that.removeClass('on');

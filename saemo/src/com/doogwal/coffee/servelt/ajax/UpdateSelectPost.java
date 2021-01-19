@@ -38,10 +38,8 @@ public class UpdateSelectPost extends HttpServlet{
 //		int crewNo = Integer.parseInt(crewNoStr);
 //		int crewMemberNo = Integer.parseInt(crewMemberNoStr);
 		
-		Post post = PostsDAO.selectPostDetailOne(postNo);
+		Post post = PostsDAO.selectPostUpdateOne(postNo);
 		
-		
-
 		PrintWriter out = resp.getWriter();
 		
 		ObjectMapper om = new ObjectMapper();
