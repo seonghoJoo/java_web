@@ -119,7 +119,7 @@
 				
 				System.out.println("article.jsp:"+like);
 				
-				flag = like != null;
+				flag = like != null; 
 			}
 			
 			%>

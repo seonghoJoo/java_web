@@ -32,7 +32,9 @@
     	/*페이지 처리 end*/
     	
     	List<Board> boards = BoardsDAO.selectBoards(crewNo);
-    	
+    	for(Board b: boards){
+    		System.out.println(b.getNo());
+    	}
     	int boardNo = boards.get(0).getNo();
     	
     	//List<CrewPost> crewPosts = CrewPostsDAO.selectPostDetailList(crewNo);
@@ -264,79 +266,8 @@
 
 
     <div class="pop_write_wrap">
-    	<div class="pop_write"><!-- popWrite start-->
-            <form id="writeForm" method="post" action="/writePost.do">
-                <!-- 질문 2 : fieldset 추가 적당한지-->
-                <fieldset>
-                    <input type="hidden" id="contents" name="contents" value=""/>
-                    <input type="hidden" name="boardNo" value="<%=boardNo %>"/>
-                    <input type="hidden" name="memberNo" value="<%=crewMemberNo%>"/>
-                    <input class="imageApplicable" type="hidden" name="imageApplicable" value="N" />
-                    <h2>글쓰기</h2>
-                    <div id="standalone-container">
-                        <div id="toolbar-container">
-                            <!--                    <span class="ql-formats">-->
-                            <select class="ql-size">
-                                <option>20px</option>
-                                <option>28px</option>
-                                <option>36px</option>
-                                <option>48px</option>
-                            </select>
-                            <!--                    </span>-->
-                            <!--                    <span class="ql-formats">-->
-                            <button class="ql-bold" data-toggle="tooltip" data-placement="bottom" title="Bold"></button>
-                            <button class="ql-italic" data-toggle="tooltip" data-placement="bottom" title="Italic"></button>
-                            <button class="ql-underline" data-toggle="tooltip" data-placement="bottom" title="Underline"></button>
-                            <button class="ql-strike" data-toggle="tooltip" data-placement="bottom" title="Strike"></button>
-                            <select class="ql-color">
-                                <option selected></option>
-                                <option value="red"></option>
-                                <option value="orange"></option>
-                                <option value="yellow"></option>
-                                <option value="green"></option>
-                                <option value="blue"></option>
-                                <option value="purple"></option>
-                            </select>
-                        </div>
-                        <!-- 에디터 감싸는 컨테이너 -->
-                        <div id="editorContainer"></div>
-                        <div class="file_box">
-                            <ul class="file_list"></ul>
-                        </div>
-                        <!-- 에디터 -->
-                        <div class="editor_upload_box">
-                            <ul class="editor_write_images">
-                                <li>
-                                    <label for="image_input"><i class="far fa-image"></i>
-                                    </label>
-                                    <input id="image_input" type="file" style="display: none;"/>
-                                </li>
-                                <li>
-                                    <label for="file_input"><i class="fas fa-paperclip"></i>
-                                    </label>
-                                    <input id="file_input" type="file" style="display: none;"/>
-                                </li>
-                            </ul>
-                            <div>
-                                <label for="post_top_input">게시글 상위 고정</label>
-                                <input type="checkbox" id="post_top_input" name="post_top" value="T"/><!--질문 3: value 뭐가 좋을지? -->
-                            </div>
-
-                            <div id="post_submit_btn"><button type="submit">저장</button></div>
-                        </div><!--//editor_upload_box end-->
-                        <div class="close"><i class="fas fa-times"></i></div>
-                    </div>
-                </fieldset>
-            </form>
-        </div><!--// popWrite end-->
   	</div><!-- //pop_write_wrap -->
 
-	
-	<div class="pop_write_wrap">
-	<div class="popCrewPost"><!--crewPostWrap-->
-	
-	</div><!--//crewPostWrap-->
-	</div>
 
 
 <%@ include file="/WEB-INF/template/footer.jsp" %>
@@ -450,9 +381,6 @@
     <@})@>
 </script>
 
-
-
-
 <script type="text/template" id="detailPostsTmpl">
 		<div class="option_btn">
         	<a><i class="fas fa-ellipsis-v"></i></a>
@@ -556,6 +484,73 @@ ontentsContainer-->
         </div><!--//commentingContainer-->
 </script>
 
+<script type="text/template" id="popWriteTmpl">
+		<div class="pop_write"><!-- popWrite start-->
+            <form id="writeForm" method="post" action="/writePost.do">
+                <!-- 질문 2 : fieldset 추가 적당한지-->
+                <fieldset>
+                    <input type="hidden" id="contents" name="contents" value=""/>
+                    <input type="hidden" name="boardNo" value="<%=boardNo %>"/>
+                    <input type="hidden" name="memberNo" value="<%=crewMemberNo%>"/>
+                    <input class="imageApplicable" type="hidden" name="imageApplicable" value="N" />
+                    <h2>글쓰기</h2>
+                    <div id="standalone-container">
+                        <div id="toolbar-container">
+                            <!--                    <span class="ql-formats">-->
+                            <select class="ql-size">
+                                <option>20px</option>
+                                <option>28px</option>
+                                <option>36px</option>
+                                <option>48px</option>
+                            </select>
+                            <!--                    </span>-->
+                            <!--                    <span class="ql-formats">-->
+                            <button class="ql-bold" data-toggle="tooltip" data-placement="bottom" title="Bold"></button>
+                            <button class="ql-italic" data-toggle="tooltip" data-placement="bottom" title="Italic"></button>
+                            <button class="ql-underline" data-toggle="tooltip" data-placement="bottom" title="Underline"></button>
+                            <button class="ql-strike" data-toggle="tooltip" data-placement="bottom" title="Strike"></button>
+                            <select class="ql-color">
+                                <option selected></option>
+                                <option value="red"></option>
+                                <option value="orange"></option>
+                                <option value="yellow"></option>
+                                <option value="green"></option>
+                                <option value="blue"></option>
+                                <option value="purple"></option>
+                            </select>
+                        </div>
+                        <!-- 에디터 감싸는 컨테이너 -->
+                        <div id="editorContainer"></div>
+                        <div class="file_box">
+                            <ul class="file_list"></ul>
+                        </div>
+                        <!-- 에디터 -->
+                        <div class="editor_upload_box">
+                            <ul class="editor_write_images">
+                                <li>
+                                    <label for="image_input"><i class="far fa-image"></i>
+                                    </label>
+                                    <input id="image_input" type="file" style="display: none;"/>
+                                </li>
+                                <li>
+                                    <label for="file_input"><i class="fas fa-paperclip"></i>
+                                    </label>
+                                    <input id="file_input" type="file" style="display: none;"/>
+                                </li>
+                            </ul>
+                            <div>
+                                <label for="post_top_input">게시글 상위 고정</label>
+                                <input type="checkbox" id="post_top_input" name="post_top" value="T"/><!--질문 3: value 뭐가 좋을지? -->
+                            </div>
+
+                            <div id="post_submit_btn"><button type="submit">저장</button></div>
+                        </div><!--//editor_upload_box end-->
+                        <div class="close"><i class="fas fa-times"></i></div>
+                    </div>
+                </fieldset>
+            </form>
+        </div><!--// popWrite end-->
+</script>
 
 <script type="text/template" id="replyTmpl">
 
@@ -793,35 +788,45 @@ ontentsContainer-->
 		       // alert("에러:" + code);
 		    },
 		    success:function (json){
-		    	$popCrewPost.append($detailPostsTmpl{});
+		    	$popCrewPost.append($detailPostsTmpl({c:json}));
 		    	console.log(json);
 		    }
 		});
 	});
 	
-	
     /*post*/
     
     
     /*popWrite start*/
-	const $contents = $("#contents");
+	
 	
 	const $popWriteWrap= $(".pop_write_wrap");
 	const $popWrite = $('.pop_write');
 	// 닫기 버튼
 	const $close = $('.close');
-	$close.click(function (e) {
-	    $popWriteWrap.removeClass('on');
-	    $popWriteWrap.children().remove();
+	$postVariableBox.on("click",'.close',function (e) {
+		//pop_write_wrap
+		const $that = $(this).parent().parent().parent().parent().parent();
+	    $that.removeClass('on');
+	    $that.children().remove();
 	});
 	
-	
+	const $popWriteTmpl = _.template($('#popWriteTmpl').html());
 	// 새글 쓰기 버튼 on
 	const $postingBtn = $('.posting_btn');
 	$postingBtn.click(function (e) {
 	    e.preventDefault();
 	    $popWriteWrap.addClass("on");
-	    //$popWriteWrap.append($updatePostsTmpl({w:json}));
+	    
+	    $popWriteWrap.append($popWriteTmpl());
+	    quill = new Quill('#editorContainer', {
+		    modules: {
+		        toolbar: {
+		            container: '#toolbar-container',
+		        }
+		    },
+		    theme: 'snow'
+		});
 	    quill.focus();
 	})
 	
@@ -849,12 +854,13 @@ ontentsContainer-->
 	
 	
 	const $post_top_input = $('#post_top_input');
-	$("#writeForm").on("submit",function (e) {
+	$popWriteWrap.on("submit","#writeForm",function (e) {
 	
 	    const contents = 
         	$(".ql-editor").html();
 
         const text = $(".ql-editor").text();
+        const $contents = $("#contents");
         $contents.val(contents);
         console.log("text:"+text);
         console.log("contents:"+contents);
@@ -881,21 +887,11 @@ ontentsContainer-->
 	    }
 	
 	});//#writeForm submit() end
+	var quill;
 	
-	var quill = new Quill('#editorContainer', {
-	    modules: {
-	        toolbar: {
-	            container: '#toolbar-container',
-	        }
-	    },
-	    theme: 'snow'
-	});
-	
-	$("#image_input").on("change",function() {
-	
+	$popWriteWrap.on("change","#image_input",function() {
+		
 	    const file = this.files[0];
-	
-	
 	    console.log(file);
 	
 	    //image/ 로 시작하는
