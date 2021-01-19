@@ -27,7 +27,7 @@ public class ReportPost extends HttpServlet {
 		
 		Report report = new Report(postNo, writerMemberNo, reporterMemberNo, type);
 		
-		int result = ReportsDAO.insertReport(report)
+		int result = ReportsDAO.insertReport(report);
 		
 		
 	}

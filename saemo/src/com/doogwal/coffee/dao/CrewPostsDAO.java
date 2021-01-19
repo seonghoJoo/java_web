@@ -28,13 +28,12 @@ public class CrewPostsDAO {
 	}
 	
 	public static CrewPost selectPostDetailOne(int no) {
-		Post post;
 		
 		SqlSession session = null;
 		
 		try {
 			session = SqlSessionUtil.getSession();
-			post = session.selectOne("posts.selectPostDetailOne",no);
+			return session.selectOne("posts.selectPostDetailOne",no);
 			
 		}catch(Exception e) {
 			e.printStackTrace();

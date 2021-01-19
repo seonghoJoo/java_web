@@ -67,9 +67,17 @@
     	border-bottom:0;
     	padding:0;
     }
-    .pop_write_wrap .pop_write .post_submit_btn>button{
-    	width:50px;
-    	
+    .popCrewPost{
+	    width: 540px;
+	    border: 1px solid #eaeaea;
+	    box-shadow: 0 0 2px 1px #eaeaea;
+	    background-color: white;
+	    position:fixed;
+	    left:50%;
+	    top:10%;
+	    margin:0 0 0 -270px;
+    	display:none;
+    	z-index: 100;
     }
     </style>
 </head>
@@ -314,7 +322,7 @@
                                 <input type="checkbox" id="post_top_input" name="post_top" value="T"/><!--질문 3: value 뭐가 좋을지? -->
                             </div>
 
-                            <div class="post_submit_btn"><button type="submit">저장</button></div>
+                            <div id="post_submit_btn"><button type="submit">저장</button></div>
                         </div><!--//editor_upload_box end-->
                         <div class="close"><i class="fas fa-times"></i></div>
                     </div>
@@ -324,7 +332,11 @@
   	</div><!-- //pop_write_wrap -->
 
 	
+	<div class="pop_write_wrap">
+	<div class="popCrewPost"><!--crewPostWrap-->
 	
+	</div><!--//crewPostWrap-->
+	</div>
 
 
 <%@ include file="/WEB-INF/template/footer.jsp" %>
@@ -442,7 +454,6 @@
 
 
 <script type="text/template" id="detailPostsTmpl">
-	<div class="popCrewPost"><!--crewPostWrap-->
 		<div class="option_btn">
         	<a><i class="fas fa-ellipsis-v"></i></a>
         	<ul class="option_list">
@@ -543,10 +554,7 @@ ontentsContainer-->
                 <button class="commentingBtn">보내기</button>
             </form>
         </div><!--//commentingContainer-->
-    </div><!--//crewPostWrap-->
 </script>
-
-
 
 
 <script type="text/template" id="replyTmpl">
@@ -571,7 +579,7 @@ ontentsContainer-->
 	const crewMemberNo = <%=crewMemberNo %>;
 	_.templateSettings = {interpolate: /\<\@\=(.+?)\@\>/gim,evaluate: /\<\@([\s\S]+?)\@\>/gim,escape: /\<\@\-(.+?)\@\>/gim};
 	
-	//const $updatePostsTmpl = _.template($('#updatePostsTmpl').html());
+	const $detailPostsTmpl = _.template($('#detailPostsTmpl').html());
 	//$('.commented_list').append($replyTmpl({r:json}))
 	// 업데이트 start
 	$postVariableBox.on("click",".update_post_item",function(e){
@@ -735,7 +743,7 @@ ontentsContainer-->
 	}
 	});
 
-	
+	// 댓글 달기
 	const $replyTmpl = _.template($('#replyTmpl').html());
 	$postVariableBox.on("submit",'.reply_form',function(e){
 		e.preventDefault();
@@ -758,10 +766,37 @@ ontentsContainer-->
 		    success:function (json){
 		    	console.log(json);
 		    	$that.val('');
-		    	$('.commented_list').append($replyTmpl({r:json}))
+		    	$('.commented_list').append($replyTmpl({c:json}))
 		    }
 		});
 		
+	});
+	/*글 상세*/
+	const $popCrewPost = $('.popCrewPost');
+	$postVariableBox.on("click",'.postingContentsContainer',function(e){
+		e.preventDefault();
+		alert("클릭");
+		
+		const $that = $(this).parent().children().children().next().next();
+		const postNoval = $that.val()
+		
+		$.ajax({
+		    url: "/ajax/getCrewPostDetail.json",
+		    type:'get',
+		    dataType:'json',
+		    data:{
+		    	postNo: postNoval,
+		    	memberNo: <%=crewMemberNo%>,
+				crewNo:<%=crewNo%>
+		    },
+		    error : function(xhr, error, code) {
+		       // alert("에러:" + code);
+		    },
+		    success:function (json){
+		    	$popCrewPost.append($detailPostsTmpl{});
+		    	console.log(json);
+		    }
+		});
 	});
 	
 	

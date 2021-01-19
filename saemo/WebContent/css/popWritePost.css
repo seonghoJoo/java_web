@@ -19,7 +19,7 @@
     position: fixed;
     left: 50%;
     top:40%;
-    margin: -255px 0 0 -320px;
+    margin: -255px 0 0 -300px;
     background-color: #fafafa;
     z-index: 100;
 }
@@ -89,16 +89,18 @@ button{
     bottom: 0;
     margin: 20px 0;
 }
-.post_submit_btn{
+#post_submit_btn{
     position: absolute;
     left: 430px;
     bottom : 20px;
 }
-.post_submit_btn button{
+
+#post_submit_btn>button{
     width: 90px;
     height: 40px;
     font-size: 20px;
 }
+
 .close{
     color: #757575;
     position:absolute;
