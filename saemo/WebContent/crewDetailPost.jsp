@@ -569,8 +569,7 @@ ontentsContainer-->
 <script src="/js/crewDetailPost.js"></script>
 
 <script type="text/template" id="popUpdateTmpl">
-
-<div class="pop_write"><!-- popWrite start-->
+	<div class="pop_write"><!-- popWrite start-->
             <form id="writeForm" method="post" action="/writePost.do">
                 <!-- 질문 2 : fieldset 추가 적당한지-->
                 <fieldset>
@@ -638,8 +637,7 @@ ontentsContainer-->
                     </div>
                 </fieldset>
             </form>
-        </div><!--// popWrite end-->
-
+	</div><!--// popWrite end-->
 </script>
 
 <script src="js/quill.core.js"></script>
