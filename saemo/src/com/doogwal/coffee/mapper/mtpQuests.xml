@@ -13,4 +13,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<!--      2021 01 14  성호 part end     -->
+	
+	<select id="selectUserAnswersMtpQuestsList" parameterType="int" resultType="MtpQuest">
+		SELECT no, mtp_choice mtpChoice, q_no qNo,regdate
+		FROM mtp_quests
+		WHERE q_no = #{qNo}
+	</select>
 </mapper>
