@@ -15,7 +15,6 @@
     	int crewMemberNo = Integer.parseInt(memberNoStr);
 		int crewOrder = Integer.parseInt(crewOrderStr);  
 		System.out.println(crewOrder);
-    	/**/
 
     	/*페이지 처리 start*/
     	//현재 페이지 번호
@@ -81,6 +80,61 @@
     	display:none;
     	z-index: 100;
     }
+    
+    .pop_post_detail_wrap{
+	    position: fixed;
+	    width: 100%;
+	    height: 100%;
+	    background-color: rgba(0,0,0,.75);
+	    display: none;
+	    left: 0;
+	    top:0;
+	    z-index: 2;
+	}
+	
+	.pop_post_detail_wrap.on{
+	    display: block;
+	}
+	
+	.detail_post_wrap{
+		width: 540px;
+	    border: 1px solid #eaeaea;
+	    box-shadow: 0 0 2px 1px #eaeaea;
+	    background-color: white;
+	    position:fixed;
+	    left:50%;
+	    top:10%;
+	    margin: 0 0 0 -270px;
+	}
+	
+	.pop_write{
+	    width: 600px;
+	    max-height: 799px;
+	    position: fixed;
+	    left: 50%;
+	    top:40%;
+	    margin: -255px 0 0 -300px;
+	    background-color: #fafafa;
+	    z-index: 100;
+	}
+	.pop_post_detail_wrap .close{
+		color: #fff;
+	    position:absolute;
+	    right:30px;
+	    top:20px;
+	    font-size: 40px;
+	    cursor: pointer;
+	}
+	.pop_post_detail_wrap .postingUserInformationContainer{
+		margin:20px 0 0 0;
+	}
+	.pop_post_detail_wrap .postingContentsContainer{
+		width:540px;
+		overflow-y:scroll;
+	}
+	.pop_post_detail_wrap .option_btn{
+		top:40px;
+	}
     </style>
 </head>
 <body>
@@ -268,6 +322,9 @@
     <div class="pop_write_wrap">
   	</div><!-- //pop_write_wrap -->
 
+	<div class="pop_post_detail_wrap">
+	
+	</div>
 
 
 <%@ include file="/WEB-INF/template/footer.jsp" %>
@@ -382,6 +439,8 @@
 </script>
 
 <script type="text/template" id="detailPostsTmpl">
+	<div class="close"><i class="fas fa-times"></i></div>
+	<div class="detail_post_wrap"><!--detail_post_wrap-->
 		<div class="option_btn">
         	<a><i class="fas fa-ellipsis-v"></i></a>
         	<ul class="option_list">
@@ -391,7 +450,7 @@
 				<li class="delete_post_item">삭제하기</li>
 				<li class="update_post_item">수정하기</li>
 				<@}@>
-        		</ul>
+        	</ul>
 		<input type="hidden" value="<@= c.no@>"/>
     </div>
         <div class="postingUserInformationContainer"><!--postingUserInformationContainer-->
@@ -482,6 +541,7 @@ ontentsContainer-->
                 <button class="commentingBtn">보내기</button>
             </form>
         </div><!--//commentingContainer-->
+	</div>
 </script>
 
 <script type="text/template" id="popWriteTmpl">
@@ -553,7 +613,6 @@ ontentsContainer-->
 </script>
 
 <script type="text/template" id="replyTmpl">
-
 <li class="commented_item"><!--commented_item-->
 	<div class="commented_user_profile"><img src="/img/<@=r.profileImg @>" width="40" height="40" /></div>
     <span class="commented_user_name"><@=r.name @></span>
@@ -564,12 +623,10 @@ ontentsContainer-->
     </div><!--//commented_add_box-->
  </li><!--//commented_item-->
 </script>
-<script src="/js/moment-with-locales.js"></script>
-<script src="/js/crewDetailPage.js"></script>
-<script src="/js/crewDetailPost.js"></script>
 
 <script type="text/template" id="popUpdateTmpl">
 	<div class="pop_write"><!-- popWrite start-->
+		
             <form id="writeForm" method="post" action="/writePost.do">
                 <!-- 질문 2 : fieldset 추가 적당한지-->
                 <fieldset>
@@ -640,6 +697,12 @@ ontentsContainer-->
 	</div><!--// popWrite end-->
 </script>
 
+<script src="/js/moment-with-locales.js"></script>
+<script src="/js/crewDetailPage.js"></script>
+<script src="/js/crewDetailPost.js"></script>
+
+
+
 <script src="js/quill.core.js"></script>
 <script src="js/quill.min.js"></script>
 <script>
@@ -647,63 +710,28 @@ ontentsContainer-->
 	const crewMemberNo = <%=crewMemberNo %>;
 	_.templateSettings = {interpolate: /\<\@\=(.+?)\@\>/gim,evaluate: /\<\@([\s\S]+?)\@\>/gim,escape: /\<\@\-(.+?)\@\>/gim};
 	
+	// 글 상세
 	const $detailPostsTmpl = _.template($('#detailPostsTmpl').html());
+	
+	// 에디터 수정
 	const $popUpdateTmpl = _.template($('#popUpdateTmpl').html());
-	//$('.commented_list').append($replyTmpl({r:json}))
-	// 업데이트 start
-	$postVariableBox.on("click",".update_post_item",function(e){
-		const $that = $(this).parent().next();
-		const val = $that.val();
-		$.ajax({
-    	    url:"/ajax/updateSelectPost.json",
-    	    type:'post',
-    	    data:{
-    	    	crewNo:<%=crewNo%>,
-    	    	crewMemberNo:<%=crewMemberNo%>,
-    	    	postNo:val
-    	    },
-    	    error : function(xhr, error, code) {
-    	        alert("에러:" + code);
-    	    },
-    	    success:function (json){
-    	    	//$('.commented_list').append($updatePostsTmpl({r:json}))
-    	    	console.log(json);
-    	    }
-    	});
-	});
-	// 업데이트 start
 	
+	// 글 리스트
+	const $postsTmpl = _.template($('#postsTmpl').html());
 	
-	
-	$(document).on("click", '.remove_question',function (e) {
-	    const $this = $(this);
-	    //여기서 ajax로 파일 업로드 수행
-	    $.ajax({
-	        url:"ajax/deleteFile.json",
-	        type : 'POST',//multipart/form-data
-	        dataType : "json",
-	        error : function(xhr, error, code) {
-	            alert("에러:" + code);
-	        },
-	        success:function(json) {
-	            alert(json.result);
-	            if(json.result==true) {
-	                $this.parent().remove();
-	            }
-	        }
-	    });
-	});
-	
-	/*post*/
-	
-	let pageNo = 1;
+	// 글쓰기
+	const $popWriteTmpl = _.template($('#popWriteTmpl').html());
 
+	// 페이지 번호
+	let pageNo = 1;
+	
 	//한 페이지에 보여지는 게시물수 
 	let numPage = 2;
 	
-	//const $postVariableBox = $('.post_variable_box');
-	const $postsTmpl = _.template($('#postsTmpl').html());
+	/*글 불러오기 (페이지 1부터)*/
+	getPost();
 	
+	/*글 불러오기 페이징 처리*/
 	function getPost(){
 		$.ajax({
 		    url:"/ajax/getCrewPost.json",
@@ -724,7 +752,9 @@ ontentsContainer-->
 		    }
 		});
 	}
-	getPost();
+	/*글 불러오기 페이징 처리*/
+	
+	/* 좋아요 관련 함수 */
 	function pushLike(url,postNo){
 		$.ajax({
 		    "url": url,
@@ -743,8 +773,6 @@ ontentsContainer-->
 		});
 	}
 	
-
-
 	
 	/*무한 스크롤링*/
 	$(window).scroll(function(e) {
@@ -753,16 +781,21 @@ ontentsContainer-->
 	    }
 	});	
 	
+	/* 글 옵션 더보기*/
 	$postVariableBox.on("click",'.option_btn',function(e){
 		const $that = $(this).children().next();
 		$that.toggleClass('appear');
 	});
+	/* 글 옵션 더보기*/
 	
+	/* 글 상위 고정하기*/
 	$postVariableBox.on("click",'.top_item',function(e){
 		const $that = $(this).parent();
 		$that.toggleClass('appear');
 	});
+	/* 글 상위 고정하기*/
 	
+	/*신고하기*/
 	$postVariableBox.on("click",'.ban_item',function(e){
 		const $that = $(this).parent().next();
 		const postNo = $that.val();
@@ -779,7 +812,7 @@ ontentsContainer-->
 		    	writerMemberNo: writerMemberNo,
 		    },
 		    error : function(xhr, error, code) {
-		       // alert("에러:" + code);
+		       alert("신고하기 에러:" + code);
 		    },
 		    success:function (json){
 		    	console.log(json);
@@ -787,7 +820,8 @@ ontentsContainer-->
 		});
 		
 	});
-	// ---------------------------------------------------------------------
+	/*신고하기*/
+	
 	/*수정하기*/
 	$postVariableBox.on("click",'.update_post_item',function(e){
 		const $that = $(this).parent().next();
@@ -807,7 +841,7 @@ ontentsContainer-->
 		    	writerMemberNo: writerMemberNo,
 		    },
 		    error : function(xhr, error, code) {
-		       // alert("에러:" + code);
+		        alert("수정하기 에러:" + code);
 		    },
 		    success:function (json){
 		    	console.log(json);
@@ -830,13 +864,13 @@ ontentsContainer-->
 	/*수정하기*/
 	
 	
-	/*댓글 누르기*/
+	/*댓글쓰기 박스 누르기*/
 	$postVariableBox.on("click",'.comment_btn',function(e){
 		const $that = $(this).parent().next().next().children().children().eq(0);
 		console.log($that);
 		$that.focus();
 	});
-	/*댓글 누르기*/
+	/*댓글쓰기 박스 누르기*/
 	
 	/*좋아요 누르기*/
 	$postVariableBox.on("click",'.like_btn',function(e){
@@ -856,7 +890,7 @@ ontentsContainer-->
 	});
 	/*좋아요 누르기*/
 	
-	// 댓글 달기
+	/* 댓글 달기*/
 	const $replyTmpl = _.template($('#replyTmpl').html());
 	$postVariableBox.on("submit",'.reply_form',function(e){
 		e.preventDefault();
@@ -874,25 +908,27 @@ ontentsContainer-->
 				reply:val
 		    },
 		    error : function(xhr, error, code) {
-		       // alert("에러:" + code);
+		       alert("댓글 달기 에러:" + code);
 		    },
 		    success:function (json){
 		    	console.log(json);
 		    	$that.val('');
-		    	$('.commented_list').append($replyTmpl({c:json}))
+		    	$('.commented_list').append($replyTmpl({r:json}))
 		    }
 		});
 		
 	});
+	/* 댓글 달기*/
+	
 	/*글 상세*/
-	const $popCrewPost = $('.popCrewPost');
+	const $pop_post_detail_wrap = $('.pop_post_detail_wrap');
+	//const $popCrewPost = $('.popCrewPost');
 	$postVariableBox.on("click",'.postingContentsContainer',function(e){
 		e.preventDefault();
-		alert("클릭");
-		
 		const $that = $(this).parent().children().children().next().next();
 		const postNoval = $that.val()
 		
+		$pop_post_detail_wrap.addClass("on");
 		$.ajax({
 		    url: "/ajax/getCrewPostDetail.json",
 		    type:'get',
@@ -903,21 +939,54 @@ ontentsContainer-->
 				crewNo:<%=crewNo%>
 		    },
 		    error : function(xhr, error, code) {
-		       // alert("에러:" + code);
+		       alert("글 상세 에러:" + code);
 		    },
 		    success:function (json){
-		    	$popCrewPost.append($detailPostsTmpl({c:json}));
+		    	$pop_post_detail_wrap.append($detailPostsTmpl({c:json}));
 		    	console.log(json);
 		    }
 		});
 	});
+	/*글 상세*/
+	
+	/*글 상세 닫기*/
+	$pop_post_detail_wrap.on("click",'.close',function(e){
+		const $that = $(this).parent();
+		$that.children().remove();
+		$that.removeClass('on');
+	});
+	/*글 상세 닫기*/
+	
+	
+	/* 글 삭제하기 */
+	$postVariableBox.on("click",".delete_post_item",function(e){
+		const $that = $(this).parent().next();
+		const $popWrap = $(this).parent().parent().parent();
+		const val = $that.val();
+		console.log($popWrap);
+		$.ajax({
+    	    url:"/ajax/deletePost.json",
+    	    type:'get',
+    	    data:{
+    	    	postNo:val
+    	    },
+    	    error : function(xhr, error, code) {
+    	        alert("글 삭제 에러:" + code);
+    	    },
+    	    success:function (){
+    	    	$popWrap.remove();    
+    	    }
+    	});
+	});
+	/* 글 삭제하기 */
+	
 	
     /*post*/
     /*popWrite start*/
 	const $popWriteWrap= $(".pop_write_wrap");
 	const $popWrite = $('.pop_write');
 	
-	// 닫기 버튼
+	/* 글 쓰기 수정 닫기 버튼 */
 	$popWriteWrap.on("click",'.close',function (e) {
 		alert("클릭");
 		//pop_write_wrap
@@ -925,9 +994,11 @@ ontentsContainer-->
 	    $that.removeClass('on');
 	    $that.children().remove();
 	});
+	/* 글 쓰기 수정 닫기 버튼 */
 	
-	const $popWriteTmpl = _.template($('#popWriteTmpl').html());
-	// 새글 쓰기 버튼 on
+	
+	
+	/* 새글 쓰기 버튼 on*/
 	const $postingBtn = $('.posting_btn');
 	$postingBtn.click(function (e) {
 	    e.preventDefault();
@@ -945,30 +1016,9 @@ ontentsContainer-->
 	    quill.focus();
 	})
 	
-	// 삭제하기
-	$postVariableBox.on("click",".delete_post_item",function(e){
-		const $that = $(this).parent().next();
-		const $popWrap = $(this).parent().parent().parent();
-		const val = $that.val();
-		console.log($popWrap);
-		$.ajax({
-    	    url:"/ajax/deletePost.json",
-    	    type:'get',
-    	    data:{
-    	    	postNo:val
-    	    },
-    	    error : function(xhr, error, code) {
-    	        alert("에러:" + code);
-    	    },
-    	    success:function (){
-    	    	$popWrap.remove();    
-    	    }
-    	});
-	});
-	// 삭제하기 END
-	
-	
 	const $post_top_input = $('#post_top_input');
+	
+	/*에디터 글 작성*/
 	$popWriteWrap.on("submit","#writeForm",function (e) {
 	
 	    const contents = 
@@ -1002,8 +1052,11 @@ ontentsContainer-->
 	    }
 	
 	});//#writeForm submit() end
+	/*에디터 글 작성*/
+	
 	var quill;
 	
+	/*에디터에 이미지 삽입*/
 	$popWriteWrap.on("change","#image_input",function() {
 		
 	    const file = this.files[0];
@@ -1018,6 +1071,7 @@ ontentsContainer-->
 	        //multipart/form-data에 필요함
 	        const formData = new FormData();
 	
+	        
 	        formData.append("uploadImage", file, file.name);
 	
 	        //여기서 ajax로 파일 업로드 수행
@@ -1029,7 +1083,7 @@ ontentsContainer-->
 	            type : 'POST',//multipart/form-data
 	            dataType : "json",
 	            error : function(xhr, error, code) {
-	                alert("에러:" + code);
+	                alert("에디터에 이미지 삽입 에러:" + code);
 	            },
 	            success:function(json) {
 	                const range = quill.getSelection();
@@ -1044,22 +1098,24 @@ ontentsContainer-->
 	                // 요소를 직접 못넣는다. custom delta
 	                quill.insertEmbed(idx, 'image', "/upload/"+json.imageName);
 	                quill.insertText( quill.getSelection() + 1, ' ', Quill.sources.SILENT);
-	
 	            }
 	        });
-	
-	
 	    } else {
 	        alert("이미지를 선택해주세요!");
 	    }
 	})
+	/*에디터에 이미지 삽입*/
 	
+	/*에디터 폰트 크기 설정*/
 	var Size = Quill.import('attributors/style/size');
 	Size.whitelist = ['20px', '28px', '36px','48px'];
 	Quill.register(Size, true);
+	/*에디터 폰트 크기 설정*/
 	
+	/*에디터 색깔 넣기*/
 	var ColorClass = Quill.import('attributors/class/color');
 	Quill.register(ColorClass, true);
+	/*에디터 색깔 넣기*/
 	
 	/*popWrite end*/
     

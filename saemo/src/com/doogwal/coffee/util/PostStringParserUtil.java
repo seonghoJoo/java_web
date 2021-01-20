@@ -9,13 +9,12 @@ public class PostStringParserUtil {
 		
 		String origin="";
 		String save ="";
-		List<String> listSave = new ArrayList();
+		List<String> listSave = new ArrayList<String>();
 		int index=0;
 		while(0<str.length()) {
 			
 			// 더이상 img file이 없을때 종료
 			if(str.indexOf(del1)<0) {
-				System.out.println("문자열 없음");
 				origin+=str;
 				break;
 			}
@@ -27,26 +26,21 @@ public class PostStringParserUtil {
 		return listSave;
 	}
 	
-public static String contenetsOriginParserUtil(String str,String del1, String del2) { 
-		
+	public static String contenetsOriginParserUtil(String str,String del1, String del2) { 
 		String origin="";
-		String save ="";
-		List<String> listSave = new ArrayList();
 		int index=0;
 		while(0<str.length()) {
-			
 			// 더이상 img file이 없을때 종료
 			if(str.indexOf(del1)<0) {
-				System.out.println("문자열 없음");
 				origin+=str;
 				break;
 			}
 			// 글 저장
 			origin+=str.substring(index, str.indexOf(del1));
-			save+=str.substring(str.indexOf(del1),str.indexOf(del2)+2);
 			str = str.substring(str.indexOf(del2)+2);
 		}
+		// 이미지 빈 태그들 없애기
+		origin = origin.replaceAll("<p>[\\s]*</p>", "");
 		return origin;
 	}
-	
 }

@@ -21,7 +21,6 @@ public class UploadPostImage extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-				
 		//ServletContext
 		ServletContext application 
 		= req.getServletContext();
