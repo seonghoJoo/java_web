@@ -49,7 +49,16 @@
     <link rel="stylesheet" href="/css/quill.core.css" />
     <link rel="stylesheet" href="/css/quill.snow.css"/>
     <link rel="stylesheet" href="/css/popWritePost.css" />
+    <link rel="stylesheet" href="/css/popReport.css" />
     <style>
+    
+    /* 바디에 스크롤 막는 방법 */
+	.not_scroll{
+	    position: fixed;
+	    overflow: hidden;
+	    width: 100%;
+	    height: 100%
+	}
     #header{
         position: fixed;
         z-index: 1;
@@ -323,7 +332,9 @@
   	</div><!-- //pop_write_wrap -->
 
 	<div class="pop_post_detail_wrap">
+	</div>
 	
+	<div id="reportBoxWrap"><!--reportBoxWrap-->
 	</div>
 
 
@@ -461,18 +472,8 @@
 			<!-- -----------------------postUserInfoTmpl------------------------------ -->
         </div><!--//postingUserInformationContainer-->
         <div class="postingContentsContainer"><!--postingContentsContainer-->
-            <p class="posting_text"><@=c.texts@></p>
-            <div class="posting_image image_box_type<@if(c.postImgs.length>5){@><@=4@><@}else{@><@=c.postImgs.length@><@}@>"><!--posting_image-->
-                <ul class="posting_image_list"><!--posting_image_list-->
-			<!-- -----------------------posting Imags------------------------------ -->
-				<@ for(let i=0;i<c.postImgs.length;i++){ @>
-					<li class="posting_image_item"><img src="<@=c.postImgs[i].image@>" width="100%" height="100%" /></li>
-                <@} @>
-			<!-- -----------------------posting Imags------------------------------ -->
-				</ul><!--//posting_image_list-->
-            </div><!--//posting_image-->
-        </div><!--//postingC
-ontentsContainer-->
+            <p class="posting_text"><@=c.contents@></p>
+        </div><!--//postingContentsContainer-->
         <div class="postCountContainer"><!--postCountContainer-->
             <div class="like_box"><!--like_box-->
                 <div class="like_icon"><i class="fas fa-heart"></i></div>
@@ -697,6 +698,76 @@ ontentsContainer-->
 	</div><!--// popWrite end-->
 </script>
 
+<script type="text/template" id="reportTmpl">
+       <div id="reportBox"><!--reportBox-->
+        <div class="report_title">신고하기</div>
+        <div class="report_target_box"><!--report_target_box-->
+            <div class="target_name_box"><!--target_name_box-->
+                <span class="title">작성자</span>
+                <span class="report_target_name">sdfs</span>
+            </div><!--//target_name_box-->
+            <div class="target_post_box"><!--report_target_post_box-->
+                <span class="title">내용</span>
+                <span class="report_target_post">sdffffffffffffffffffffffffffffffffffffffgggggffffffffffffffffffffff</span>
+            </div><!--//report_target_post_box-->
+        </div><!--//report_target_box-->
+        <form class="report_reason_box" method="get" action="/"><!--report_reason_box-->
+            <ul class="report_reason_list">
+                <li class="report_reason_item">
+                    <label>
+                        <span>스팸입니다.</span>
+                        <i class="fas fa-angle-right"></i>
+                        <input class="report_input" type="radio" name="type" value="S"/>
+                    </label>
+                </li>
+                <li class="report_reason_item">
+                    <label>
+                        <span>부적절한 상품을 팔거나 홍보하고 있습니다.</span>
+                        <i class="fas fa-angle-right"></i>
+                        <input class="report_input"  type="radio" name="type" value="P"/>
+                    </label>
+                </li>
+                <li class="report_reason_item">
+                    <label>
+                        <span>자해나 자살과 관련된 내용입니다.</span>
+                        <i class="fas fa-angle-right"></i>
+                        <input class="report_input" type="radio" name="type" value="H"/>
+                    </label>
+                </li>
+                <li class="report_reason_item">
+                    <label>
+                        <span>나체 이미지거나 음란한 내용을 담고 있습니다.</span>
+                        <i class="fas fa-angle-right"></i>
+                        <input class="report_input" type="radio" name="type" value="D"/>
+                    </label>
+                </li>
+                <li class="report_reason_item">
+                    <label>
+                        <span>저작권, 명예훼손 등 기타 권리를 침해하는 내용입니다.</span>
+                        <i class="fas fa-angle-right"></i>
+                        <input class="report_input" type="radio" name="type" value="C"/>
+                    </label>
+                </li>
+                <li class="report_reason_item">
+                    <label>
+                        <span>특정인의 개인정보가 포함되어 있습니다.</span>
+                        <i class="fas fa-angle-right"></i>
+                        <input class="report_input" type="radio" name="type" value="I"/>
+                    </label>
+                </li>
+
+                <li class="report_reason_item">
+                    <label>
+                        <span>혐오를 조장하는 내용입니다.</span>
+                        <i class="fas fa-angle-right"></i>
+                        <input class="report_input" type="radio" name="type" value="H"/>
+                    </label>
+                </li>
+            </ul>
+        </form><!--//report_reason_box-->
+    </div>
+</script>
+
 <script src="/js/moment-with-locales.js"></script>
 <script src="/js/crewDetailPage.js"></script>
 <script src="/js/crewDetailPost.js"></script>
@@ -721,6 +792,9 @@ ontentsContainer-->
 	
 	// 글쓰기
 	const $popWriteTmpl = _.template($('#popWriteTmpl').html());
+	
+	// 신고하기
+	const $reportTmpl = _.template($('#reportTmpl').html());
 
 	// 페이지 번호
 	let pageNo = 1;
@@ -790,41 +864,71 @@ ontentsContainer-->
 	
 	/* 글 상위 고정하기*/
 	$postVariableBox.on("click",'.top_item',function(e){
-		const $that = $(this).parent();
+		const $that = $(this).parent().next();
+		console.log($that);
 		$that.toggleClass('appear');
 	});
-	/* 글 상위 고정하기*/
 	
-	/*신고하기*/
+	/*신고하기 옵션 클릭*/
+	let postNo;
+	let writerNo;
+	const $reportBoxWrap = $('#reportBoxWrap');
+   	const $report_reason_item = $('.report_reason_item');
 	$postVariableBox.on("click",'.ban_item',function(e){
 		const $that = $(this).parent().next();
-		const postNo = $that.val();
-		const writerMemberNo = $that.next().val();
 		$that.toggleClass('appear');
-		
-		$.ajax({
-		    url: "/ajax/insertReport.json",
-		    type:'get',
-		    dataType:'json',
-		    data:{
-		    	postNo: postNo,
-				reporterMemberNo : <%=crewMemberNo%>,
-		    	writerMemberNo: writerMemberNo,
-		    },
-		    error : function(xhr, error, code) {
-		       alert("신고하기 에러:" + code);
-		    },
-		    success:function (json){
-		    	console.log(json);
-		    }
-		});
-		
+		$reportBoxWrap.toggle('on');
+		$reportBoxWrap.append($reportTmpl);
+		postNo = $that.val();
+		writerNo = $that.next().val();
 	});
-	/*신고하기*/
+	/*신고하기 옵션 클릭*/
+	
+   /*신고하기*/
+   $reportBoxWrap.on("click",$report_reason_item ,function (e) {
+        const $that = $(this).children().children().next().next();
+        const $remove = $(this).parent();
+        const val = $that.val();
+        const intention = confirm("허위로 신고를 할시 불이익을 받을 수 있습니다.\n 그래도 신고하시겠습니까?").valueOf();
+        console.log(intention);
+        if(intention==true){
+            $.ajax({
+                url: "ajax/insertReport.json",
+                type:'get',
+                data:{
+                	postNo:postNo,
+                	reporterNo : <%=crewMemberNo%>,
+                	writerNo : writerNo,
+                	type : val
+                },
+                dataType:'json',
+                error : function(xhr, error, code) {
+                    alert("신고하기 에러:" + code);
+                    $reportBoxWrap.toggle('on');
+                },
+                success:function (json){
+                	if(json.result==1){
+  	                  	alert("신고하였습니다.");
+                	}else{
+                		alert("신고가 되질 않습니다.");
+                	}
+                    $reportBoxWrap.toggle('on');
+                }
+            });
+        }else{
+            alert("신고를 취소하였습니다.");
+            $reportBoxWrap.toggle('on');
+        }
+        $remove.remove();
+   });
+   /*신고하기*/
+	
 	
 	/*수정하기*/
 	$postVariableBox.on("click",'.update_post_item',function(e){
 		const $that = $(this).parent().next();
+		// 스크롤 막기
+		$("html, body").toggleClass("not_scroll");
 		const postNo = $that.val();
 		const writerMemberNo = $that.next().val();
 		const $updateContents = $('.update_contents');
@@ -925,9 +1029,10 @@ ontentsContainer-->
 	//const $popCrewPost = $('.popCrewPost');
 	$postVariableBox.on("click",'.postingContentsContainer',function(e){
 		e.preventDefault();
+		// 스크롤 막기
+		$("html, body").toggleClass("not_scroll");
 		const $that = $(this).parent().children().children().next().next();
 		const postNoval = $that.val()
-		
 		$pop_post_detail_wrap.addClass("on");
 		$.ajax({
 		    url: "/ajax/getCrewPostDetail.json",
@@ -952,10 +1057,61 @@ ontentsContainer-->
 	/*글 상세 닫기*/
 	$pop_post_detail_wrap.on("click",'.close',function(e){
 		const $that = $(this).parent();
+		// 스크롤 막기
+		$("html, body").toggleClass("not_scroll");
 		$that.children().remove();
 		$that.removeClass('on');
 	});
 	/*글 상세 닫기*/
+	
+	/* 글 상세 좋아요 누르기*/
+	$pop_post_detail_wrap.on("click",'.like_btn',function(e){
+	// likeBtn
+	const $that = $(this).children();
+	const val = $that.next().val();
+	alert(val);
+	if($that.prop("checked")){
+	    $that.attr("checked",false);
+	    $(this).removeClass("like");
+	    pushLike("/ajax/unPushLike.json",val);
+	}else{
+	    $that.attr("checked",true);
+	    $(this).addClass("like");
+	    pushLike("/ajax/pushLike.json",val);
+	}
+	});
+	/*글 상세 좋아요 누르기*/
+	
+	
+	
+	/* 글 상세 댓글 달기*/
+	$pop_post_detail_wrap.on("submit",'.reply_form',function(e){
+		e.preventDefault();
+		const $that = $(this).children();
+		let val = $that.val().substr(0,30);
+		const postNoVal = $(this).children().next().val();
+		
+		$.ajax({
+		    url: "/ajax/insertReply.json",
+		    type:'get',
+		    dataType:'json',
+		    data:{
+		    	postNo: postNoVal,
+		    	memberNo: <%=crewMemberNo%>,
+				reply:val
+		    },
+		    error : function(xhr, error, code) {
+		       alert("댓글 달기 에러:" + code);
+		    },
+		    success:function (json){
+		    	console.log(json);
+		    	$that.val('');
+		    	$('.pop_post_detail_wrap .commented_list').append($replyTmpl({r:json}))
+		    }
+		});
+		
+	});
+	/* 글 상세 댓글 달기*/
 	
 	
 	/* 글 삭제하기 */
@@ -988,7 +1144,8 @@ ontentsContainer-->
 	
 	/* 글 쓰기 수정 닫기 버튼 */
 	$popWriteWrap.on("click",'.close',function (e) {
-		alert("클릭");
+		// 스크롤 막기
+		$("html, body").toggleClass("not_scroll");
 		//pop_write_wrap
 		const $that = $(this).parent().parent().parent().parent().parent();
 	    $that.removeClass('on');
@@ -1003,7 +1160,8 @@ ontentsContainer-->
 	$postingBtn.click(function (e) {
 	    e.preventDefault();
 	    $popWriteWrap.addClass("on");
-	    
+	 	// 스크롤 막기
+		$("html, body").toggleClass("not_scroll");
 	    $popWriteWrap.append($popWriteTmpl());
 	    quill = new Quill('#editorContainer', {
 		    modules: {
@@ -1018,7 +1176,7 @@ ontentsContainer-->
 	
 	const $post_top_input = $('#post_top_input');
 	
-	/*에디터 글 작성*/
+	/*에디터 글 작성 완료*/
 	$popWriteWrap.on("submit","#writeForm",function (e) {
 	
 	    const contents = 
@@ -1052,7 +1210,7 @@ ontentsContainer-->
 	    }
 	
 	});//#writeForm submit() end
-	/*에디터 글 작성*/
+	/*에디터 글 작성 완료*/
 	
 	var quill;
 	

@@ -1,6 +1,7 @@
 package com.doogwal.coffee.servelt.ajax;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.doogwal.coffee.dao.CrewsDAO;
 import com.doogwal.coffee.dao.ReportsDAO;
 import com.doogwal.coffee.vo.Report;
 
@@ -16,18 +18,28 @@ public class ReportPost extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
 		String postNoStr = req.getParameter("postNo");
-		String reporterMemberNoStr = req.getParameter("reporterMemberNo");
-		String writerMemberNoStr = req.getParameter("writerMemberNo");
+		String reporterNoStr = req.getParameter("reporterNo");
+		String writerNoStr = req.getParameter("writerNo");
+		String typeStr = req.getParameter("type");
 		
 		int postNo = Integer.parseInt(postNoStr);
-		int reporterMemberNo = Integer.parseInt(reporterMemberNoStr);
-		int writerMemberNo = Integer.parseInt(writerMemberNoStr);
+		int reporterNo = Integer.parseInt(reporterNoStr);
+		int writerNo = Integer.parseInt(writerNoStr);
+		System.out.println(typeStr);
+		char type = typeStr.charAt(0);
 		
-		Report report = new Report(postNo, writerMemberNo, reporterMemberNo, type);
+		Report report = new Report(postNo, writerNo, reporterNo, type);
 		
 		int result = ReportsDAO.insertReport(report);
+		
+		System.out.println("Report result: "+ result);
+		
+		resp.setContentType("application/json; charset=UTF-8");
+		
+		PrintWriter out = resp.getWriter();
+		
+		out.print("{\"result\":"+result+"}");
 		
 		
 	}
