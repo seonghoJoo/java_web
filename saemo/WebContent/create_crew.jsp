@@ -122,6 +122,7 @@
     <form action="/createCrew.do" method="post">
         <fieldset>
             <div class="step_box">
+            	<input type="hidden" />
                 <h2 class="spot">카테고리 선택</h2>
                 <div class="section_category"><!--category_section start-->
                     <ul class="category_list"><!--질문1. ul 써도 되는지 안되는지 질문으로 -->
@@ -162,7 +163,7 @@
                         <div class="crew_create_cover_inner">
                             <div class="crew_image_selected">
                                 <img src="img/category1.jpg" width="280" height="220" title="" alt="" />
-                                <div class="msg profile">가가가가가가가가가</div>
+                                <div class="msg profile"></div>
                             </div>
                             <ul class="crew_image_list">
                                 <%for(int i=1;i<=7;i++){ %>
@@ -436,13 +437,11 @@
 		
 		// 4) formdata에 파라미터를 추가
 		
-		// ?type=P 파라미터를 넘김
-		formData.append("type","P");
-		
+	
 		// 파일을 append 
 		// file: 13.6KB 파일 
 		// file.name: ryan.jpg
-		formData.append("profile",file,file.name);
+		formData.append("uploadImage", file, file.name);
 		
 		$.ajax({
 			url:"/ajax/UploadCrewImage.json",
@@ -456,8 +455,8 @@
 				alert("서버 점검중!");
 			},
 			success:function(json){
-				console.log(json.profileName);
-				$crewImageSelectedImg.attr("src","/upload/"+json.profileName);
+				console.log(json.imageName);
+				$crewImageSelectedImg.attr("src","/upload/"+json.imageName);
                 // image
                 // delta라는 개념을 하나 만들어라
                 // 요소를 직접 못넣는다. custom delta

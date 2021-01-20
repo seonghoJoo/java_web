@@ -35,14 +35,17 @@ $crew_name.keyup(function (e) {
                     $nameMsg.removeClass("ok");
 					nameFlag = true;
                 }else{
-					
+					nameFlag = false;
 					$nameMsg.addClass("ok");
 					$nameMsg.text("중복된 크루 이름입니다.");
                 }
-            }
+           		nextBtnOn2(nameFlag,crewFlag,imgFlag);
+			 }
         });
-
-        nextBtnOn2(nameFlag,crewFlag,imgFlag);
+	
+		// ajax는 불러오는데 시간이 있기 때문에 47번째 줄에 있는것은 
+		// 바람직 하지 않음
+        // nextBtnOn2(nameFlag,crewFlag,imgFlag);
     }else{
         $nameMsg.addClass("ok");
         nameFlag = false;
@@ -87,6 +90,14 @@ function nextBtnOn2(nameFlag, crewFlag, imgFlag){
 const $crewImageSelectedImg = $('.crew_image_selected img');
 
 const $crewImageItem = $('.crew_image_item input');
+
+$crewImageItem.change(function (e) {
+    e.preventDefault();
+    let src = $(this).next().children().data("src");
+    console.log("crewImageItemChange: " + src);
+    // $(this).children().attr("checked","checked");
+    $crewImageSelectedImg.attr("src", src);
+});
 
 /*
 $("#image_input").on("change",function() {

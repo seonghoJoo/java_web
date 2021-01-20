@@ -130,7 +130,7 @@ public class CreateCrew extends HttpServlet{
 		List<CrewMember> ownCrewList = CrewMembersDAO.selectOwnList(user.getNo());
 		System.out.println("onwCrewList 사이즈:" + ownCrewList.size());
 		int crewIdx = ownCrewList.size();
-		session.setAttribute("userCrewList"+ (crewIdx), crewMember);
+		session.setAttribute("userCrewList"+ (--crewIdx), crewMember);
 		
 		resp.sendRedirect("/index.jsp");
 		
