@@ -87,12 +87,7 @@ public class CreateCrew extends HttpServlet{
 					// insert Questoin
 					q = new Question(crewNo, 'M', mtpQuests[i]);
 					
-					int qResult = QuestionsDAO.insertQuestion(q);
-					
-					// get Question no by crewNo
-					List<Question> qNoList = QuestionsDAO.selectQuestionList(crewNo); 
-					
-					int qNo = qNoList.get(mtpNumIndex).getNo();
+					int qNo = QuestionsDAO.insertQuestion(q);
 					int mtpNum = Integer.parseInt(mtpNums[mtpNumIndex++]);
 					if(mtpQuests.length>0) {
 						// 6 3 1

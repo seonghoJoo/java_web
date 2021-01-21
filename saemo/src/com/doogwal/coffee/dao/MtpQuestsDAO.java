@@ -36,11 +36,11 @@ public class MtpQuestsDAO {
 	 * 	객관식 질문 넣기
 	 * */
 	
-	public static List<MtpQuest> selectUserAnswersMtpQuestsList(int no){
+	public static List<MtpQuest> selectUserAnswersMtpQuestsList(int qNo){
 		SqlSession session = null;
 		try {
 			session = SqlSessionUtil.getSession();
-			return session.selectList("mtpquests.selectUserAnswersMtpQuestsList",no);
+			return session.selectList("mtpquests.selectUserAnswersMtpQuestsList",qNo);
 		}catch(Exception e) {
 			e.printStackTrace();
 		} finally {

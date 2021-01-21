@@ -324,7 +324,6 @@
 <!--객관식 보기 추가--><!--2개 이하는 못지움-->
 <script type="text/template" id="multipleChoiceAnswerTmpl">
     <div>
-
         <label><span><i class="far fa-dot-circle"></i></span>
             <input name="mtp_answer" class="answer_input" placeholder='보기를 적어주세요'/>
         </label>

@@ -11,10 +11,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE crew_no=#{crewNo}
 	</select>
 	
-	<insert id="insertQuestion" parameterType="Question">
+	<insert id="insertQuestion" parameterType="Question" useGeneratedKeys="true" keyColumn="no" keyProperty="no">
 		INSERT INTO questions(no,type,quest,crew_no,regdate)
-		VALUES( questions_seq.nextval,#{type},#{quest},#{crewNo},systimestamp)
+		VALUES(questions_seq.nextval,#{type},#{quest},#{crewNo},systimestamp)
 	</insert>
-	
-	
 </mapper>

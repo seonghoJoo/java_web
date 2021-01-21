@@ -7,14 +7,12 @@
     pageEncoding="UTF-8"%>
 <%
 	//크루 번호 받기
+	//http://localhost/userAnswer.jsp?crewNo=1000
 	String crewNoStr = request.getParameter("crewNo");
 	int crewNo = Integer.parseInt(crewNoStr);
 
 	// 크루 질문 가져오기
 	List<Question> questions = QuestionsDAO.selectQuestionList(crewNo);
-	
-	// 크루 객관식 질문 가져오기
-	List<MtpQuest> mtpQuestions = MtpQuestsDAO.selectUserAnswersMtpQuestsList(crewNo);
 	
 %>
 <!DOCTYPE html>
@@ -22,9 +20,7 @@
 <head>
     <meta charset="UTF-8">
     <title>가입조건</title>
-    <link rel="stylesheet" href="css/reset.css"/>
-    <link rel="stylesheet" href="css/default.css" />
-    <link rel="stylesheet" href="css/all.min.css"/>
+    <%@ include file="/WEB-INF/template/link.jsp" %>
     <style>
         #container{
             padding-top: 30px;
@@ -113,94 +109,51 @@
     </style>
 </head>
 <body>
-<div id="header"><!--header start-->
-    <div class="inner">
-        <div class="header_logo_search"><!--header_left start-->
-            <img src="img/logo.png" alt="saemo logo" title="saemo logo" />
-            <form class="header_search"><!--header_search-->
-                <fieldset><!--fieldset-->
-                    <legend class="screen_out">검색</legend>
-                    <input placeholder="검색어를 입력하세요." maxlength="10" />
-                    <button type="submit"><i class="fas fa-search"></i></button>
-                </fieldset><!--//header_search-->
-            </form><!--//#form -->
-        </div><!--//header_left end-->
-        <div class="header_crew_list_meeting_status"><!--header_right start-->
-            <div class="header_crew_list"><!--header_crew_list-->
-                <ul>
-                    <li><a href="/"><img class="header_crew_list_on" src="img/category1.jpg" width="40" height="40" /></a></li>
-                    <li><a href="/"><img src="img/category2.jpg" width="40" height="40" /></a></li>
-                    <li><a href="/"><img src="img/category3.jpg" width="40" height="40" /></a></li>
-                </ul>
-            </div><!--//header_crew_list -->
-            <div class="header_meeting_home"><a href=""><i class="far fa-handshake"></i></a></div>
-            <div class="header_status"><a href=""><i class="fas fa-user-circle"></i></a></div>
-            <div class="header_status_dropbox">
-                <h3 class="screen_out">내메뉴</h3>
-                <ul>
-                    <li><a href="">마이페이지</a></li>
-                    <li><a href="">로그아웃</a></li>
-                </ul>
-            </div>
-        </div><!--//header_right end-->
-    </div><!--// inner end-->
-    <div class="progressbar_container">
-        <div class="step_progressbar"></div>
-    </div>
-</div><!--//header end-->
-<div id="container">
+	<%@ include file="/WEB-INF/template/header.jsp" %>
     <h2>두괄 크루가 물어보고 싶은게 있대요!</h2>
     <div class="form_box">
         <form id="form">
             <fieldset>
-                <dl>
-                    <dt class="multiple_choice_question">1.연봉이 어떻게 되시나요?</dt>
+            <%for(int i=0;i<questions.size();i++){ 
+            	if(questions.get(i).getType()=='M'){
+            		// 크루 객관식 질문 가져오기
+            		List<MtpQuest> mtpQuestions = MtpQuestsDAO.selectUserAnswersMtpQuestsList(questions.get(i).getNo());
+            		System.out.println(questions.get(i).getNo());
+            		
+       
+            	%>
+				<dl>
+                    <dt class="multiple_choice_question"><%=i+1 %><%=questions.get(i).getQuest() %></dt>
+                    <%for(int j=0;j<mtpQuestions.size();j++){ %>
                     <dd>
                         <label>
-                            <input type="radio" id="multiple_choice_question1_1" name="multiple_choice_question1"/>
-                            <span>4000 미만</span>
+                            <input type="radio" name="multiple_choice_question<%=i%>_<%=j%>"/>
+                            <span><%=mtpQuestions.get(j).getMtpChoice() %></span>
                         </label>
                     </dd>
-                    <dd>
-                        <label>
-                            <input type="radio" id="multiple_choice_question1_2" name="multiple_choice_question1"/>
-                            <span>4000 이상</span>
-                        </label>
-                    </dd>
-
-                    <dt class="multiple_choice_question">2.성격은 어떤가요?</dt>
-                    <dd>
-                        <input type="radio" id="multiple_choice_question2_1" name="multiple_choice_question2"/>
-                        <label for="multiple_choice_question2_1"><h4>내성적</h4></label>
-                    </dd>
-                    <dd>
-                        <input type="radio" id="multiple_choice_question2_2" name="multiple_choice_question2"/>
-                        <label for="multiple_choice_question2_2"><h4>외향적</h4></label>
-                    </dd>
-                    <dd>
-                        <input type="radio" id="multiple_choice_question2_3" name="multiple_choice_question2"/>
-                        <label for="multiple_choice_question2_3"><h4>중립</h4></label>
-                    </dd>
+                    <%} %>
                 </dl>
-
-                <dl>
-                    <dt class="multiple_choice_question1">3. 직업이 되시나요?</dt>
+				<%}else if(questions.get(i).getType()=='S'){ %>
+				<dl>
+                    <dt class="multiple_choice_question1"><%=i+1 %> <%=questions.get(i).getQuest() %></dt>
                     <dd>
                         <label>
                             <input type="text" id="subjective_choice_question1_1" name="subjective_choice_question1"/>
-                            <div class="extra_description">(공무원은 9급, 소방관, 경찰은 환영합니다.)</div>
                         </label>
                     </dd>
                 </dl>
-
-                <dl>
-                    <dt class="file_attachment_question">4. 귀하의 사진을 올려주세요</dt>
+				<%}else if(questions.get(i).getType()=='F'){ %>
+				<dl>
+                    <dt class="file_attachment_question"><%=i+1 %> <%=questions.get(i).getQuest() %></dt>
                     <dd>
                         <label>
                             <input type="file" id="file_attachment_question1_1" name="file_attachment_question1"/>
                         </label>
                     </dd>
                 </dl>
+				<%} %>            
+                
+				<%} %>
                 <div class="basic_info">
                     <div class="profile_image_upload">
                         <label>
@@ -225,30 +178,7 @@
             </fieldset>
         </form>
     </div>
-</div>
-<div id="footer"><!--//footer start-->
-    <div class="inner"><!--//inner start-->
-        <ul class="footer_container_help"><!--// footer_conatiner_left start-->
-            <li><a href="">이용약관</a></li>
-            <li><a href="">FAQ</a></li>
-            <li><a href="">회사소개</a></li>
-        </ul><!--// footer_conatiner_left end-->
-        <div class="footer_container_company_name clear_fix">
-            <span> &copy; 두괄</span>
-        </div><!--// footer_conatiner_start end-->
-        <dl>
-            <dt>
-                <address class="footer_address">주소 : 서울특별시 관악구 봉천로 72-6 7층</address>
-            </dt>
-            <dt>
-                <div class="footer_phone_num">전화번호 : 02-123-1234</div>
-            </dt>
-        </dl>
-
-
-    </div><!--//footer_container end-->
-</div><!--//footer end-->
-
+	<%@ include file="/WEB-INF/template/footer.jsp" %>
 
 <script src="js/jquery.js"></script>
 <script src="js/default.js"></script>

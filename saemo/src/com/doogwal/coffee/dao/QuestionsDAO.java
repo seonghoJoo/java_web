@@ -15,20 +15,20 @@ public class QuestionsDAO {
 	 *  질문 넣기
 	 * */
 	public static int insertQuestion(Question question) {
-		int cnt = 0;
+		int result = 0;
 		SqlSession session = null;
 		
 		try {
 			session = SqlSessionUtil.getSession();
-			cnt = session.insert("questions.insertQuestion",question);
-			return cnt;
+			result = session.insert("questions.insertQuestion",question);
+			return question.getNo();
 		}catch(Exception e) {
 			e.printStackTrace();
 		} finally {
 			session.close();
 		}//try~catch~finally end
 		
-		return cnt;
+		return -1;
 	}
 	/*
 	 * 	2014 01 14 주성호 end
