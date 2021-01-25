@@ -27,4 +27,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	
+		<!--박형우 start -->
+	<!--20210114 start -->
+	
+	<select id="selectWatingCrewMemberImgs" parameterType="int" resultType="String">
+			SELECT PROFILE_IMG profileImg
+			FROM crew_members
+			WHERE crew_no = #{no} AND type='W'
+			ORDER BY user_no
+		</select>
+	
+	<!--20210114 end -->
+	<!--박형우  end -->
+	
+	<!-- 정진하 20210113 1936 마이페이지에서 프로필 사진 수정 후 업데이트 -->    
+	    <update id="updateProfileImage" parameterType="CrewMember">
+	   	 UPDATE crew_members
+	   	 SET profile_img = #{profileImg}
+	   	 WHERE no = #{no}
+	    </update>
+	
+	<!--정진하  end -->
+	
+	
 </mapper>

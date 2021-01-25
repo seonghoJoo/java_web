@@ -11,6 +11,8 @@ import com.doogwal.coffee.vo.Like;
 
 public class LikesDAO {
 
+	// 주성호 2021 01 25 start
+	// 글 하나의 좋아요 리스트들 불러오기
 	public static List<Like> selectLikesList(Map<String,Object> map) {
 
 		SqlSession session = null;
@@ -27,6 +29,7 @@ public class LikesDAO {
 		return null;
 	}
 	
+	// 좋아요 클릭
 	public static int pushLike(Map<String,Object> map) {
 		int cnt = 0;
 		SqlSession session = null;
@@ -44,6 +47,7 @@ public class LikesDAO {
 		return cnt;
 	}
 	
+	// 좋아요 취소 클릭
 	public static int unPushLike(Map<String,Object> map) {
 		int cnt = 0;
 		SqlSession session = null;
@@ -61,6 +65,7 @@ public class LikesDAO {
 		return cnt;
 	}
 	
+	// 좋아요 누른사람 보기
 	public static int selectWhetherLike(Map<String,Object> map) {
 		int cnt = -1;
 		SqlSession session = null;
@@ -76,4 +81,5 @@ public class LikesDAO {
 		
 		return -1;
 	}
+	// 주성호 2021 01 25 start
 }

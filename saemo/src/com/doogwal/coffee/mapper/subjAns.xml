@@ -11,5 +11,5 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		INSERT INTO subj_ans(no,q_no,ans,regdate,crew_apply_no)
 		VALUES(subj_ans_seq.nextval,#{qNo},#{ans},systimestamp ,#{crewApplyNo})
 	</insert>
-	
+	<!--      2021 01 14  성호 part end     -->
 </mapper>

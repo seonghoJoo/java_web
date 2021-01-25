@@ -5,6 +5,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="questions">
 	
+	<!--      2021 01 14  성호 part start    -->
 	<select id="selectQuestionList" parameterType="int" resultType="Question">
 		SELECT no, crew_no crewNo, type, quest,regdate
 		FROM questions
@@ -15,4 +16,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		INSERT INTO questions(no,type,quest,crew_no,regdate)
 		VALUES(questions_seq.nextval,#{type},#{quest},#{crewNo},systimestamp)
 	</insert>
+	<!--      2021 01 14  성호 part end    -->
+	
+	<!--박형우 start-->
+	<!--20210114 start-->
+		<select id="selectJoinConditions" parameterType="int" resultType="Question">
+			SELECT NO, TYPE, QUEST, CREW_NO crewNo, REGDATE	
+			FROM questions
+			WHERE crew_no=#{no}
+		</select>
+	
+	<!--20210114 end-->
+	<!--박형우  end-->
+	
+	
 </mapper>

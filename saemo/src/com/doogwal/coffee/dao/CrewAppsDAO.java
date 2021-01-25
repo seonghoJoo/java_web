@@ -7,6 +7,9 @@ import com.doogwal.coffee.vo.CrewApp;
 
 public class CrewAppsDAO {
 	
+	// 주성호 start -----------------------------
+	//2021 01 25 start
+
 	public static int insertCrewApp(CrewApp crewApp) {
 		int result = 0;
 		SqlSession session = null;
@@ -23,5 +26,8 @@ public class CrewAppsDAO {
 		
 		return -1;
 	}
+	//2021 01 25 end
+	// 주성호 end-------------------------------
+
 	
 }

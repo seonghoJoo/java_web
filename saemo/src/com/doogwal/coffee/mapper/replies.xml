@@ -5,13 +5,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="replies">
 
+	<!--      2021 01 14  성호 part start    -->
+	<!-- 상세글  댓글 불러오기 -->
 	<select id="selectPostDetailOne" parameterType="int" resultType="Reply">
 		SELECT no, post_no postNo, seq, reply, member_no memberNo, regdate
 		FROM replies
 		WHERE post_no = #{no}
 	</select>
 	
-	
+	<!--  댓글 불러오기 -->
 	<select id="selectReplyList" parameterType="map" resultType="Reply">
 		SELECT r.no, post_no postNo, seq, reply, r.member_no memberNo, r.regdate, u.name, m.profile_img progfileImg
 		FROM replies r, crew_members m, users u
@@ -19,6 +21,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY 3
 	</select>
 	
+	<!-- 댓글 넣기 -->
 	<insert id="insertReply" parameterType="Reply">
 		<selectKey order="BEFORE" resultType="int" keyProperty="no">
 			SELECT replies_seq.nextval
@@ -27,5 +30,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		INSERT INTO replies(no, post_no,seq,reply,member_no, regdate)
 		VALUES(#{no}, #{postNo},#{no},#{reply}, #{memberNo} ,systimestamp)
 	</insert>
+	<!--      2021 01 14  성호 part start    -->
 	
 </mapper>

@@ -11,6 +11,8 @@ import com.doogwal.coffee.vo.Post;
 
 public class CrewPostsDAO {
 	
+	// 주성호 start 2021 01 25
+	// 크루 디테일 글 페이징 처리
 	public static List<CrewPost> selectPostDetailList(PageVO pageVO) {
 
 		SqlSession session = null;
@@ -26,7 +28,7 @@ public class CrewPostsDAO {
 		
 		return null;
 	}
-	
+	// 크루 디테일 글 상세 불러오기
 	public static CrewPost selectPostDetailOne(int no) {
 		
 		SqlSession session = null;
@@ -44,5 +46,6 @@ public class CrewPostsDAO {
 		return null;
 	}//selectCheckNickname() end
 	
+	// 주성호 end 2021 01 25
 
 }

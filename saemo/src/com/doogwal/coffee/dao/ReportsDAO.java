@@ -8,6 +8,9 @@ import com.doogwal.coffee.util.SqlSessionUtil;
 import com.doogwal.coffee.vo.Report;
 
 public class ReportsDAO {
+	
+	// 주성호 2021 01 25 start------------------------------
+	// 신고 하기
 	public static int insertReport(Report report) {
 		int cnt = 0;
 		SqlSession session = null;
@@ -25,6 +28,7 @@ public class ReportsDAO {
 		return cnt;
 	}
 	
+	// 신고 불러오기
 	public static List<Report> selectReportList(int crewMemberNo) {
 		SqlSession session = null;
 		
@@ -39,6 +43,6 @@ public class ReportsDAO {
 		
 		return null;
 	}
-	
+	// 주성호 2021 01 25 end------------------------------
 	
 }

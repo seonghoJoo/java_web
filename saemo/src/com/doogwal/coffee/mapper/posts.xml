@@ -5,27 +5,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="posts">
 
+<!-- 주성호 2021 01 25 start -->
+	<!-- 글 상세 불러오기 -->
 	<select id="selectPostDetailOne" parameterType="int" resultType="CrewPost">
 		SELECT no,member_no memberNo,regdate,contents,like_cnt likeCnt,board_no boardNo,image_applicable imageApplicable,top,reply_cnt replyCnt,texts
 		FROM posts 
 		WHERE no = #{no}
 	</select>
-	
+	<!-- 글 수정하기 -->
 	<select id="selectPostUpdateOne" parameterType="int" resultType="Post">
 		SELECT no,member_no memberNo,regdate,contents,like_cnt likeCnt,board_no boardNo,image_applicable imageApplicable,top,reply_cnt replyCnt,texts
 		FROM posts 
 		WHERE no = #{no}
 	</select>
 	
-	
-	<!-- 
-	<select id="selectPostDetailList" parameterType="int" resultType="CrewPost">
-		SELECT p.no,p.member_no memberNo,p.regdate,contents,like_cnt likeCnt,board_no boardNo,image_applicable imageApplicable
-		FROM posts p, boards b
-		WHERE b.crew_no = #{crewNo} AND board_no = b.no
-	</select>
-	 -->
-	
+	<!-- 글 페이지 처리 -->
 	<select id="selectPostDetailList" resultType="CrewPost" parameterType="PageVO">
 		SELECT no, memberNo, regdate, contents, likeCnt, boardNo, imageApplicable,replyCnt,texts
 		FROM	(SELECT no, memberNo, regdate, contents, likeCnt, boardNo, imageApplicable,replyCnt,texts, rownum r
@@ -39,23 +33,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE r BETWEEN #{start} AND #{end}
 	</select>
 	
+	<!-- 글 좋아요 -->
 	<update id="postPushLike" parameterType="int">
 		UPDATE posts
 		SET like_cnt = like_cnt+1
 		WHERE no=#{no} 
 	</update>
 	
+	<!-- 글 좋아요 취소 -->
 	<update id="postUnPushLike" parameterType="int">
 		UPDATE posts
 		SET like_cnt = like_cnt-1
 		WHERE no=#{no} 
 	</update>
 	
+	<!-- 글 작성 -->
 	<insert id="insertPost" parameterType="Post">
 		INSERT INTO posts(no,member_no,regdate,contents,like_cnt,board_no,image_applicable,top,reply_cnt,texts)
 		VALUES(posts_seq.nextval,#{memberNo},systimestamp,#{contents},0,#{boardNo},#{imageApplicable},#{top},0,#{texts})
 	</insert>
 	
+	<!-- 글 삭제 -->
 	<delete id="deletePost" parameterType="int">
 		DELETE
 		FROM posts
@@ -66,4 +64,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT posts_seq.nextval-1
 		FROM dual
 	</select>
+	
+<!-- 주성호 2021 01 25 end -->
 </mapper>

@@ -13,7 +13,7 @@ public class CrewsDAO {
 	/*
 	2021 01 11 주성호 start
 	가입된 크루 3개 보여주기
-*/
+	 */
 
 	public static List<Crew> selectOwnList(int no) {
 

@@ -10,6 +10,12 @@ import com.doogwal.coffee.vo.Reply;
 
 public class RepliesDAO {
 	
+	
+	/*
+	 * 	2021 01 25 주성호 start
+	 * */
+	//- ------------------------------------------------------------------
+	// 댓글 리스트 불러오기
 	public static List<Reply> selectReplyList(Map<String,Object> map) {
 
 		SqlSession session = null;
@@ -25,7 +31,7 @@ public class RepliesDAO {
 		
 		return null;
 	}
-	
+	// 댓글 삽입
 	public static int insertReply(Reply reply) {
 		SqlSession session = null;
 		try {
@@ -39,5 +45,9 @@ public class RepliesDAO {
 		
 		return -1;
 	}
+	/*
+	 * 	2021 01 25 주성호 end
+	 * */
+	//- ------------------------------------------------------------------
 	
 }
