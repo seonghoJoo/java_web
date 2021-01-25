@@ -2,17 +2,16 @@ package com.doogwal.coffee.vo;
 
 import java.sql.Timestamp;
 
-public class SubjFileAns {
+public class SubjAns {
 	private int no,qNo,crewApplyNo;
 	private String ans;
 	private Timestamp regdate;
 	
-	public SubjFileAns() {
+	public SubjAns() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public SubjFileAns(int no, int qNo, int crewApplyNo, String ans) {
-		this.no = no;
+	public SubjAns(int qNo, int crewApplyNo, String ans) {
 		this.qNo = qNo;
 		this.crewApplyNo = crewApplyNo;
 		this.ans = ans;

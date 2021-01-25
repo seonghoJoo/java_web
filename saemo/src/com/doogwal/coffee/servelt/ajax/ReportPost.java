@@ -26,6 +26,7 @@ public class ReportPost extends HttpServlet {
 		int postNo = Integer.parseInt(postNoStr);
 		int reporterNo = Integer.parseInt(reporterNoStr);
 		int writerNo = Integer.parseInt(writerNoStr);
+		System.out.println("postNo:" + postNo + "reporterNo: "+ reporterNo + "writerNo: " + writerNo);
 		System.out.println(typeStr);
 		char type = typeStr.charAt(0);
 		

@@ -12,9 +12,7 @@ public class FileAns {
 	}
 	
 	
-	public FileAns(int no, int qNo, int crewApplyNo, String ans) {
-		super();
-		this.no = no;
+	public FileAns(int qNo, int crewApplyNo, String ans) {
 		this.qNo = qNo;
 		this.crewApplyNo = crewApplyNo;
 		this.ans = ans;

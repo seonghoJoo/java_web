@@ -7,7 +7,7 @@
     pageEncoding="UTF-8"%>
 <%
 	//크루 번호 받기
-	//http://localhost/userAnswer.jsp?crewNo=1000
+	//http://localhost/userAnswer.jsp?crewNo=5037
 	String crewNoStr = request.getParameter("crewNo");
 	int crewNo = Integer.parseInt(crewNoStr);
 
@@ -90,6 +90,7 @@
             resize: none;
             margin-right: 10px;
             font-size: 20px;
+            padding:8px 10px;
         }
         .counting_characters{/*글자 수 카운티 글*/
             font-size: 10px;
@@ -106,48 +107,55 @@
         textarea,input:focus{
             outline-color: #ff6333;
         }
+        .form_box input[]
     </style>
 </head>
 <body>
 	<%@ include file="/WEB-INF/template/header.jsp" %>
     <h2>두괄 크루가 물어보고 싶은게 있대요!</h2>
     <div class="form_box">
-        <form id="form">
+        <form id="form" action="/qualAnswers.do" method="post">
+        	<input type="hidden" name="crewNo" value="<%=crewNo %>"/>
             <fieldset>
             <%for(int i=0;i<questions.size();i++){ 
             	if(questions.get(i).getType()=='M'){
             		// 크루 객관식 질문 가져오기
             		List<MtpQuest> mtpQuestions = MtpQuestsDAO.selectUserAnswersMtpQuestsList(questions.get(i).getNo());
             		System.out.println(questions.get(i).getNo());
-            		
-       
             	%>
 				<dl>
-                    <dt class="multiple_choice_question"><%=i+1 %><%=questions.get(i).getQuest() %></dt>
+                    <dt class="multiple_choice_question"><%=i+1 %>. <%=questions.get(i).getQuest() %></dt>
+                    <input type="hidden" name="qNo" value="<%=questions.get(i).getNo() %>"/>
+                    <input type="hidden" name="type" value="M"/>
                     <%for(int j=0;j<mtpQuestions.size();j++){ %>
                     <dd>
                         <label>
-                            <input type="radio" name="multiple_choice_question<%=i%>_<%=j%>"/>
+                            <input type="radio" name="answers<%=i%>" value="<%=j+1%>"/>
                             <span><%=mtpQuestions.get(j).getMtpChoice() %></span>
+                            <input type="hidden" name="mtpChoiceNo" value="<%=mtpQuestions.get(j).getNo() %>"/>
                         </label>
                     </dd>
                     <%} %>
                 </dl>
 				<%}else if(questions.get(i).getType()=='S'){ %>
 				<dl>
-                    <dt class="multiple_choice_question1"><%=i+1 %> <%=questions.get(i).getQuest() %></dt>
+                    <dt class="multiple_choice_question1"><%=i+1 %>. <%=questions.get(i).getQuest() %></dt>
                     <dd>
                         <label>
-                            <input type="text" id="subjective_choice_question1_1" name="subjective_choice_question1"/>
+                            <input type="text" name="answer<%=i%>"/>
+                            <input type="hidden" name="type" value="S"/>
+                            <input type="hidden" name="qNo" value="<%=questions.get(i).getNo() %>"/>
                         </label>
                     </dd>
                 </dl>
 				<%}else if(questions.get(i).getType()=='F'){ %>
 				<dl>
-                    <dt class="file_attachment_question"><%=i+1 %> <%=questions.get(i).getQuest() %></dt>
+                    <dt class="file_attachment_question"><%=i+1 %>. <%=questions.get(i).getQuest() %></dt>
                     <dd>
                         <label>
-                            <input type="file" id="file_attachment_question1_1" name="file_attachment_question1"/>
+                            <input type="file" name="answer<%=i%>"/>
+                            <input type="hidden" name="type" value="F"/>
+                            <input type="hidden" name="qNo" value="<%=questions.get(i).getNo() %>"/>
                         </label>
                     </dd>
                 </dl>
@@ -166,7 +174,7 @@
                     <div class="profile_introduce_upload">
                         <label>
                             <h3>간단한 자기소개</h3>
-                            <textarea maxlength="100" class="introduce" placeholder="내용을 입력해 주세요"></textarea>
+                            <textarea name="introduce" maxlength="100" class="introduce" placeholder="내용을 입력해 주세요"></textarea>
                             <span class="counting_characters">(0/100자)</span>
                         </label>
                     </div>
@@ -212,8 +220,7 @@
             //multipart/form-data에 필요함
             const formData = new FormData();
 
-            formData.append("uploadImg", file, file.name);
-            formData.append("type", "B");//B는 board의 줄임말
+            formData.append("uploadImage", file, file.name);
 
             //여기서 ajax로 파일 업로드 수행
             $.ajax({
@@ -227,8 +234,8 @@
                     alert("에러:" + code);
                 },
                 success:function(json) {
-                    console.log("ajax 실행:"+json.url);
-                    $('.profile_image_upload img').attr("src",json.url);
+                    console.log("ajax 실행:"+json.imageName);
+                    $('.profile_image_upload img').attr("src","upload/"+json.imageName);
                 }
             });
         } else {

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="crewApps">
+	<!-- ALTER TABLE crew_apps MODIFY acceptance DEFAULT 'W'; -->
+	<insert id="insertCrewApp" parameterType="CrewApp" useGeneratedKeys="true" keyColumn="no" keyProperty="no">
+		INSERT INTO crew_apps(no,regdate,crew_no,user_no)
+		VALUES(crew_apps_seq.nextval,systimestamp,#{crewNo},#{userNo})
+	</insert>
+</mapper>

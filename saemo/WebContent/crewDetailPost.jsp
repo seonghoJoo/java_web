@@ -50,6 +50,7 @@
     <link rel="stylesheet" href="/css/quill.snow.css"/>
     <link rel="stylesheet" href="/css/popWritePost.css" />
     <link rel="stylesheet" href="/css/popReport.css" />
+    <link rel="stylesheet" href="/css/enlargePost(image).css"/>
     <style>
     
     /* 바디에 스크롤 막는 방법 */
@@ -336,6 +337,9 @@
 	
 	<div id="reportBoxWrap"><!--reportBoxWrap-->
 	</div>
+	
+	<div class="post_detail_image_warp"><!--postDetailImageWarp-->
+	</div><!--//postDetailImageWarp-->
 
 
 <%@ include file="/WEB-INF/template/footer.jsp" %>
@@ -469,7 +473,7 @@
  			<div class="posting_user_profile"><img src="/img/<@=c.userMember.profileImg@>" /></div>
         	<span class="posting_user_name"><@=c.userMember.name @></span>
         	<span class="posting_date"><@= moment(c.regdate).format("YYYY년 MM월 DD일 HH:mm:ss")@></span>
-			<!-- -----------------------postUserInfoTmpl------------------------------ -->
+			<!-- -----------------------postUserInfo------------------------------ -->
         </div><!--//postingUserInformationContainer-->
         <div class="postingContentsContainer"><!--postingContentsContainer-->
             <p class="posting_text"><@=c.contents@></p>
@@ -768,6 +772,17 @@
     </div>
 </script>
 
+<script type="text/template" id="detailImageTmpl">
+
+    <div>
+        <div class="close report_icon"><i class="fas fa-times"></i></div>
+        <div class="right_icon report_icon"><i class="fas fa-chevron-right"></i></div>
+        <div class="left_icon report_icon"><i class="fas fa-chevron-left"></i></div>
+        <div class="enlarge_image_container image_box">
+        <!--enlargeImageContainer--></div>
+    </div>
+</script>
+
 <script src="/js/moment-with-locales.js"></script>
 <script src="/js/crewDetailPage.js"></script>
 <script src="/js/crewDetailPost.js"></script>
@@ -795,6 +810,9 @@
 	
 	// 신고하기
 	const $reportTmpl = _.template($('#reportTmpl').html());
+	
+	// 이미지 확대하기
+	const $detailImageTmpl = _.template($('#detailImageTmpl').html());
 
 	// 페이지 번호
 	let pageNo = 1;
@@ -873,27 +891,28 @@
 	let postNo;
 	let writerNo;
 	const $reportBoxWrap = $('#reportBoxWrap');
-   	const $report_reason_item = $('.report_reason_item');
+   	const $reportReasonItem = $('.report_reason_item');
 	$postVariableBox.on("click",'.ban_item',function(e){
 		const $that = $(this).parent().next();
 		$that.toggleClass('appear');
-		$reportBoxWrap.toggle('on');
+		$reportBoxWrap.toggleClass('on');
 		$reportBoxWrap.append($reportTmpl);
 		postNo = $that.val();
 		writerNo = $that.next().val();
 	});
 	/*신고하기 옵션 클릭*/
-	
+
    /*신고하기*/
-   $reportBoxWrap.on("click",$report_reason_item ,function (e) {
+   $reportBoxWrap.on("click",'.report_reason_item' ,function (e) {
         const $that = $(this).children().children().next().next();
-        const $remove = $(this).parent();
+        const $remove = $(this).parent().parent().parent();
         const val = $that.val();
+        console.log(val);
         const intention = confirm("허위로 신고를 할시 불이익을 받을 수 있습니다.\n 그래도 신고하시겠습니까?").valueOf();
         console.log(intention);
         if(intention==true){
             $.ajax({
-                url: "ajax/insertReport.json",
+                url: "/ajax/insertReport.json",
                 type:'get',
                 data:{
                 	postNo:postNo,
@@ -904,7 +923,7 @@
                 dataType:'json',
                 error : function(xhr, error, code) {
                     alert("신고하기 에러:" + code);
-                    $reportBoxWrap.toggle('on');
+                    $reportBoxWrap.toggleClass('on');
                 },
                 success:function (json){
                 	if(json.result==1){
@@ -912,12 +931,12 @@
                 	}else{
                 		alert("신고가 되질 않습니다.");
                 	}
-                    $reportBoxWrap.toggle('on');
+                    $reportBoxWrap.toggleClass('on');
                 }
             });
         }else{
             alert("신고를 취소하였습니다.");
-            $reportBoxWrap.toggle('on');
+            $reportBoxWrap.toggleClass('on');
         }
         $remove.remove();
    });
@@ -1027,11 +1046,11 @@
 	/*글 상세*/
 	const $pop_post_detail_wrap = $('.pop_post_detail_wrap');
 	//const $popCrewPost = $('.popCrewPost');
-	$postVariableBox.on("click",'.postingContentsContainer',function(e){
+	$postVariableBox.on("click",'.postingContentsContainer > p',function(e){
 		e.preventDefault();
 		// 스크롤 막기
 		$("html, body").toggleClass("not_scroll");
-		const $that = $(this).parent().children().children().next().next();
+		const $that = $(this).parent().parent().children().children().next().next();
 		const postNoval = $that.val()
 		$pop_post_detail_wrap.addClass("on");
 		$.ajax({
@@ -1054,15 +1073,109 @@
 	});
 	/*글 상세*/
 	
-	/*글 상세 닫기*/
-	$pop_post_detail_wrap.on("click",'.close',function(e){
-		const $that = $(this).parent();
+	// ----------------------------------------------------------------수정
+	 /*글 이미지 확대 끝*/
+	const $postDetailImageWarp = $('.post_detail_image_warp');
+	let imageArr = [];
+    let imageIdx = 0;
+	/*글 상세 이미지 확대*/
+	$postVariableBox.on("click",'.posting_image_item',function(e){
+		e.preventDefault();
+		
+		// 화면 어둡게 하기
+		$postDetailImageWarp.toggleClass('on');
+	
 		// 스크롤 막기
 		$("html, body").toggleClass("not_scroll");
-		$that.children().remove();
-		$that.removeClass('on');
+		
+		const $that = $(this).parent().parent().parent().parent().children().children().next().next();
+		console.log($that);
+		const postNoVal = $that.val();
+		console.log(postNoVal);
+		$.ajax({
+            url:"/ajax/postImage.json",
+            type:'get',
+            dataType:'json',
+            data:{
+            	postNo:postNoVal
+            },
+            error : function(xhr, error, code) {
+                alert("에러:" + code);
+            },
+            success:function (json){
+            	$postDetailImageWarp.append($detailImageTmpl);
+            	console.log(json.length);
+                for(let i=0; i<json.length; i++){
+                    imageArr[i] = json[i].image;
+                    console.log(imageArr[i]);
+                }
+                $(".image_box").css("backgroundImage", "url("+imageArr[0]+")");
+            }
+        });
 	});
-	/*글 상세 닫기*/
+	/*글 상세 이미지 확대*/
+	
+	/*글 상세 이미지 확대 팝업 닫기*/
+    $postDetailImageWarp.on('click','.close',function (e) {
+        
+        let $that = $(this).parent();
+        $that.parent().toggleClass('on');
+        // 스크롤 열기
+        $("html, body").toggleClass("not_scroll");
+        imageArr=[];
+        $that.remove();
+    });
+    /*글 상세 이미지 확대 팝업 닫기*/
+	
+	/*글 상세 이미지 닫기*/
+	$pop_post_detail_wrap.on("click",'.close',function(e){
+		const $that = $(this);
+		// 스크롤 막기
+		$("html, body").toggleClass("not_scroll");
+		$that.parent().removeClass('on');
+		$that.remove();
+	});
+	/*글 상세 이미지 닫기*/
+	
+	const $rightBtn = $(".right_icon");
+    const $leftBtn = $(".left_icon");
+
+    /*우로 넘기기*/
+    $postDetailImageWarp.on('click','.right_icon',function (e) {
+        imageIdx++;
+        console.log(imageIdx);
+        if(imageIdx==imageArr.length-1){
+            $(this).css("display","none");
+        }
+        if(imageIdx!=0){
+            $(".left_icon").css("display","block");
+        }
+        imageChange(imageIdx);
+    });
+    /*우로 넘기기*/
+
+    /*좌로 넘기기*/
+    $postDetailImageWarp.on('click','.left_icon',function (e) {
+        imageIdx--;
+        console.log(imageIdx);
+        if(imageIdx!=imageArr.length-1){
+            $(".right_icon").css("display","block");
+        }
+        if(imageIdx==0){
+            $(this).css("display","none");
+        }
+        imageChange(imageIdx);
+    });
+    /*좌로 넘기기*/
+
+    function imageChange(imageIdx){
+        $(".image_box").css("background-image", "url("+imageArr[imageIdx]+")");
+    }
+    
+    /*글 이미지 확대 끝*/
+    // ----------------------------------------------------------------수정
+	
+	
 	
 	/* 글 상세 좋아요 누르기*/
 	$pop_post_detail_wrap.on("click",'.like_btn',function(e){

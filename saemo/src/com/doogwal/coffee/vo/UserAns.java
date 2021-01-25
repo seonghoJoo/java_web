@@ -11,8 +11,7 @@ public class UserAns {
 		// TODO Auto-generated constructor stub
 	}
 
-	public UserAns(int no, int qNo, int crewApplyNo, int mtpChoiceNo) {
-		this.no = no;
+	public UserAns(int qNo, int crewApplyNo, int mtpChoiceNo) {
 		this.qNo = qNo;
 		this.crewApplyNo = crewApplyNo;
 		this.mtpChoiceNo = mtpChoiceNo;

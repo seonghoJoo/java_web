@@ -10,4 +10,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		VALUES(REPORTS_SEQ.nextval,#{type},systimestamp,#{postNo},#{memberNo},#{reporter})
 	</insert>
 	
+	<select id="selectReportList" parameterType="int" resultType="Report">
+		SELECT r.post_no postNo,r.no,r.type,r.regdate,r.member_no memberNo,reporter,u.name, c.profile_img
+		FROM users u,crew_members c LEFT JOIN reports r
+		ON c.no = r.member_no
+		WHERE r.member_no = #{memberNo} AND 
+		u.no = c.user_no
+	</select>
+	
 </mapper>

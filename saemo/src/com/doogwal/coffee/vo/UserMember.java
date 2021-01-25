@@ -11,8 +11,6 @@ public class UserMember {
 	
 	private String name;
 
-	
-	
 	public UserMember() {
 		// TODO Auto-generated constructor stub
 	}

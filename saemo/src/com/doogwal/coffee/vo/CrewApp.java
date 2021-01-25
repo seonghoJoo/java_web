@@ -4,21 +4,39 @@ import java.sql.Timestamp;
 
 public class CrewApp {
 	
-	private int no,crewNo,userNo;
+	private int no,userNo,crewNo;
 	private char acceptance;
 	private Timestamp regdate;
+	private String introduce;
 	
 	public CrewApp() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public CrewApp(int no, int crewNo, int userNo, char acceptance) {
-		this.no = no;
+	public CrewApp( int crewNo, int userNo) {
 		this.crewNo = crewNo;
 		this.userNo = userNo;
-		this.acceptance = acceptance;
 	}
 
+	
+	
+	public String getIntroduce() {
+		return introduce;
+	}
+
+	public void setIntroduce(String introduce) {
+		this.introduce = introduce;
+	}
+
+
+	public Timestamp getRegdate() {
+		return regdate;
+	}
+
+	public void setRegdate(Timestamp regdate) {
+		this.regdate = regdate;
+	}
+	
 	public int getNo() {
 		return no;
 	}

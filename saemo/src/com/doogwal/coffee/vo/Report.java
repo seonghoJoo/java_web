@@ -1,11 +1,17 @@
 package com.doogwal.coffee.vo;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 public class Report {
 	private int no,postNo,memberNo,reporter;
 	private char type;
 	private Timestamp regdate;
+	
+	private String name,profileImg;
+	
+	private List<Post> posts;
+	private List<CrewMember> reporters;
 	
 	public Report() {
 		// TODO Auto-generated constructor stub
@@ -16,6 +22,47 @@ public class Report {
 		this.memberNo = memberNo;
 		this.reporter = reporter;
 		this.type = type;
+	}
+	
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getProfileImg() {
+		return profileImg;
+	}
+
+	public void setProfileImg(String profileImg) {
+		this.profileImg = profileImg;
+	}
+
+	public Timestamp getRegdate() {
+		return regdate;
+	}
+
+	public void setRegdate(Timestamp regdate) {
+		this.regdate = regdate;
+	}
+
+	public List<Post> getPosts() {
+		return posts;
+	}
+
+	public void setPosts(List<Post> posts) {
+		this.posts = posts;
+	}
+
+	public List<CrewMember> getReporters() {
+		return reporters;
+	}
+
+	public void setReporters(List<CrewMember> reporters) {
+		this.reporters = reporters;
 	}
 
 	public int getNo() {

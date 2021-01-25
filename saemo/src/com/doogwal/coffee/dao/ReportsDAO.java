@@ -1,5 +1,7 @@
 package com.doogwal.coffee.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 
 import com.doogwal.coffee.util.SqlSessionUtil;
@@ -22,4 +24,21 @@ public class ReportsDAO {
 		
 		return cnt;
 	}
+	
+	public static List<Report> selectReportList(int crewMemberNo) {
+		SqlSession session = null;
+		
+		try {
+			session = SqlSessionUtil.getSession();
+			return session.selectList("reports.selectReportList",crewMemberNo);
+		}catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}//try~catch~finally end
+		
+		return null;
+	}
+	
+	
 }

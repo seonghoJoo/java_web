@@ -26,6 +26,10 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	<typeAlias alias="PageVO" type="com.doogwal.coffee.vo.PageVO"></typeAlias>
 	<typeAlias alias="UserMember" type="com.doogwal.coffee.vo.UserMember"></typeAlias>
 	<typeAlias alias="Report" type="com.doogwal.coffee.vo.Report"></typeAlias>
+	<typeAlias alias="CrewApp" type="com.doogwal.coffee.vo.CrewApp"></typeAlias>
+	<typeAlias alias="UserAns" type="com.doogwal.coffee.vo.UserAns"></typeAlias>
+	<typeAlias alias="SubjAns" type="com.doogwal.coffee.vo.SubjAns"></typeAlias>
+	<typeAlias alias="FileAns" type="com.doogwal.coffee.vo.FileAns"></typeAlias>
 </typeAliases>
 
 <!--  데이터 베이스와 연결 환경 설정 -->
@@ -58,6 +62,10 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	<mapper resource="com/doogwal/coffee/mapper/postImgs.xml"></mapper>
 	<mapper resource="com/doogwal/coffee/mapper/likes.xml"></mapper>
 	<mapper resource="com/doogwal/coffee/mapper/reports.xml"></mapper>
+	<mapper resource="com/doogwal/coffee/mapper/crewApps.xml"></mapper>
+	<mapper resource="com/doogwal/coffee/mapper/userAns.xml"></mapper>
+	<mapper resource="com/doogwal/coffee/mapper/subjAns.xml"></mapper>
+	<mapper resource="com/doogwal/coffee/mapper/fileAns.xml"></mapper>
 </mappers>
 
 </configuration>
