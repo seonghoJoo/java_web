@@ -128,7 +128,7 @@ body {
     position:absolute;
     border: 1px solid #424242;
     display: none;
-    z-index:100;
+    z-index:20;
 }
 .header_status_dropbox li{
     width: 80px;

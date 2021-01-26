@@ -1,0 +1,104 @@
+package com.doogwal.coffee.dao;
+
+import org.apache.ibatis.session.SqlSession;
+
+import com.doogwal.coffee.util.SqlSessionUtil;
+import com.doogwal.coffee.vo.Gathering;
+import com.doogwal.coffee.vo.Meeting;
+
+public class SchedulesDAO {
+	//박형우 start -----------------------------------------------------------------------
+	//20210114 start
+		// upcomming event를 가져오는
+		public static Gathering selectUpcommingGathring(int no) {
+			
+			SqlSession session = null;
+			
+			try {
+				session = SqlSessionUtil.getSession();
+				
+				return session.selectOne("schedules.selectUpcommingGathring", no);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				session.close();
+			}
+			
+			return null;
+		}
+		public static Meeting selectUpcommingMeeting(int no) {
+			
+			SqlSession session = null;
+			
+			try {
+				session = SqlSessionUtil.getSession();
+				
+				return session.selectOne("schedules.selectUpcommingMeeting", no);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				session.close();
+			}
+			
+			return null;
+		}
+	//20210114 end
+
+	//20210123 start
+		
+		//밋팅만들기 하는
+		public static int insertMakingMeeting(Meeting meeting) {
+			
+			SqlSession session = null;
+			
+			try {
+				session = SqlSessionUtil.getSession();
+				
+				return session.insert("schedules.insertMakingMeeting", meeting);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				session.close();
+			}
+			
+			return -1;
+		}
+		//20210123 start
+
+	//박형우 end -----------------------------------------------------------------------
+	
+	//송진현start---------------------------------------------------------------------------
+		public static int insert(Gathering schedule) {
+			int result = 0;
+			SqlSession session = null;
+			try {
+				session = SqlSessionUtil.getSession();
+				result = session.insert("schedules.insert",schedule);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				session.close();
+			}
+			return 0;
+		}
+		
+		public static Gathering selectOne(int no) {
+			
+			SqlSession session = null;
+			
+			try {
+				session = SqlSessionUtil.getSession();
+				
+				return session.selectOne("schedules.selectOne",no);
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				session.close();
+			}
+			
+			return null;
+		}
+	//송진현end---------------------------------------------------------------------------
+}
+

@@ -27,18 +27,45 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	
-		<!--박형우 start -->
-	<!--20210114 start -->
-	
+	<!--박형우 start-->
+	<!--20210114 start-->
+
 	<select id="selectWatingCrewMemberImgs" parameterType="int" resultType="String">
 			SELECT PROFILE_IMG profileImg
 			FROM crew_members
 			WHERE crew_no = #{no} AND type='W'
 			ORDER BY user_no
-		</select>
+	</select>
+	<!--20210114 end-->
+	<!--20210119 start -->
+	<select id="selectFormallyCrewMemberList" parameterType="int" resultType="FormallyCrewMemberJson">
+		SELECT u.name name, cm.profile_img profileImg, cm.role rank, cm.no crewMemberNo
+		FROM crew_members cm JOIN users u ON cm.user_no = u.no 
+		WHERE crew_no=#{crewNo} AND type='A'
+	</select>
+	<!--20210119 end -->
+	<!--20210124 start -->
+	<update id="transformRankToOperator" parameterType="int">
+		UPDATE crew_members SET role='O'
+		WHERE no = #{no}
+	</update>
 	
-	<!--20210114 end -->
-	<!--박형우  end -->
+	<update id="transformRankToMember" parameterType="int">
+		UPDATE crew_members SET role='M'
+		WHERE no = #{no}
+	</update>
+		
+	<!--20210124 end -->
+	<!--20210125 end -->
+	
+	<select id="selectCrewMemberForKick" parameterType="int" resultType="CrewMember">
+		SELECT user_no userNo, crew_no crewNo
+		FROM crew_members
+		WHERE no=#{no}
+	</select>
+		<!--20210125 end -->
+	<!--박형우  end-->
+
 	
 	<!-- 정진하 20210113 1936 마이페이지에서 프로필 사진 수정 후 업데이트 -->    
 	    <update id="updateProfileImage" parameterType="CrewMember">

@@ -1,6 +1,7 @@
 package com.doogwal.coffee.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -52,5 +53,19 @@ public class BoardsDAO {
 		
 	//20210115 start
 	//박형우 end -----------------------------------------------------------------------
+		
+	public static int insertBoard(Board board) {
+		SqlSession session = null;
+		try {
+			session = SqlSessionUtil.getSession();
+			return session.insert("boards.insertBoard", board);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			session.close();
+		}
+		
+		return -1;
+	}
 
 }

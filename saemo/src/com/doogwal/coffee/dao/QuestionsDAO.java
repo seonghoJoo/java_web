@@ -56,4 +56,27 @@ public class QuestionsDAO {
 	 *  질문 리스트 얻기
 	 * */
 	//- ------------------------------------------------------------------
+	
+	//박형우 start -----------------------------------------------------------------------
+	//20210114 start
+		public static List<Question> selectJoinConditions(int no) {
+			
+			SqlSession session = null;
+			
+			try {
+				session = SqlSessionUtil.getSession();
+				
+				return session.selectList("questions.selectJoinConditions",no);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				session.close();
+			}
+			
+			return null;
+		}
+	//20210114 end
+	//박형우 end -----------------------------------------------------------------------
+
+	
 }

@@ -30,6 +30,17 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	<typeAlias alias="UserAns" type="com.doogwal.coffee.vo.UserAns"></typeAlias>
 	<typeAlias alias="SubjAns" type="com.doogwal.coffee.vo.SubjAns"></typeAlias>
 	<typeAlias alias="FileAns" type="com.doogwal.coffee.vo.FileAns"></typeAlias>
+	
+	<typeAlias alias="Gathering" type="com.doogwal.coffee.vo.Gathering"></typeAlias>
+	<typeAlias alias="Meeting" type="com.doogwal.coffee.vo.Meeting"></typeAlias>
+	<typeAlias alias="Attendance" type="com.doogwal.coffee.vo.Attendance"></typeAlias>
+	<typeAlias alias="OngoingMeeting" type="com.doogwal.coffee.vo.OngoingMeeting"></typeAlias>
+	<typeAlias alias="MeetApp" type="com.doogwal.coffee.vo.MeetApp"></typeAlias>  
+	<typeAlias alias="FormallyCrewMemberJson" type="com.doogwal.coffee.vo.FormallyCrewMemberJson"></typeAlias>  
+	<typeAlias alias="WaitingMeetingCrewsJson" type="com.doogwal.coffee.vo.WaitingMeetingCrewsJson"></typeAlias>
+	<typeAlias alias="Preparation" type="com.doogwal.coffee.vo.Preparation"/>
+	<typeAlias alias="District" type="com.doogwal.coffee.vo.District"/>
+	
 </typeAliases>
 
 <!--  데이터 베이스와 연결 환경 설정 -->
@@ -66,6 +77,16 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	<mapper resource="com/doogwal/coffee/mapper/userAns.xml"></mapper>
 	<mapper resource="com/doogwal/coffee/mapper/subjAns.xml"></mapper>
 	<mapper resource="com/doogwal/coffee/mapper/fileAns.xml"></mapper>
+	
+	<mapper resource="com/doogwal/coffee/mapper/gatherings.xml"></mapper>
+	<mapper resource="com/doogwal/coffee/mapper/schedules.xml"></mapper>
+	<mapper resource="com/doogwal/coffee/mapper/attendances.xml"></mapper>
+	<mapper resource="com/doogwal/coffee/mapper/meetApps.xml"></mapper>
+	<mapper resource="com/doogwal/coffee/mapper/meetings.xml"></mapper>
+	<mapper resource="com/doogwal/coffee/mapper/districts.xml"></mapper>
+	<mapper resource="com/doogwal/coffee/mapper/rules.xml"></mapper>
+	<mapper resource="com/doogwal/coffee/mapper/preparations.xml"></mapper>
+	<mapper resource="com/doogwal/coffee/mapper/districts.xml"></mapper>
 </mappers>
 
 </configuration>

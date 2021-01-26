@@ -13,11 +13,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.doogwal.coffee.dao.BoardsDAO;
 import com.doogwal.coffee.dao.CrewMembersDAO;
 import com.doogwal.coffee.dao.CrewsDAO;
 import com.doogwal.coffee.dao.MtpQuestsDAO;
 import com.doogwal.coffee.dao.QuestionsDAO;
 import com.doogwal.coffee.dao.UsersDAO;
+import com.doogwal.coffee.vo.Board;
 import com.doogwal.coffee.vo.Crew;
 import com.doogwal.coffee.vo.CrewMember;
 import com.doogwal.coffee.vo.MtpQuest;
@@ -34,7 +36,6 @@ public class CreateCrew extends HttpServlet{
 		
 		String name = req.getParameter("name");
 		String coverImg = req.getParameter("cover_img");
-		
 		String intro = req.getParameter("intro");
 		String categoryNoStr = req.getParameter("category_no");
 		String olderYearStr = req.getParameter("olderYear");
@@ -59,19 +60,18 @@ public class CreateCrew extends HttpServlet{
 		char gender = user.getGender();
 		int no=1;
 		Crew crew;
+		// 남녀 성별 구분하여 성비를 바꿈
 		if(gender=='F') {
 			crew = new Crew(minAge, maxAge, maxPop,1, categoryNo, 30000, age, 0, name, coverImg, intro);
 		}else {
 			crew = new Crew(minAge, maxAge, maxPop,1, categoryNo, 30000, age, 1, name, coverImg, intro);
 		}
-		int resultCrew = CrewsDAO.insertCrew(crew);
-		System.out.println("result: "+  resultCrew);
 		
-		// 크루 이름으로 부터 번호 얻기
-		int crewNo = CrewsDAO.selectCrewByName(name);
+		// 크루 삽입과 동시에 크루 번호 얻기
+		int crewNo = CrewsDAO.insertCrew(crew);
+
 		
-		System.out.println("crewNo:" +crewNo);
-		
+		// 질문들 얻기
 		String[] mtpQuests = req.getParameterValues("mtp_quest");
 		String[] mtpAnswers = req.getParameterValues("mtp_answer");
 		
@@ -79,19 +79,19 @@ public class CreateCrew extends HttpServlet{
 		int ansLen=0;
 		Question q;
 		MtpQuest mtpQ;
+		// 질문 타입을 알아내기 위함
 		String[] types = req.getParameterValues("type");
+		// 보기 몇번까지 존재하는지 알아냄
 		String[] mtpNums = req.getParameterValues("mtp_num");
 		if(types!=null) {
 			for(int i=0;i<types.length;i++) {
 				if(types[i].equals("M")) {
 					// insert Questoin
 					q = new Question(crewNo, 'M', mtpQuests[i]);
-					
 					int qNo = QuestionsDAO.insertQuestion(q);
 					int mtpNum = Integer.parseInt(mtpNums[mtpNumIndex++]);
+					// 보기 질문이 있을때
 					if(mtpQuests.length>0) {
-						// 6 3 1
-						// 123456 789 10
 						for(int j=ansLen;j<ansLen+mtpNum;j++) {
 							System.out.println(mtpAnswers[j]);
 							mtpQ = new MtpQuest(crewNo, qNo, mtpAnswers[j]);
@@ -105,11 +105,14 @@ public class CreateCrew extends HttpServlet{
 					}
 					ansLen += mtpNum;
 				}
+				// 주관식 질문 얻기
 				else if(types[i].equals("S")) {
 					// insert Questoin
 					q = new Question(crewNo, 'S', mtpQuests[i]);
 					int qResult = QuestionsDAO.insertQuestion(q);
-				}else if(types[i].equals("F")) {
+				}
+				// 파일 질문 얻기
+				else if(types[i].equals("F")) {
 					// insert Questoin
 					q = new Question(crewNo, 'F', mtpQuests[i]);
 					int qResult = QuestionsDAO.insertQuestion(q);
@@ -122,11 +125,23 @@ public class CreateCrew extends HttpServlet{
 		// 질문과 정답 얻기
 		System.out.println("크루 insert:" + crewMemberResult);
 		
+		Board board = new Board();
+		board.setCrewNo(crewNo);
+		// 전체글 삽입
+		board.setName("전체글");
+		int boardResult = BoardsDAO.insertBoard(board);
+		// 일정 삽입
+		board.setName("일정");
+		boardResult = BoardsDAO.insertBoard(board);
+		
+		
+		// header.jsp를 위해 session을 추가해서 넣어줌
 		List<CrewMember> ownCrewList = CrewMembersDAO.selectOwnList(user.getNo());
 		System.out.println("onwCrewList 사이즈:" + ownCrewList.size());
 		int crewIdx = ownCrewList.size();
 		session.setAttribute("userCrewList"+ (--crewIdx), crewMember);
 		
+		// index로 redirect
 		resp.sendRedirect("/index.jsp");
 		
 	}

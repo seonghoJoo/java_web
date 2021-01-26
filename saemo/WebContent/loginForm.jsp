@@ -19,7 +19,7 @@
         </div>
         <div id="loginContainer"><!--loginContainer-->
             <div class="login_form">
-                <form action="login.do" method="post">
+                <form action="/login.do" method="post">
                     <input id="loginId" name="loginId" placeholder="  아이디" />
                     <input id="loginPassword" <%
                     String fail = (String)session.getAttribute("fail");

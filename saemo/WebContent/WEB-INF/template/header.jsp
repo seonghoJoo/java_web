@@ -38,7 +38,7 @@
                 <ul>
                 	<%for(int i=0;i<userCrews.length;i++){ %>
                 		<%if(userCrews[i]!=null){ %>
-                    		<li><a href="/crewDetailPost.jsp?crewNo=<%=userCrews[i].getCrewNo() %>&memberNo=<%=userCrews[i].getNo() %>&crewOrder=<%=i%>"><img class="header_crew_list_on" src="/img/<%=userCrews[i].getCoverImg() %>" width="40" height="40" /></a></li>
+                    		<li><a href="/crewDetailPage.jsp?crewNo=<%=userCrews[i].getCrewNo() %>&crewOrder=<%=i%>"><img class="header_crew_list_on" src="/img/<%=userCrews[i].getCoverImg() %>" width="40" height="40" /></a></li>
                    		<%}else{ %>
                    			<li><a href="/create_crew.jsp"><i class="fas fa-plus-circle"></i></a></li>
                    		<%} %>

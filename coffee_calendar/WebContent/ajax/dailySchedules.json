@@ -1,0 +1,31 @@
+[
+  {
+    "title": "아침 커피 미팅",
+    "start": "2020-12-11T09:00:00",
+    "extendedProps": {
+      "participantsNum": "3",
+      "nonParticipantsNum": "2"
+    },
+    "className": "gathering"
+
+  },
+  {
+    "title": "Business Lunch",
+    "start": "2020-12-11T12:00:00",
+    "extendedProps": {
+      "participantsNum": "5",
+      "nonParticipantsNum": "0"
+    },
+    "className": "gathering"
+  },
+  {
+    "title": "회식",
+    "start": "2020-12-11T19:00:00",
+    "extendedProps": {
+      "participantsNum": "4",
+      "nonParticipantsNum": "1"
+    },
+    "className": "gathering"
+  }
+
+]

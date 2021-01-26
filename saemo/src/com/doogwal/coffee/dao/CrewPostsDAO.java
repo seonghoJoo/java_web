@@ -1,6 +1,7 @@
 package com.doogwal.coffee.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -13,7 +14,7 @@ public class CrewPostsDAO {
 	
 	// 주성호 start 2021 01 25
 	// 크루 디테일 글 페이징 처리
-	public static List<CrewPost> selectPostDetailList(PageVO pageVO) {
+	public static List<CrewPost> selectPostDetailList(Map<String,Object> pageVO) {
 
 		SqlSession session = null;
 		try {

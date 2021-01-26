@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC	
+"-//mybatis.org//DTD Mapper 3.0//EN"	
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="meetings">
+	<!--박형우 start-->
+	<!--20210116 start-->
+
+	<select id="selectOngoingMeetings" parameterType="int" resultType="OngoingMeeting">
+		SELECT schedules.name meetingName, crews.name crewName, img, schedules.crew_no crewNo, schedules.no meetingNo
+		FROM schedules JOIN meetings ON schedules.no = meetings.no JOIN crews ON schedules.crew_no = crews.no
+		WHERE crew_no IN(SELECT crew_no
+						FROM crew_members
+						WHERE user_no=#{no})
+		AND confirmation = 'W'
+		ORDER BY meetingNo
+	</select>
+	
+	<!--20210116 end-->
+	<!--20210123 start-->
+	
+	<insert id="insertMakingMeeting" parameterType="Meeting">
+		INSERT INTO meetings(NO, IMG, POINT, CATEGORY_NO, THEME_NO, PLACE, CONFIRMATION)
+		VALUES(#{no}, #{img}, #{point}, #{categoryNo}, #{themeNo}, #{place}, #{confirmation})
+	</insert>
+
+	<!--20210123 end-->
+	<!--20210125 start-->
+	
+	<update id="updateAcceptMeetingApp" parameterType="int">
+		UPDATE meetings SET confirmation = 'A'
+		WHERE no=#{no}
+	</update>
+	
+	<!--20210125 end-->
+	<!--박형우 end-->
+</mapper>
+

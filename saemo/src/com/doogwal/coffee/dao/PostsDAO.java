@@ -1,5 +1,6 @@
 package com.doogwal.coffee.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -13,7 +14,8 @@ public class PostsDAO {
 	//20210114 start
 		
 		//상위 고정 게시글을 가져오는
-		public static List<String> selectTopContents(int no) {
+		public static List<Post> selectTopContents(int no) {
+			
 			SqlSession session = null;
 			
 			try {

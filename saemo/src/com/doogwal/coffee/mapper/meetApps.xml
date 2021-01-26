@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="meetApps">
+<!--박형우 start-->
+<!--20210114 start-->
+	<select id="weApplymeetingList" parameterType="int" resultType="Meeting">
+		SELECT meetings.img, schedules.name, schedules.description, schedules.type
+		FROM meet_apps JOIN meetings ON meet_apps.meeting_no = meetings.no JOIN schedules ON schedules.no = meetings.no
+		WHERE meet_apps.apply_crew_no = #{no} AND NOT meet_apps.acceptance='R' AND SYSDATE &lt; schedules.start_date
+	</select>
+<!--20210114 end-->
+<!--20210117 start-->
+
+	<insert id="bringMeeting" parameterType="MeetApp">
+		<selectKey order="BEFORE" resultType="int" keyProperty="no">
+			SELECT MEET_APPS_SEQ.nextval
+			FROM dual
+		</selectKey>
+		INSERT INTO meet_apps(no, regdate, meeting_no, apply_crew_no, acceptance, introduce)
+		VALUES(#{no}, systimestamp, #{meetingNo}, #{applyCrewNo}, 'W', null)
+	</insert>
+
+	<!--20210117 end-->
+	<!-- 20210122 start -->
+
+	<select id="selectWatingMeetingCrews" parameterType="int" resultType="WaitingMeetingCrewsJson">
+		SELECT mapp.no no, meeting_no meetingNo, apply_crew_no applyCrewNo, introduce, cs.cover_img crewCcoverImg, cs.name crewName, s.name meetingName, s.start_date startDate, mapp.regdate regdate
+		FROM meet_apps mapp JOIN crews cs ON mapp.apply_crew_no = cs.no JOIN schedules s ON mapp.meeting_no = s.no
+		WHERE meeting_no IN (SELECT ms.no
+							FROM schedules s JOIN meetings ms ON s.no = ms.no
+							WHERE s.crew_no = #{no} AND s.start_date > sysdate)
+		AND acceptance = 'W'
+		ORDER BY no
+	</select>
+	
+	<update id="updateAcceptMeetingApp" parameterType="int">
+		UPDATE meet_apps SET acceptance = 'A'
+		WHERE no=#{no}
+	</update>
+	
+	<update id="updateAcceptMeetingAppAfter">
+		UPDATE meet_apps SET acceptance='R'
+		WHERE meeting_no = #{no} AND acceptance='W'
+	</update>
+	
+	<update id="updateRejectMeetingApp" parameterType="int">
+		UPDATE meet_apps SET acceptance='R'
+		WHERE no=#{no}
+	</update>
+	<!-- 20210122 end -->
+
+<!--박형우 end-->
+</mapper>  
+

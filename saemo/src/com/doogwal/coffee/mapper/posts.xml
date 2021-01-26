@@ -5,6 +5,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="posts">
 
+	<!--박형우 start-->
+	<!--20210114 start-->
+	
+		<select id="selectTopContents" parameterType="int" resultType="String">
+			SELECT contents
+			FROM posts
+			WHERE board_no=#{no} AND top='Y'
+		</select>
+		
+	<!--20210114 end-->
+	<!--박형우 end-->
+
+
 <!-- 주성호 2021 01 25 start -->
 	<!-- 글 상세 불러오기 -->
 	<select id="selectPostDetailOne" parameterType="int" resultType="CrewPost">
@@ -20,13 +33,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 글 페이지 처리 -->
-	<select id="selectPostDetailList" resultType="CrewPost" parameterType="PageVO">
+	<select id="selectPostDetailList" resultType="CrewPost" parameterType="hashMap">
 		SELECT no, memberNo, regdate, contents, likeCnt, boardNo, imageApplicable,replyCnt,texts
 		FROM	(SELECT no, memberNo, regdate, contents, likeCnt, boardNo, imageApplicable,replyCnt,texts, rownum r
 				FROM	(
 						SELECT	p.no,p.member_no memberNo,p.regdate,contents,like_cnt likeCnt,board_no boardNo,image_applicable imageApplicable, reply_cnt replyCnt,texts
 						FROM posts p, boards b
-						WHERE b.crew_no = #{no} AND board_no = b.no
+						WHERE b.crew_no = #{crewNo} AND board_no = #{boardNo} AND board_no = b.no
 						ORDER BY 3 DESC
 						)
 				)

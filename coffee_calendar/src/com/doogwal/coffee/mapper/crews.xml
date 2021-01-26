@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="crews">
+
+<!-- 주성호 2021 01 11 header start-->
+	<select id="selectOwnList" parameterType="int"  resultType="Crew">
+		SELECT c.no, c.name, c.cover_img coverImg,c.intro,min_age minAge,max_age maxAge,max_pop maxPop,cur_pop curPop,category_no categoryNo,c.regdate,avg_age avgAge,gender_rate genderRate,point
+		FROM crew_members m, crews c
+		WHERE m.user_no=#{no} AND m.crew_no = c.no
+		ORDER BY 1
+	</select>
+	
+	<select id="selectCrewByName" parameterType="String" resultType="int">
+		SELECT no
+		FROM crews
+		WHERE name=#{name}
+	</select>
+	
+	<!-- 주성호 2021 01 11 check name-->
+	<select id="selectCheckName" parameterType="String"  resultType="int">
+		SELECT COUNT(*)
+		FROM crews
+		WHERE name = #{name}
+	</select>
+	<!-- 주성호 2021 01 11 end-->
+	
+	
+	<insert id="insertCrew" parameterType="Crew">
+		INSERT INTO crews(no, name, cover_img, intro, min_age, max_age, max_pop, cur_pop, category_no,gender_rate,avg_age,point, regdate)
+		VALUES(crews_seq.nextval, #{name},#{coverImg} ,#{intro}, #{minAge}, #{maxAge}, #{maxPop},#{curPop} ,#{categoryNo},#{genderRate},#{avgAge},#{point} , systimestamp)
+	</insert>
+<!-- 주성호 2021 01 14 en -->
+
+
+<!-- 정진하 2021 01 17 main start-->
+<!-- 현재 날짜로부터 생성된지 6개월 미만의 크루들만 최신순으로 가져옴 -->
+	<select id="selectCrewsRecruiting" resultType="Crew">
+		SELECT no, name, cover_img coverImg, intro, min_age minAge, max_age maxAge, 
+		max_pop maxPop, cur_pop curPop, category_no categoryNo,
+		regdate, avg_age avgAge, gender_rate genderRate, point
+		FROM crews
+		WHERE ADD_MONTHS(regdate, 6) >= systimestamp AND rownum between 1 and 8
+		ORDER BY regdate desc
+	</select>
+<!-- 정진하 2021 01 17 end-->
+
+<!--정진하 2021 01 24 번호로 크루이름 가져오기 위해 작성함 -->
+	<select id="selectNameByCrewNo" resultType="String" parameterType="int">
+		SELECT name
+		FROM crews
+		WHERE no=#{no}
+	</select>
+<!--정진하 2021 01 24 end -->
+
+
+</mapper>

@@ -15,4 +15,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM users
 		WHERE no=#{no}
 	</select>
+	
+	
+		<!--박형우 start-->
+	<!--20210114 start-->
+	<select id="selectAttendanceUser" parameterType="int" resultType="User">
+		SELECT no, name, email, password, phone_num phoneNum, gender, birth_date birthDate, address, email_check emailCheck, email_auth eamilAuth, regdate
+		FROM users
+		WHERE no=#{no}
+	</select>
+	<!--20210114 end-->
+	<!--박형우  end-->
+	
 </mapper>

@@ -27,11 +27,37 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 주성호 2021 01 11 end-->
 	
 	<!-- 주성호 2021 01 25 크루 삽입-->
-	<insert id="insertCrew" parameterType="Crew">
+	<insert id="insertCrew" parameterType="Crew" useGeneratedKeys="true" keyColumn="no" keyProperty="no">
 		INSERT INTO crews(no, name, cover_img, intro, min_age, max_age, max_pop, cur_pop, category_no,gender_rate,avg_age,point, regdate)
 		VALUES(crews_seq.nextval, #{name},#{coverImg} ,#{intro}, #{minAge}, #{maxAge}, #{maxPop},#{curPop} ,#{categoryNo},#{genderRate},#{avgAge},#{point} , systimestamp)
 	</insert>
 	<!-- 주성호 2021 01 25 크루 삽입-->
+	
+	<!--박형우 start-->
+	<!--20210114 start-->
+	<select id="selectCrewAllInformation" parameterType="int" resultType="Crew">
+		SELECT NO, NAME, COVER_IMG coverImg, INTRO, MIN_AGE minAge, MAX_AGE maxAge, MAX_POP maxPop, CUR_POP curPop, CATEGORY_NO categoryNo, REGDATE, AVG_AGE avgAge, GENDER_RATE genderRate, POINT
+		FROM crews
+		where no=#{no}	
+	</select>
+
+	<!--20210114 end-->
+	<!--20210117 start-->
+
+	<update id="updateCrewPoint" parameterType="java.util.Map">
+		UPDATE crews SET point = point+(#{point})
+		WHERE no=#{no}
+	</update>
+	
+	<select id="selectOrganizeMeetingCrew" parameterType="int" resultType="int">
+		SELECT crew_no
+		FROM schedules s JOIN meetings m ON s.no = m.no
+		WHERE m.no=#{no} 
+	</select>
+	<!--20210117 end-->
+	<!--박형우  end-->
+	
+	
 	
 	
 	<!--이아림 20210114 searchList(동적쿼리) start -->

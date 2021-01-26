@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="meetings">
+
+	<!-- 정진하 2021 01 23 일정 뽑아올 때 포인트 얻기 위함 -->
+	<select id="selectMeetingPoint" parameterType="int" resultType="int">
+	SELECT point
+	FROM meetings
+	WHERE no = #{no}
+	ORDER BY no
+	</select>
+
+
+</mapper>

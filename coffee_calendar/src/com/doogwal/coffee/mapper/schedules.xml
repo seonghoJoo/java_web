@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="schedules">
+
+<!-- 정진하 Start -->
+<!-- 정진하 2021 01 17 main start-->
+<!-- 최신순으로 모임 가져옴 -->
+	<select id="selectUpcomingGatheringList" resultType="Gathering">
+		SELECT s.no, s.district_no districtNo, s.crew_no crewNo , s.type, s.start_date startDate,
+		s.end_date endDate, s.regdate, s.name, s.address, s.description, s.lat, s.lng, g.fee,
+		c.name crewName, c.cover_img crewCoverImg
+		FROM schedules s, crews c, gatherings g
+		WHERE s.crew_no = c.no and s.no = g.no AND rownum between 1 and 7
+		ORDER BY s.regdate desc
+	</select>
+<!-- 정진하 2021 01 17 end-->
+
+<!-- 정진하 2021 01 21 크루상세페이지 일별 일정 리스트 가져오기 -->
+	<select id="selectDailySchedules" resultType="Meeting" parameterType="java.util.Map">
+		SELECT no, name, start_date startDate, type
+		FROM schedules
+		WHERE TO_CHAR(start_date,'YYYY-MM-DD') = #{startDate} AND crew_no = #{crewNo}
+		ORDER BY no
+	</select>
+	
+<!-- 정진하 2021 01 23 크루상세페이지 모든 일정 리스트 가져오기 -->	
+	<select id="selectAllSchedules" resultType="Meeting" parameterType="int">
+		SELECT no, name, start_date startDate, type
+		FROM schedules
+		WHERE crew_no = #{crewNo} and start_date >= systimestamp
+		ORDER BY no
+	</select>
+
+
+	<select id="selectMonthlySchedules" resultType="Meeting" parameterType="int">
+		SELECT name, start_date startDate
+		FROM schedules
+		WHERE crew_no=#{crewNo}
+	</select>
+<!-- 정진하 2021 01 24 밋팅메인에서 신청가능한 밋팅목록 가져오기 위해 작성함 -->	
+	<select id="selectMeetingListByThemeNo" resultType="Meeting" parameterType="int">
+		SELECT s.no, s.crew_no crewNo, s.name, s.start_date startDate, m.point, m.place, m.img, c.name crewName
+		FROM schedules s, meetings m, crews c
+		WHERE m.theme_no = #{themeNo} and s.no = m.no and s.crew_no = c.no 
+		ORDER BY s.no
+	</select>
+	
+	<select id="selectMeetingListByDateRange" resultType="Meeting" parameterType="java.util.Map">
+		SELECT s.no, s.crew_no crewNo, s.name, s.start_date startDate, m.point, m.place, m.img, c.name crewName
+		FROM schedules s, meetings m, crews c
+		WHERE s.start_date BETWEEN TO_DATE(#{startFrom},'YYYY-MM-DD') and TO_DATE(#{endHere},'YYYY-MM-DD')
+		AND s.crew_no = c.no AND s.no = m.no
+		ORDER BY s.no
+	</select>
+	
+	<select id="selectMeetingListByUsingLocationInfo" resultType="Meeting" parameterType="String">
+	SELECT s.no, s.crew_no crewNo, s.name, s.start_date startDate, m.point, m.place, m.img, c.name crewName
+	FROM schedules s, meetings m, crews c
+	WHERE s.address LIKE #{locationInfo2} AND s.crew_no = c.no AND s.no = m.no AND s.start_date >= systimestamp
+	ORDER BY s.no
+	</select>
+	
+	
+	<select id="selectMeetingListFromToday" resultType="Meeting">
+		SELECT s.no, s.crew_no crewNo, s.name, s.start_date startDate, m.point, m.place, m.img, c.name crewName, s.type
+		FROM schedules s, meetings m, crews c
+		WHERE s.start_date >= systimestamp AND s.crew_no = c.no AND s.no = m.no
+		ORDER BY s.no
+	</select>
+<!-- 정진하 end -->
+
+</mapper>

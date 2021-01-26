@@ -55,55 +55,31 @@ public class CrewsDAO {
 	/*
 	2021 01 11 주성호 end
 	 */
-
 	/*
 	 	2021 01 14 주성호 start
 	 	크루 생성
 	 * */
 	public static int insertCrew(Crew crew) {
-		int cnt = 0;
+		int result = 0;
 		SqlSession session = null;
 		
 		try {
 			session = SqlSessionUtil.getSession();
-			cnt = session.insert("crews.insertCrew",crew);
-			return cnt;
+			result =  session.insert("crews.insertCrew",crew);
+			return crew.getNo();
 		}catch(Exception e) {
 			e.printStackTrace();
 		} finally {
 			session.close();
 		}//try~catch~finally end
 		
-		return cnt;
+		return -1;
 	}
 	/*
  	2021 01 14 주성호 end
  	크루 생성
  * */
 	
-	/*
- 	2021 01 14 주성호 start
- 	크루 이름으로 번호 받기
-	 * */
-	public static int selectCrewByName(String name) {
-		int cnt = 0;
-		SqlSession session = null;
-		try {
-			session = SqlSessionUtil.getSession();
-			cnt = session.selectOne("crews.selectCrewByName",name);
-			return cnt;
-		}catch(Exception e) {
-			e.printStackTrace();
-		} finally {
-			session.close();
-		}//try~catch~finally end
-		
-		return cnt;
-	}
-	/*
- 	2021 01 14 주성호 end
- 	크루 이름으로 번호 받기
-	 * */
 	
 	//20210114 이아림 검색결과에 크루 목록 보여주기 start 
 	public static List<Crew> selectSearchList(Map<String, Object> data) {
@@ -126,5 +102,68 @@ public class CrewsDAO {
 		return list;
 		}//selectList() end
 	//20210114 이아림 end
+	
+	
+	//박형우 start -----------------------------------------------------------------------
+	//20210114 start
+	// 해당 크루의 모든 정보를 가져오는
+		public static Crew selectCrewAllInformation(int no) {
+			
+			SqlSession session = null;
+			
+			try {
+				session = SqlSessionUtil.getSession();
+				
+				return session.selectOne("crews.selectCrewAllInformation", no);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				session.close();
+			}
+			
+			return null;
+		}
+	//20210114 end
+	//20210117 start
 
+		// 해당 크루 포인트 수정하는
+		public static int updateCrewPoint(Map<String, Integer> map) {
+			
+			SqlSession session = null;
+			
+			try {
+				session = SqlSessionUtil.getSession();
+				
+				return session.update("crews.updateCrewPoint", map);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				session.close();
+			}
+			
+			return 0;
+		}
+		
+		//밋팅 번호로 크루 번호를 찾는
+		public static int selectOrganizeMeetingCrew(int no) {
+			
+			SqlSession session = null;
+			
+			try {
+				session = SqlSessionUtil.getSession();
+				
+				return session.selectOne("crews.selectOrganizeMeetingCrew", no);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				session.close();
+			}
+			
+			return 0;
+		}
+			
+		//20210117 end
+	//박형우 end -----------------------------------------------------------------------
 }
+
+

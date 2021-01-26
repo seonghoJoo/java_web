@@ -11,6 +11,14 @@ public class User {
 	private Date birthDate;
 	private Timestamp regdate;
 	
+	public Timestamp getRegdate() {
+		return regdate;
+	}
+
+
+	public void setRegdate(Timestamp regdate) {
+		this.regdate = regdate;
+	}
 	public static final String LOGIN = "loginUser";
 	
 	//년 월 일 얻기용 SimpleDateFormat은 객체 3개 필요하나 Calendar는 하나로 조짐

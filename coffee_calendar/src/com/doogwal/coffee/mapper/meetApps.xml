@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="meetApps">
+	<!-- 정진하 2021 01 22  -->
+	<select id="selectCrewInteractingWith" parameterType="int" resultType="Crew">
+	SELECT c.name name, c.cover_img coverImg
+	FROM meet_apps ms JOIN crews c ON ms.apply_crew_no = c.no
+	WHERE acceptance = 'A' AND ms.meeting_no = #{meetingNo}
+	ORDER BY ms.meeting_no
+	</select>
+
+
+
+</mapper>

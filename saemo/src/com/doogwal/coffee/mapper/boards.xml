@@ -20,4 +20,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		INSERT INTO boards(no, name, regdate, crew_no)
 		VALUES(#{no}, #{name}, systimestamp, #{crewNo})
 	</insert>
+	
+	<insert id="insertBoard" parameterType="Board">
+		INSERT INTO boards(no, name, regdate, crew_no)
+		VALUES(boards_seq.nextval, #{name}, systimestamp, #{crewNo})
+	</insert>
 </mapper>

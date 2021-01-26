@@ -1,12 +1,14 @@
 package com.doogwal.coffee.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
 import com.doogwal.coffee.util.SqlSessionUtil;
 import com.doogwal.coffee.vo.Crew;
 import com.doogwal.coffee.vo.CrewMember;
+import com.doogwal.coffee.vo.FormallyCrewMemberJson;
 import com.doogwal.coffee.vo.UserMember;
 
 public class CrewMembersDAO {
@@ -78,5 +80,122 @@ public class CrewMembersDAO {
 	 */
 	
 	//-------------------------------------------------------------
+	//박형우 start -----------------------------------------------------------------------
+	//20210114 start
+	//가입 대기자들의 이미지를 가져오기 위한 
+		public static List<String> selectWatingCrewMemberImgs(int no) {
+			SqlSession session = null;
+			try {
+				session = SqlSessionUtil.getSession();
+				return session.selectList("crewMembers.selectWatingCrewMemberImgs", no);
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				if(session!=null) session.close();
+			}//try~catch~finally end 
+			return null;
+		}
+	//20210114 end
+	//20210119 start
+		
+		//크루 정식 인원들 받아오는
+		public static List<FormallyCrewMemberJson> selectFormallyCrewMemberList(int crewNo) {
+			SqlSession session = null;
+			try {
+				session = SqlSessionUtil.getSession();
+				return session.selectList("crewMembers.selectFormallyCrewMemberList", crewNo);
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				if(session!=null) session.close();
+			}//try~catch~finally end 
+			return null;
+		}
+			
+		//20210119 end
+		//20210124 start
+		
+		//크루멤버 일반회원->운영진으로
+		public static int transformRankToOperator(int crewMemberNo) {
+			SqlSession session = null;
+			try {
+				session = SqlSessionUtil.getSession();
+				return session.update("crewMembers.transformRankToOperator", crewMemberNo);
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				if(session!=null) session.close();
+			}//try~catch~finally end 
+			return -1;
+		}
+		
+		//크루멤버 운영진->일반회원으로
+		public static int transformRankToMember(int crewMemberNo) {
+			SqlSession session = null;
+			try {
+				session = SqlSessionUtil.getSession();
+				return session.update("crewMembers.transformRankToMember", crewMemberNo);
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				if(session!=null) session.close();
+			}//try~catch~finally end 
+			return -1;
+		}
+		
+		//20210124 end
+		//20210125 start
+		
+		//크루멤버 탈퇴시키기
+		public static CrewMember selectCrewMemberForKick(int crewMemberNo) {
+			SqlSession session = null;
+			try {
+				session = SqlSessionUtil.getSession();
+				return session.selectOne("crewMembers.selectCrewMemberForKick", crewMemberNo);
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				if(session!=null) session.close();
+			}//try~catch~finally end 
+			return null;
+		}
+
+		//20210125 end
+		
+		//크루 정식 멤버로 받아주는
+		public static int updateRegularMember(Map<String, Integer> map) {
+			SqlSession session = null;
+			try {
+				session = SqlSessionUtil.getSession();
+			
+				return session.update("crewMembers.updateRegularMember", map);
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				if(session!=null) session.close();
+			}//try~catch~finally end 
+			return 0;
+		}
+
+		//크루 가입신청을 거절하는
+		public static int deleteKickMember(Map<String, Integer> map) {
+			SqlSession session = null;
+			try {
+				session = SqlSessionUtil.getSession();
+			
+				return session.delete("crewMembers.deleteKickMember", map);
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				if(session!=null) session.close();
+			}//try~catch~finally end 
+			return 0;
+		}
+
+		
+		
+
+	//박형우 end -----------------------------------------------------------------------
+
 
 }
